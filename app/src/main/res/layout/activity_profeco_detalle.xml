@@ -67,6 +67,7 @@
                             android:textColor="#C41919"
                             android:textSize="16dp"
                             android:textStyle="bold"
+                            android:fontFamily="sans-serif-light"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             android:visibility="gone"/>
@@ -80,6 +81,7 @@
                             android:text="Folio:"
                             android:textSize="16dp"
                             android:textStyle="bold"
+                            android:fontFamily="sans-serif-light"
                             app:layout_constraintEnd_toStartOf="@+id/TxtFolio"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -89,6 +91,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="16dp"
                             android:textStyle="bold"
+                            android:fontFamily="sans-serif-light"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -114,6 +117,7 @@
                             android:layout_height="wrap_content"
                             android:text="No. Dispensario:"
                             android:textSize="18dp"
+                            android:fontFamily="sans-serif-light"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -123,6 +127,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="16dp"
                             android:textStyle="bold"
+                            android:fontFamily="sans-serif-light"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/textView0"/>
 
@@ -132,6 +137,7 @@
                             android:layout_height="wrap_content"
                             android:text="Marca:"
                             android:textSize="18dp"
+                            android:fontFamily="sans-serif-light"
                             app:layout_constraintStart_toStartOf="@+id/textView0"
                             app:layout_constraintTop_toBottomOf="@+id/textView0" />
 
@@ -141,6 +147,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="16dp"
                             android:textStyle="bold"
+                            android:fontFamily="sans-serif-light"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/textView1" />
 
@@ -150,6 +157,7 @@
                             android:layout_height="wrap_content"
                             android:text="Modelo:"
                             android:textSize="16dp"
+                            android:fontFamily="sans-serif-light"
                             app:layout_constraintStart_toStartOf="@+id/textView1"
                             app:layout_constraintTop_toBottomOf="@+id/textView1" />
 
@@ -159,6 +167,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="16dp"
                             android:textStyle="bold"
+                            android:fontFamily="sans-serif-light"
                             app:layout_constraintBottom_toBottomOf="@+id/textView9"
                             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -168,6 +177,7 @@
                             android:layout_height="wrap_content"
                             android:text="Serie:"
                             android:textSize="16dp"
+                            android:fontFamily="sans-serif-light"
                             app:layout_constraintStart_toStartOf="@+id/textView9"
                             app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
@@ -176,6 +186,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16dp"
+                            android:fontFamily="sans-serif-light"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/TxtModelo" />
 
@@ -185,6 +196,7 @@
                             android:layout_height="wrap_content"
                             android:text="Lado:"
                             android:textSize="16dp"
+                            android:fontFamily="sans-serif-light"
                             app:layout_constraintStart_toStartOf="@+id/textView4"
                             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -193,6 +205,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16dp"
+                            android:fontFamily="sans-serif-light"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/TxtSerie" />
 
@@ -202,6 +215,7 @@
                             android:layout_height="wrap_content"
                             android:text="Producto:"
                             android:textSize="16dp"
+                            android:fontFamily="sans-serif-light"
                             app:layout_constraintStart_toStartOf="@+id/textView21"
                             app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
@@ -210,6 +224,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16dp"
+                            android:fontFamily="sans-serif-light"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/TxtLado" />
 
@@ -232,6 +247,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="#B4B4B4"
                             android:textSize="15dp"
+                            android:fontFamily="sans-serif-light"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -260,6 +276,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Motivo:"
+                        android:fontFamily="sans-serif-light"
                         android:layout_marginBottom="5dp"/>
 
                     <View
@@ -273,6 +290,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="18dp"
+                        android:fontFamily="sans-serif-light"
                         android:layout_marginTop="5dp"/>
                 </LinearLayout>
             </FrameLayout>
@@ -295,6 +313,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Responsable:"
+                        android:fontFamily="sans-serif-light"
                         android:layout_marginBottom="5dp"/>
 
                     <View
@@ -307,6 +326,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="18dp"
+                        android:fontFamily="sans-serif-light"
                         android:layout_marginTop="5dp"/>
                 </LinearLayout>
             </FrameLayout>
@@ -328,6 +348,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Observaciones:"
+                        android:fontFamily="sans-serif-light"
                         android:layout_marginBottom="5dp"/>
 
                     <View
@@ -340,6 +361,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="18dp"
+                        android:fontFamily="sans-serif-light"
                         android:layout_marginTop="5dp"/>
                 </LinearLayout>
             </FrameLayout>

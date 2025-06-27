@@ -78,7 +78,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Dispensario" />
+                android:text="Dispensario"
+                android:fontFamily="sans-serif-light"
+                android:textSize="20dp"
+                android:layout_marginTop="10dp"/>
 
             <Spinner
                 android:id="@+id/SpinnerDispensario"
@@ -89,7 +92,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lado" />
+                android:text="Lado"
+                android:fontFamily="sans-serif-light"
+                android:textSize="20dp"
+                android:layout_marginTop="10dp"/>
 
             <Spinner
                 android:id="@+id/SpinnerLado"
@@ -100,7 +106,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Producto" />
+                android:text="Producto"
+                android:fontFamily="sans-serif-light"
+                android:textSize="20dp"
+                android:layout_marginTop="10dp"/>
 
             <Switch
                 android:id="@+id/Producto1"
@@ -145,7 +154,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Responsable" />
+                android:text="Responsable"
+                android:fontFamily="sans-serif-light"
+                android:textSize="20dp"
+                android:layout_marginTop="10dp"/>
 
             <Spinner
                 android:id="@+id/SpinnerResponsable"

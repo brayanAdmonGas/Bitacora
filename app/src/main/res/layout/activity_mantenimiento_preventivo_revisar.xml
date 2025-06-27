@@ -1,0 +1,942 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/white"
+    tools:context=".mantenimiento.MantenimientoPreventivoRevisar">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        tools:ignore="MissingConstraints">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:navigationIcon="?attr/actionModeCloseDrawable"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:titleTextAppearance="@style/ToolbarTitleStyle"
+            app:title="Mantenimiento Preventivo"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <include layout="@layout/mensaje_fuera_rango" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/TxtTitulo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif-light"/>
+
+                    <View
+                        android:id="@+id/divider8"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?android:attr/listDivider" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardElevation="0dp"
+                android:backgroundTint="#FFFFFF">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="15dp">
+
+                    <TextView
+                        android:id="@+id/TxtSublista1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:fontFamily="sans-serif-light"
+                        android:visibility="gone"
+                        android:textColor="@color/colorPrimary"
+                        android:padding="5dp"/>
+
+                        <!--     Inicio Lista 1     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/Si_1"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/Si_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:paddingRight="5dp"
+                            android:text="Si"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/No_1"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"
+                            />
+
+                        <CheckBox
+                            android:id="@+id/No_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:text="No"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!--    Fin Lista 1     -->
+
+                    <!--    Inicio Lista 2     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/Si_2"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/Si_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:paddingRight="5dp"
+                            android:text="Si"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/No_2"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/No_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:text="No"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!--    Fin Lista 2     -->
+
+                    <!--    Inicio Lista 3     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/Si_3"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/Si_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:paddingRight="5dp"
+                            android:text="Si"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/No_3"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/No_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:text="No"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!--    Fin Lista 3     -->
+
+
+                    <TextView
+                        android:id="@+id/TxtSublista2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:fontFamily="sans-serif-light"
+                        android:visibility="gone"
+                        android:textColor="@color/colorPrimary"
+                        android:padding="5dp"/>
+
+
+
+                    <!--    Inicio Lista 4     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/Si_4"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/Si_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:paddingRight="5dp"
+                            android:text="Si"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/No_4"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/No_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:text="No"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!--    Fin Lista 4     -->
+
+
+                    <TextView
+                        android:id="@+id/TxtSublista3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:fontFamily="sans-serif-light"
+                        android:visibility="gone"
+                        android:textColor="@color/colorPrimary"
+                        android:padding="5dp"/>
+
+
+                    <!--    Inicio Lista 5     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar5"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/Si_5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/Si_5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:paddingRight="5dp"
+                            android:text="Si"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/No_5"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/No_5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:text="No"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!--    Fin Lista 5     -->
+
+                    <TextView
+                        android:id="@+id/TxtSublista5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:fontFamily="sans-serif-light"
+                        android:visibility="gone"
+                        android:textColor="@color/colorPrimary"
+                        android:padding="5dp"/>
+
+                    <!--    Inicio Lista 6     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint6"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar6"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/Si_6"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/Si_6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:paddingRight="5dp"
+                            android:text="Si"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/No_6"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/No_6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:text="No"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!--    Fin Lista 6     -->
+
+                    <TextView
+                        android:id="@+id/TxtSublista4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:fontFamily="sans-serif-light"
+                        android:visibility="gone"
+                        android:textColor="@color/colorPrimary"
+                        android:padding="5dp"/>
+
+
+                    <!--    Inicio Lista 7     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint7"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar7"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/Si_7"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/Si_7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:paddingRight="5dp"
+                            android:text="Si"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/No_7"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/No_7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:text="No"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!--    Fin Lista 7     -->
+
+
+                    <!--    Inicio Lista 8     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint8"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar8"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/Si_8"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/Si_8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:paddingRight="5dp"
+                            android:text="Si"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/No_8"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/No_8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:text="No"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!--    Fin Lista 8     -->
+
+
+
+                    <!--    Inicio Lista 9     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint9"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar9"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/Si_9"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/Si_9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:paddingRight="5dp"
+                            android:text="Si"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/No_9"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/No_9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:text="No"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!--    Fin Lista 9     -->
+
+
+
+                    <!--    Inicio Lista 10     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint10"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar10"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/Si_10"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/Si_10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:paddingRight="5dp"
+                            android:text="Si"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/No_10"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/No_10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:text="No"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!--    Fin Lista 10     -->
+
+
+
+                    <!--    Inicio Lista 11     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint11"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar11"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/Si_11"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/Si_11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:paddingRight="5dp"
+                            android:text="Si"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/No_11"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/No_11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:text="No"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!--    Fin Lista 11     -->
+
+
+                    <!--    Inicio Lista 12     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint12"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar12"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/Si_12"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/Si_12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:paddingRight="5dp"
+                            android:text="Si"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/No_12"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/No_12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:text="No"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!--    Fin Lista 12     -->
+
+
+                    <!--    Inicio Lista 13     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint13"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar13"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/Si_13"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/Si_13"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:paddingRight="5dp"
+                            android:text="Si"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/No_13"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                        <CheckBox
+                            android:id="@+id/No_13"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:onClick="CheckboxClicked"
+                            android:text="No"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:visibility="gone"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!--    Fin Lista 13     -->
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+            <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+            <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                android:layout_marginTop="10dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/Observaciones"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Observaciones"
+                    android:inputType="textMultiLine"
+                    android:padding="15dp"
+                    android:textSize="17sp"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Personal que realiza el servicio:"
+                android:textColor="#9C9C9C"
+                android:paddingTop="3dp"
+                android:textSize="15sp"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp">
+
+
+                <CheckBox
+                    android:id="@+id/Interno"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginRight="10dp"
+                    android:onClick="CheckboxClicked"
+                    android:paddingRight="5dp"
+                    android:text="Interno"
+                    android:textSize="17sp"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/Externo"
+                    app:layout_constraintEnd_toStartOf="@+id/Externo" />
+
+                <CheckBox
+                    android:id="@+id/Externo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:onClick="CheckboxClicked"
+                    android:text="Externo"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                android:layout_marginTop="10dp"/>
+
+            <LinearLayout
+                android:id="@+id/LinearRealizaInterno"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="Trabajador que realiza la actividad"
+                    app:endIconMode="clear_text">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/PersonaRealizaInterno"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:padding="15dp"
+                        android:textSize="15sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LinearRealizaExterno"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/BtbFirma"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:backgroundTint="#F58282"
+                    android:text="Trabajador que realiza la actividad"/>
+
+                <TextView
+                    android:id="@+id/TxtPersonalExterno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:textSize="22dp"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"
+                    android:textAlignment="center"
+                    />
+                <ImageView
+                    android:id="@+id/ImageFirma"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="10dp"
+                    android:scaleType="fitCenter"
+                    android:visibility="gone"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LinearGuardar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"
+                    android:layout_marginTop="10dp"
+                    />
+
+                <Button
+                    android:id="@+id/BtnGuardar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="#5d84c3"
+                    android:clickable="false"
+                    android:text="Finalizar Mantenimiento"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
+                    android:padding="15dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -32,6 +32,7 @@
                     android:textColor="#C41919"
                     android:textSize="16dp"
                     android:textStyle="bold"
+                    android:fontFamily="sans-serif-light"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     android:visibility="gone"/>
@@ -44,6 +45,7 @@
                     android:layout_marginRight="10dp"
                     android:text="Folio:"
                     android:textSize="16dp"
+                    android:fontFamily="sans-serif-light"
                     app:layout_constraintEnd_toStartOf="@+id/TxtFolio"
                     app:layout_constraintTop_toTopOf="parent"
                     android:textStyle="bold"/>
@@ -53,6 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16dp"
+                    android:fontFamily="sans-serif-light"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     android:textStyle="bold" />
@@ -79,6 +82,7 @@
                     android:layout_height="wrap_content"
                     android:text="No. Dispensario:"
                     android:textSize="16dp"
+                    android:fontFamily="sans-serif-light"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -88,6 +92,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="16dp"
                     android:textStyle="bold"
+                    android:fontFamily="sans-serif-light"
                     app:layout_constraintEnd_toEndOf="parent" />
 
                 <TextView
@@ -96,6 +101,7 @@
                     android:layout_height="wrap_content"
                     android:text="Lado:"
                     android:textSize="16dp"
+                    android:fontFamily="sans-serif-light"
                     app:layout_constraintTop_toBottomOf="@+id/textView1" />
 
                 <TextView
@@ -104,6 +110,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="16dp"
                     android:textStyle="bold"
+                    android:fontFamily="sans-serif-light"
                     app:layout_constraintBottom_toBottomOf="@+id/textView9"
                     app:layout_constraintEnd_toEndOf="parent" />
 
@@ -113,6 +120,7 @@
                     android:layout_height="wrap_content"
                     android:text="Producto:"
                     android:textSize="16dp"
+                    android:fontFamily="sans-serif-light"
                     app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
                 <TextView
@@ -120,6 +128,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16dp"
+                    android:fontFamily="sans-serif-light"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/TxtLado" />
 
@@ -144,6 +153,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#B4B4B4"
                     android:textSize="13dp"
+                    android:fontFamily="sans-serif-light"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

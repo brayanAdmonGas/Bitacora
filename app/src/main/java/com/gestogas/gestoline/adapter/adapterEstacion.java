@@ -9,23 +9,60 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.gestogas.gestoline.DiffUtil.EstacionDiff;
 import com.gestogas.gestoline.EstacionGerentes;
 import com.gestogas.gestoline.R;
 import com.gestogas.gestoline.controllers.AppController;
 import com.gestogas.gestoline.data.dataEstacion;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class adapterEstacion extends RecyclerView.Adapter<adapterEstacion.ItemViewHolder> {
 
     private final Context context;
     private final List<dataEstacion> dataList;
+    private final List<dataEstacion> searchlList;
     public adapterEstacion(Context context,List<dataEstacion> dataList){
         this.context = context;
-        this.dataList = dataList;
+        this.dataList = new ArrayList<>(dataList);
+        this.searchlList = new ArrayList<>(dataList);
 
+    }
+
+    public void filter(String text) {
+        text = text.toLowerCase().trim();
+        dataList.clear();
+
+        if (text.isEmpty()) {
+            dataList.addAll(searchlList);
+        } else {
+            for (dataEstacion item : searchlList) {
+                if (
+                        item.getRazonsocial().toLowerCase().contains(text) ||
+                                item.getPermisocre().toLowerCase().contains(text)
+                ) {
+                    dataList.add(item);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void updateData(List<dataEstacion> newData) {
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(
+                new EstacionDiff(this.dataList, newData)
+        );
+        this.dataList.clear();
+        this.dataList.addAll(newData);
+
+        diffResult.dispatchUpdatesTo(this);
+
+        searchlList.clear();
+        searchlList.addAll(newData);
     }
 
     @NonNull

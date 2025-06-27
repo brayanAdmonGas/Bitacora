@@ -169,7 +169,7 @@ public class MantenimientoCorrectivo extends AppCompatActivity {
                                 String hora = jsonObject.getString("hora");
 
                                 // Crea un objeto Item y lo añade a la lista
-                                dataMantenimiento item = new dataMantenimiento(id, folio,"0",descripcion,fecha,hora,"2");
+                                dataMantenimiento item = new dataMantenimiento(id, folio,"0",descripcion,fecha,hora,"1","0");
                                 itemList.add(item);
                             }
 

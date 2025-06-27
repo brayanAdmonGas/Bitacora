@@ -105,10 +105,15 @@ public class Evidencias extends AppCompatActivity implements adapterImagen.OnEvi
             rutalista = URL_SERVIDOR + carpeta + "/lista-evidencia.php?id=" + id;
             ruta = URL_SERVIDOR + carpeta + "/agregar-evidencia.php";
             rutadelete = URL_SERVIDOR + carpeta + "/eliminar-evidencia.php";
-        }if(categoria.equals("MantenimientoCorrectivo")){
+        }else if(categoria.equals("MantenimientoCorrectivo")){
             rutalista = URL_SERVIDOR + carpeta + "/lista-evidencia-correctivo.php?id=" + id;
             ruta = URL_SERVIDOR + carpeta + "/agregar-evidencia-correctivo.php";
             rutadelete = URL_SERVIDOR + carpeta + "/eliminar-evidencia-correctivo.php";
+
+        }else if(categoria.equals("MantenimientoPreventivo")){
+            rutalista = URL_SERVIDOR + carpeta + "/lista-evidencia-preventivo.php?id=" + id;
+            ruta = URL_SERVIDOR + carpeta + "/agregar-evidencia-preventivo.php";
+            rutadelete = URL_SERVIDOR + carpeta + "/eliminar-evidencia-preventivo.php";
 
         }
 

@@ -62,7 +62,7 @@ import java.util.Map;
 
 public class MantenimientoCorrectivoCrearEditar extends BaseActivity {
     int idEstacion, IdUsuario, idPuesto, distMax = 0;
-    String idMantenimiento, estado, url, firmaBase64 = "", nombreImagen = "", PFPR = "";
+    String idMantenimiento, estado, url, firmaBase64 = "", nombreImagen = "", PFPR = "", valExterno = "";
     EditText NombreEquipo, DescripcionMantenimiento, DescripcionActividad,Herramienta, PersonaRealizaExterno;
     CheckBox Interno,Externo;
     TextView TxtPersonalExterno;
@@ -211,6 +211,7 @@ public class MantenimientoCorrectivoCrearEditar extends BaseActivity {
                                 LinearGuardar.setVisibility(View.VISIBLE);
                                 limpiarAutoComplete();
 
+                                BtbFirma.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#82F5A5")));
                                 ImageFirma.setVisibility(View.VISIBLE);
                                 if(IDFPR.equals("0")){
                                     Glide.with(getApplicationContext()).load(URL_SERVIDOR + "Mantenimiento/ImagenFirma/" + FPR).into(ImageFirma);
@@ -221,6 +222,7 @@ public class MantenimientoCorrectivoCrearEditar extends BaseActivity {
                                 TxtPersonalExterno.setVisibility(View.VISIBLE);
                                 TxtPersonalExterno.setText(PFPR);
 
+                                valExterno = PFPR;
                                 idSeleccionado = IDFPR;
                                 nombreImagen = FPR;
 
@@ -317,6 +319,7 @@ public class MantenimientoCorrectivoCrearEditar extends BaseActivity {
 
                     BtbFirma.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#82F5A5")));
                     TxtPersonalExterno.setVisibility(View.VISIBLE);
+                    valExterno = PersonaRealizaExterno.getText().toString();
                     TxtPersonalExterno.setText(PersonaRealizaExterno.getText().toString());
                     ImageFirma.setVisibility(View.VISIBLE);
                     ImageFirma.setImageBitmap(firmaBitmap);
@@ -350,15 +353,16 @@ public class MantenimientoCorrectivoCrearEditar extends BaseActivity {
                 personal = PersonaRealizaInterno.getText().toString();
             }else if(Externo.isChecked()){
 
-                if (PersonaRealizaExterno == null || PersonaRealizaExterno.getText().toString().trim().isEmpty()) {
+                if (valExterno == null || valExterno.isEmpty()) {
                     ToastUtils.show(this, "Falta agregar la firma.", ToastUtils.INFO);
                     return;
                 }
-                personal = PersonaRealizaExterno.getText().toString().trim();
+
+                personal = valExterno;
             }
 
         }else if(estado.equals("Editar")){
-            personal =  PFPR;
+            personal =  valExterno;
         }
 
         url = (estado.equals("Nuevo"))?  "Mantenimiento/agregar-mantenimiento-correctivo.php" :  "Mantenimiento/editar-mantenimiento-correctivo.php";

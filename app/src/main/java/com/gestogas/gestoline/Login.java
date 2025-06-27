@@ -215,7 +215,6 @@ public class Login extends BaseActivity {
                     ToastUtils.show(Login.this, "Se produjo un error, revise su conexión a internet", ToastUtils.INFO);
                 }
 
-
                 InputUsuario.setEnabled(true);
                 InputPassword.setEnabled(true);
                 BtnEntrar.setEnabled(true);

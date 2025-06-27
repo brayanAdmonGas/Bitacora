@@ -9,8 +9,9 @@ public class dataMantenimiento {
     public String fecha;
     public String hora;
     public String estado;
+    public String numverificacion;
 
-    public dataMantenimiento(int id, String folio, String idequipo, String descripcion, String fecha, String hora, String estado) {
+    public dataMantenimiento(int id, String folio, String idequipo, String descripcion, String fecha, String hora, String estado, String numverificacion) {
         this.id = id;
         this.folio = folio;
         this.idequipo = idequipo;
@@ -18,6 +19,7 @@ public class dataMantenimiento {
         this.fecha = fecha;
         this.hora = hora;
         this.estado = estado;
+        this.numverificacion = numverificacion;
     }
 
     public int getId() {
@@ -46,6 +48,10 @@ public class dataMantenimiento {
 
     public String getEstado() {
         return estado;
+    }
+
+    public String getNumverificacion() {
+        return numverificacion;
     }
 }
 

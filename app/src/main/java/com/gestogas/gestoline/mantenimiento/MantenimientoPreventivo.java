@@ -1,4 +1,4 @@
-package com.gestogas.gestoline;
+package com.gestogas.gestoline.mantenimiento;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -6,13 +6,17 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,12 +24,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.gestogas.gestoline.adapter.adapterEstacion;
+import com.gestogas.gestoline.Home;
+import com.gestogas.gestoline.R;
+import com.gestogas.gestoline.adapter.adapterMantenimeinto;
 import com.gestogas.gestoline.controllers.AppController;
-import com.gestogas.gestoline.data.dataEstacion;
+import com.gestogas.gestoline.data.dataMantenimiento;
 import com.gestogas.gestoline.utils.Constantes;
 import com.gestogas.gestoline.utils.DialogHelper;
-import com.gestogas.gestoline.utils.ToastUtils;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,20 +40,21 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Estaciones extends BaseActivity {
+public class MantenimientoPreventivo extends AppCompatActivity {
+    private int Idestacion;
 
     private RecyclerView recyclerView;
-    private adapterEstacion adapter;
-    private List<dataEstacion> itemList;
+    private adapterMantenimeinto adapter;
+    private List<dataMantenimiento> itemList;
     private RequestQueue requestQueue;
-    String idgrupo;
-    TextView GrupoNombre;
-
+    String estado;
+    TextView Mensaje;
+    ImageView ImgResultado;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_home_estaciones);
+        setContentView(R.layout.activity_mantenimiento_preventivo);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -57,30 +64,31 @@ public class Estaciones extends BaseActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        idgrupo = AppController.getInstance().GetIdGrupo();
-        String NombreGrupo = AppController.getInstance().GetNombreGrupo();
+        Idestacion = AppController.getInstance().GetIdestacion();
 
-        GrupoNombre = findViewById(R.id.GrupoNombre);
-        GrupoNombre.setText(NombreGrupo);
+        TextView RazonSocial = findViewById(R.id.RazonSocial);
+        RazonSocial.setText(AppController.getInstance().GetRazonSocial());
+
+        estado = getIntent().getStringExtra("estado");
+
+        Mensaje = findViewById(R.id.Mensaje);
+        ImgResultado = findViewById(R.id.ImgResultado);
 
         recyclerView = findViewById(R.id.Recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         itemList = new ArrayList<>();
-        adapter = new adapterEstacion(this,itemList);
+        adapter = new adapterMantenimeinto(this,itemList);
         recyclerView.setAdapter(adapter);
 
         requestQueue = Volley.newRequestQueue(this);
-
-        DialogHelper.showProgressDialog(this);
-        fetchEstacion();
-
+        fetchMantenimiento();
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_search, menu);
+        getMenuInflater().inflate(R.menu.menu_toolbar_search, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
 
         // Usa el SearchView de androidx.appcompat
@@ -103,8 +111,48 @@ public class Estaciones extends BaseActivity {
         return true;
     }
 
-    private void fetchEstacion(){
-        String url = Constantes.URL_SERVIDOR + Constantes.FOLDER_ADMIN + "lista-estaciones.php?idGrupo=" + idgrupo;;
+    public boolean onOptionsItemSelected(MenuItem item){
+        if(item.getItemId() == R.id.action_buscar){
+            mostrarBottomSheetBuscar();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void mostrarBottomSheetBuscar() {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_buscar_mantenimiento, null);
+        bottomSheetDialog.setContentView(view);
+
+        Button opcion1 = view.findViewById(R.id.opcion1);
+        Button opcion2 = view.findViewById(R.id.opcion2);
+
+        opcion1.setOnClickListener(v -> {
+
+            Intent intent = new Intent(getApplicationContext(), MantenimientoPreventivo.class);
+            intent.putExtra("estado", "0");
+            startActivity(intent);
+            finish();
+
+        });
+
+        opcion2.setOnClickListener(v -> {
+
+            Intent intent = new Intent(getApplicationContext(), MantenimientoPreventivo.class);
+            intent.putExtra("estado", "1");
+            startActivity(intent);
+            finish();
+
+        });
+
+        bottomSheetDialog.show();
+    }
+
+    private void fetchMantenimiento() {
+
+        DialogHelper.showProgressDialog(this);
+        String url = Constantes.URL_SERVIDOR + "Mantenimiento/lista-mantenimiento-preventivo-estacion.php?idEstacion=" + Idestacion + "&estado=" + estado;
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
@@ -120,30 +168,28 @@ public class Estaciones extends BaseActivity {
                                 JSONObject jsonObject = response.getJSONObject(i);
 
                                 // Extrae los datos del JSON
-                                int idgas = jsonObject.getInt("IdGas");
-                                String permisocre = jsonObject.getString("PermisoCre");
-                                String razonsocial = jsonObject.getString("RazonSocial");
-                                String direccioncompleta = jsonObject.getString("Direccion");
-                                String productouno = jsonObject.getString("ProductoUno");
-                                String productodos = jsonObject.getString("ProductoDos");
-                                String productotres = jsonObject.getString("ProductoTres");
-                                String logo = jsonObject.getString("Logo");
-                                String latitud = jsonObject.getString("Latitud");
-                                String longitud = jsonObject.getString("Longitud");
-                                String distmax = jsonObject.getString("Distmax");
+                                int id = jsonObject.getInt("id");
+                                String folio = jsonObject.getString("folio");
+                                String idequipo = jsonObject.getString("idequipo");
+                                String descripcion = jsonObject.getString("nombreequipo");
+                                String fecha = jsonObject.getString("fecha");
+                                String hora = jsonObject.getString("hora");
+                                String estado = jsonObject.getString("estado");
+                                String numverificacion = jsonObject.getString("numverificacion");
 
                                 // Crea un objeto Item y lo añade a la lista
-                                dataEstacion item = new dataEstacion(idgas, permisocre, razonsocial, direccioncompleta, productouno, productodos, productotres,
-                                        logo, latitud, longitud, distmax);
+                                dataMantenimiento item = new dataMantenimiento(id, folio,idequipo,descripcion,fecha,hora,estado,numverificacion);
                                 itemList.add(item);
                             }
 
                             // Notifica al adaptador que los datos han cambiado
                             adapter.updateData(itemList);
+                            ocultarError();
                             DialogHelper.hideProgressDialog();
+
                         } catch (JSONException e) {
-                            ToastUtils.show(Estaciones.this, "No se encontro informacion.", ToastUtils.INFO);
                             DialogHelper.hideProgressDialog();
+                            mostrarError();
                         }
                     }
                 },
@@ -151,11 +197,33 @@ public class Estaciones extends BaseActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         DialogHelper.hideProgressDialog();
-                        ToastUtils.show(Estaciones.this, "No se encontro informacion.", ToastUtils.INFO);
+                        mostrarError();
                     }
                 });
 
         requestQueue.add(jsonArrayRequest);
+
+    }
+
+    private void mostrarError() {
+        Mensaje.setVisibility(View.VISIBLE);
+        Mensaje.setText("No se encontró información para mostrar");
+        ImgResultado.setImageResource(R.drawable.icon_sin_informacion);
+        ImgResultado.setVisibility(View.VISIBLE);
+    }
+
+    private void ocultarError() {
+        Mensaje.setVisibility(View.GONE);
+        ImgResultado.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            fetchMantenimiento();
+        }
 
     }
 
@@ -170,6 +238,7 @@ public class Estaciones extends BaseActivity {
         if ((keyCode == KeyEvent.KEYCODE_BACK))
         {
             volverAHome();
+
         }
         return super.onKeyDown(keyCode, event);
     }

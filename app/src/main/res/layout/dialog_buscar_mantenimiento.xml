@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Seleccione una opción:"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/colorAccent"
+        android:layout_marginLeft="10dp"
+        />
+
+    <Button
+        android:id="@+id/opcion1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pendientes"
+        android:textSize="16sp"
+        android:backgroundTint="?attr/colorPrimary"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="10dp"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        android:id="@+id/opcion2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Finalizados"
+        android:textSize="16sp"
+        android:backgroundTint="?attr/colorPrimary"
+        android:textColor="@android:color/white"
+        android:padding="10dp" />
+</LinearLayout>

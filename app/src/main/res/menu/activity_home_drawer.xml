@@ -1,53 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-tools:showIn="navigation_view">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:showIn="navigation_view">
 
-<group android:checkableBehavior="single">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_home"
+            android:title="@string/menu_home"
+            />
 
-<!-- Ítem activo como "My Files" -->
-<item
-android:id="@+id/nav_home"
-android:icon="@drawable/ic_menu_home_2"
-android:title="@string/menu_home"
-android:checked="true" />
+        <item
+            android:id="@+id/nav_tanques"
+            android:icon="@drawable/ic_menu_vistas"
+            android:title="@string/menu_tanques"/>
 
-<item
-android:id="@+id/nav_tanques"
-android:icon="@drawable/ic_tanque"
-android:title="Tanques" />
+        <item
+            android:id="@+id/nav_extintores"
+            android:title="@string/menu_extintores"
+            android:icon="@drawable/ic_menu_vistas"
+            tools:ignore="HardcodedText" />
 
-<item
-android:id="@+id/nav_extintores"
-android:icon="@drawable/ic_extintores"
-android:title="Extintores"
-tools:ignore="HardcodedText" />
+        <item
+            android:id="@+id/nav_estaciones"
+            android:icon="@drawable/ic_menu_vistas"
+            android:title="@string/menu_estaciones"
+            />
 
-<item
-android:id="@+id/nav_estaciones"
-android:icon="@drawable/ic_business_2"
-android:title="Estaciones" />
+        <item
+            android:id="@+id/nav_dispensarios"
+            android:icon="@drawable/ic_menu_vistas"
+            android:title="Dispensarios"
+            />
 
-<item
-android:id="@+id/nav_dispensarios"
-android:icon="@drawable/ic_dispensarios"
-android:title="Dispensarios" />
+        <item
+            android:id="@+id/nav_personal_autorizado"
+            android:icon="@drawable/ic_menu_personal"
+            android:title="Personal Autorizado"
+            />
 
-<item
-android:id="@+id/nav_personal_autorizado"
-android:icon="@drawable/ic_personal_autorizado"
-android:title="Personal Autorizado" />
+        <item
+            android:id="@+id/nav_migbitacora"
+            android:icon="@drawable/ic_menu_vistas"
+            android:title="Mi GBitácora"
+            />
 
-<item
-android:id="@+id/nav_migbitacora"
-android:icon="@drawable/ic_bitacora"
-android:title="Mi GBitácora" />
+        <item
+            android:id="@+id/nav_salir"
+            android:icon="@drawable/ic_menu_salir"
+            android:title="@string/menu_salir"
+            />
 
-<item
-android:id="@+id/nav_salir"
-android:icon="@drawable/ic_logout"
-android:title="@string/menu_salir" />
-
-</group>
+    </group>
 </menu>

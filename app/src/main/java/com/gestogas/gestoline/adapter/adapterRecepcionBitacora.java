@@ -30,6 +30,7 @@ public class adapterRecepcionBitacora extends RecyclerView.Adapter<adapterRecepc
     private final List<dataRecepcionBitacora> searchlList;
 
     public adapterRecepcionBitacora(Context context,List<dataRecepcionBitacora> dataList){
+
         this.context = context;
         this.dataList = new ArrayList<>(dataList);
         this.searchlList = new ArrayList<>(dataList);
