@@ -25,20 +25,18 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:titleTextAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
-            app:navigationIcon="?attr/actionModeCloseDrawable"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="Agregar Personal Autorizado"
             app:titleTextColor="@android:color/white"
-            />
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:titleTextAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+            app:navigationIcon="@drawable/ic_arrow_left_white" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- ScrollView con contenido -->
     <ScrollView
         android:id="@+id/root_home"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        android:padding="16dp"
         app:layout_constraintTop_toBottomOf="@id/appBarLayout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,20 +45,21 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp">
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="2dp"
-                android:backgroundTint="#FFFFFF"
-                android:padding="16dp">
+                android:backgroundTint="#FFFFFF">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <include layout="@layout/mensaje_fuera_rango" />
 
@@ -68,16 +67,18 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp">
+                        android:layout_marginBottom="12dp"
+                        android:hint="Fecha"
+                        app:startIconDrawable="@drawable/ic_calendar"
+                        app:startIconTint="#79747e">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/Fecha"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:focusable="false"
-                            android:hint="Fecha"
-                            android:inputType="time"
-                            android:padding="15dp"
+                            android:inputType="none"
+                            android:padding="10dp"
                             android:textSize="15sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -85,70 +86,73 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp">
+                        android:layout_marginBottom="12dp"
+                        android:hint="Hora"
+                        app:startIconDrawable="@drawable/ic_reloj"
+                        app:startIconTint="#79747e">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/Hora"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:focusable="false"
-                            android:hint="Hora"
-                            android:inputType="time"
-                            android:padding="15dp"
+                            android:inputType="none"
+                            android:padding="10dp"
                             android:textSize="15sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Dispensario Label -->
-                    <TextView
+                    <!-- Dispensario -->
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Dispensario"
-                        android:textColor="#424242"
-                        android:textSize="20sp"
-                        android:fontFamily="sans-serif-light"
-                        android:layout_marginTop="12dp"/>
+                        android:layout_marginBottom="12dp"
+                        android:hint="Dispensario"
+                        app:startIconDrawable="@drawable/ic_dispensarios"
+                        app:startIconTint="#79747e">
 
-                    <!-- Spinner Dispensario -->
-                    <Spinner
-                        android:id="@+id/SpinnerDispensario"
+                        <AutoCompleteTextView
+                            android:id="@+id/SpinnerDispensario"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:textSize="15sp"
+                            android:inputType="none"
+                            android:focusable="false" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Lado -->
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="15sp" />
+                        android:layout_marginBottom="12dp"
+                        android:hint="Lado"
+                        app:startIconDrawable="@drawable/ic_lado"
+                        app:startIconTint="#79747e">
 
-                    <!-- Lado Label -->
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Lado"
-                        android:textColor="#424242"
-                        android:textSize="20sp"
-                        android:fontFamily="sans-serif-light"
-                        android:layout_marginTop="12dp"/>
+                        <AutoCompleteTextView
+                            android:id="@+id/SpinnerLado"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:textSize="15sp"
+                            android:inputType="none"
+                            android:focusable="false" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Spinner Lado -->
-                    <Spinner
-                        android:id="@+id/SpinnerLado"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="15sp" />
-
-                    <!-- Producto Label -->
+                    <!-- Producto -->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Producto"
                         android:textColor="#424242"
                         android:textSize="20sp"
-                        android:fontFamily="sans-serif-light"
-                        android:layout_marginTop="12dp"/>
+                        android:layout_marginBottom="6dp" />
 
-                    <!-- Productos (SwitchCompat) -->
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="12dp"
                         app:cardCornerRadius="12dp"
-                        app:cardElevation="0dp"
                         app:strokeColor="#79747e"
                         app:strokeWidth="1dp"
                         app:cardBackgroundColor="#FFFFFF">
@@ -165,7 +169,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="PRODUCTO 87 OCT"
                                 android:textSize="15sp"
-                                android:padding="10dp" />
+                                android:padding="8dp" />
 
                             <androidx.appcompat.widget.SwitchCompat
                                 android:id="@+id/Producto2"
@@ -173,7 +177,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="PRODUCTO 91 OCT"
                                 android:textSize="15sp"
-                                android:padding="10dp" />
+                                android:padding="8dp" />
 
                             <androidx.appcompat.widget.SwitchCompat
                                 android:id="@+id/Producto3"
@@ -181,7 +185,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="PRODUCTO D"
                                 android:textSize="15sp"
-                                android:padding="10dp" />
+                                android:padding="8dp" />
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
 
@@ -189,48 +193,53 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:hint="Motivo">
+                        android:layout_marginBottom="12dp"
+                        android:hint="Motivo"
+                        app:startIconDrawable="@drawable/ic_business"
+                        app:startIconTint="#79747e">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/TxtMotivo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textMultiLine"
-                            android:padding="15dp"
+                            android:padding="10dp"
                             android:textSize="15sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Responsable Label -->
-                    <TextView
+                    <!-- Responsable -->
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Responsable"
-                        android:textColor="#424242"
-                        android:textSize="20sp"
-                        android:fontFamily="sans-serif-light"
-                        android:layout_marginTop="12dp" />
+                        android:layout_marginBottom="12dp"
+                        android:hint="Responsable"
+                        app:startIconDrawable="@drawable/ic_personal_autorizado"
+                        app:startIconTint="#79747e">
 
-                    <!-- Spinner Responsable -->
-                    <Spinner
-                        android:id="@+id/SpinnerResponsable"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="15sp" />
+                        <AutoCompleteTextView
+                            android:id="@+id/SpinnerResponsable"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:textSize="15sp"
+                            android:inputType="none"
+                            android:focusable="false" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Observaciones -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:hint="Observaciones">
+                        android:layout_marginBottom="16dp"
+                        android:hint="Observaciones"
+                        app:startIconTint="#79747e">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/TxtObservaciones"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textMultiLine"
-                            android:padding="15dp"
+                            android:padding="10dp"
                             android:textSize="15sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -249,7 +258,6 @@
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-
         </LinearLayout>
     </ScrollView>
 
