@@ -12,11 +12,9 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.DatePicker;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.widget.SwitchCompat;
@@ -25,8 +23,6 @@ import androidx.core.content.ContextCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.gestogas.gestoline.BaseActivity;
@@ -34,10 +30,10 @@ import com.gestogas.gestoline.R;
 import com.gestogas.gestoline.controllers.AppController;
 import com.gestogas.gestoline.data.dataDispensarios;
 import com.gestogas.gestoline.data.dataUsuario;
-import com.gestogas.gestoline.utils.DialogHelper;
 import com.gestogas.gestoline.utils.DistanciaUtils;
 import com.gestogas.gestoline.utils.TecladoUtils;
 import com.gestogas.gestoline.utils.ToastUtils;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,13 +51,14 @@ public class ProfecoCrearEditar extends BaseActivity {
     int idEstacion, idPuesto;
     private final Calendar calendar = Calendar.getInstance();
     EditText Fecha, Hora, Motivo, TxtObservaciones;
-    ArrayList<String> lado;
+    AutoCompleteTextView SpinnerDispensario, SpinnerLado, SpinnerResponsable;
+    SwitchCompat Producto1, Producto2, Producto3;
+    LinearLayout layoutFueraRango;
     List<dataDispensarios> listaDispensarios = new ArrayList<>();
     List<dataUsuario> listaResponsable = new ArrayList<>();
-    Spinner SpinnerDispensario, SpinnerLado, SpinnerResponsable;
-    private String ProductoUno, ProductoDos, ProductoTres, ValProducto1 = "", ValProducto2 = "", ValProducto3 = "";
-    SwitchCompat Producto1, Producto2, Producto3;
-    Button BtnGuardar;
+    ArrayList<String> lado = new ArrayList<>();
+    String ProductoUno = "", ProductoDos = "", ProductoTres = "";
+    String ValProducto1 = "", ValProducto2 = "", ValProducto3 = "";
     double latitudeEstacion = 0, longitudeEstacion = 0, latitudeEquipo = 0, longitudeEquipo = 0;
     int distMax = 0;
 
@@ -73,129 +70,127 @@ public class ProfecoCrearEditar extends BaseActivity {
 
         idEstacion = AppController.getInstance().GetIdestacion();
         idPuesto = AppController.getInstance().GetIdPuesto();
-
-        ProductoUno = AppController.getInstance().GetProductoUno();
-        ProductoDos = AppController.getInstance().GetProductoDos();
-        ProductoTres = AppController.getInstance().GetProductoTres();
-
-        // Evitar NullPointerException:
-        if (ProductoUno == null) ProductoUno = "";
-        if (ProductoDos == null) ProductoDos = "";
-        if (ProductoTres == null) ProductoTres = "";
-
+        ProductoUno = String.valueOf(AppController.getInstance().GetProductoUno());
+        ProductoDos = String.valueOf(AppController.getInstance().GetProductoDos());
+        ProductoTres = String.valueOf(AppController.getInstance().GetProductoTres());
         latitudeEquipo = Double.parseDouble(AppController.getInstance().GetLatitudEquipo());
         longitudeEquipo = Double.parseDouble(AppController.getInstance().GetLongitudEquipo());
         distMax = Integer.parseInt(AppController.getInstance().GetDistMax());
         latitudeEstacion = Double.parseDouble(AppController.getInstance().GetLatitud());
         longitudeEstacion = Double.parseDouble(AppController.getInstance().GetLongitud());
 
-        String titulo = getIntent().getStringExtra("titulo");
-
+        // Vistas
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(titulo);
+            getSupportActionBar().setTitle(getIntent().getStringExtra("titulo"));
         }
 
         Fecha = findViewById(R.id.Fecha);
         Hora = findViewById(R.id.Hora);
         SpinnerLado = findViewById(R.id.SpinnerLado);
         SpinnerDispensario = findViewById(R.id.SpinnerDispensario);
+        SpinnerResponsable = findViewById(R.id.SpinnerResponsable);
         Motivo = findViewById(R.id.TxtMotivo);
         TxtObservaciones = findViewById(R.id.TxtObservaciones);
-        SpinnerResponsable = findViewById(R.id.SpinnerResponsable);
         Producto1 = findViewById(R.id.Producto1);
         Producto2 = findViewById(R.id.Producto2);
         Producto3 = findViewById(R.id.Producto3);
-        BtnGuardar = findViewById(R.id.BtnGuardar);
-        LinearLayout layoutFueraRango = findViewById(R.id.layoutFueraRango);
+        layoutFueraRango = findViewById(R.id.layoutFueraRango);
+        findViewById(R.id.BtnGuardar).setOnClickListener(v -> validaProfeco());
 
-        lado = new ArrayList<>();
+        // Lados
         lado.add("Seleccione");
         lado.add("A");
         lado.add("B");
-        SpinnerLado.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, lado));
+        SpinnerLado.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, lado));
+        // === DIÁLOGO DISPENSARIO ===
+        SpinnerDispensario.setKeyListener(null);
+        SpinnerDispensario.setOnClickListener(v -> {
+            List<String> dispensariosNombres = new ArrayList<>();
+            for (dataDispensarios d : listaDispensarios) {
+                dispensariosNombres.add(d.toString());
+            }
+            int selectedIndex = dispensariosNombres.indexOf(SpinnerDispensario.getText().toString());
 
-        if (ProductoUno.isEmpty()) {
-            Producto1.setVisibility(View.GONE);
-        }
+            new MaterialAlertDialogBuilder(this)
+                    .setTitle("Selecciona dispensario")
+                    .setSingleChoiceItems(dispensariosNombres.toArray(new String[0]), selectedIndex, (dialog, which) -> {
+                        SpinnerDispensario.setText(dispensariosNombres.get(which));
+                        dialog.dismiss();
+                    })
+                    .show();
+        });
 
-        if (ProductoDos.isEmpty()) {
-            Producto2.setVisibility(View.GONE);
-        }
+// === DIÁLOGO LADO ===
+        SpinnerLado.setKeyListener(null);
+        SpinnerLado.setOnClickListener(v -> {
+            int selectedIndex = lado.indexOf(SpinnerLado.getText().toString());
 
-        if (ProductoTres.isEmpty()) {
-            Producto3.setVisibility(View.GONE);
-        }
+            new MaterialAlertDialogBuilder(this)
+                    .setTitle("Selecciona lado")
+                    .setSingleChoiceItems(lado.toArray(new String[0]), selectedIndex, (dialog, which) -> {
+                        SpinnerLado.setText(lado.get(which));
+                        dialog.dismiss();
+                    })
+                    .show();
+        });
 
+// === DIÁLOGO RESPONSABLE ===
+        SpinnerResponsable.setKeyListener(null);
+        SpinnerResponsable.setOnClickListener(v -> {
+            List<String> responsablesNombres = new ArrayList<>();
+            for (dataUsuario u : listaResponsable) {
+                responsablesNombres.add(u.toString());
+            }
+            int selectedIndex = responsablesNombres.indexOf(SpinnerResponsable.getText().toString());
+
+            new MaterialAlertDialogBuilder(this)
+                    .setTitle("Selecciona responsable")
+                    .setSingleChoiceItems(responsablesNombres.toArray(new String[0]), selectedIndex, (dialog, which) -> {
+                        SpinnerResponsable.setText(responsablesNombres.get(which));
+                        dialog.dismiss();
+                    })
+                    .show();
+        });
+
+        // Productos visibles solo si están definidos
+        Producto1.setVisibility(ProductoUno.isEmpty() ? View.GONE : View.VISIBLE);
+        Producto2.setVisibility(ProductoDos.isEmpty() ? View.GONE : View.VISIBLE);
+        Producto3.setVisibility(ProductoTres.isEmpty() ? View.GONE : View.VISIBLE);
         Producto1.setText(ProductoUno);
         Producto2.setText(ProductoDos);
         Producto3.setText(ProductoTres);
 
+        // Calendario
+        Fecha.setOnClickListener(v -> new DatePickerDialog(this, (view, year, month, day) -> {
+            calendar.set(year, month, day);
+            Fecha.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.getTime()));
+        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show());
+
+        // Hora
+        Hora.setOnClickListener(v -> {
+            Calendar now = Calendar.getInstance();
+            new TimePickerDialog(this, (view, hour, minute) -> {
+                String amPm = hour < 12 ? "a.m." : "p.m.";
+                int hourFormat = hour % 12 == 0 ? 12 : hour % 12;
+                Hora.setText(String.format(Locale.getDefault(), "%02d:%02d %s", hourFormat, minute, amPm));
+            }, now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), false).show();
+        });
+
+        // Validar distancia
+        if (DistanciaUtils.validarDistancia(this, idPuesto, latitudeEquipo, longitudeEquipo, latitudeEstacion, longitudeEstacion, distMax)) {
+            findViewById(R.id.BtnGuardar).setEnabled(true);
+            layoutFueraRango.setVisibility(View.GONE);
+        } else {
+            findViewById(R.id.BtnGuardar).setEnabled(false);
+            layoutFueraRango.setVisibility(View.VISIBLE);
+            findViewById(R.id.BtnGuardar).setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.color_inactivo));
+        }
+
         showProgressDialog(this);
         ListaDispensario();
         ListaResponsable();
-
-        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, month);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                fechaCalendario();
-            }
-        };
-
-        Fecha.setOnClickListener(v -> new DatePickerDialog(this, dateSetListener,
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)).show());
-
-        Hora.setOnClickListener(v -> ObtenerHora());
-
-        boolean validarDistancia = DistanciaUtils.validarDistancia(
-                getApplicationContext(),
-                idPuesto,
-                latitudeEquipo,
-                longitudeEquipo,
-                latitudeEstacion,
-                longitudeEstacion,
-                distMax
-        );
-
-        if (validarDistancia) {
-            BtnGuardar.setEnabled(true);
-            layoutFueraRango.setVisibility(View.GONE);
-        } else {
-            BtnGuardar.setEnabled(false);
-            layoutFueraRango.setVisibility(View.VISIBLE);
-            BtnGuardar.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.color_inactivo));
-        }
-
-        BtnGuardar.setOnClickListener(v -> validaProfeco());
-    }
-
-    private void fechaCalendario() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        Fecha.setText(sdf.format(calendar.getTime()));
-    }
-
-    private void ObtenerHora() {
-        Calendar calendar = Calendar.getInstance();
-        int hora = calendar.get(Calendar.HOUR_OF_DAY);
-        int minuto = calendar.get(Calendar.MINUTE);
-
-        TimePickerDialog picker = new TimePickerDialog(this, (view, hourOfDay, minuteSelected) -> {
-            String horaFormateada = String.format("%02d", hourOfDay % 12 == 0 ? 12 : hourOfDay % 12);
-            String minutoFormateado = String.format("%02d", minuteSelected);
-            String amPm = (hourOfDay < 12) ? "a.m." : "p.m.";
-            String horaFinal = horaFormateada + ":" + minutoFormateado + " " + amPm;
-
-            Hora.setText(horaFinal);
-        }, hora, minuto, false);
-
-        picker.show();
     }
 
     private void ListaDispensario() {
@@ -203,42 +198,23 @@ public class ProfecoCrearEditar extends BaseActivity {
         listaDispensarios.add(new dataDispensarios("0", "", "", "", "", "", "", "", "", "", ""));
         String url = URL_SERVIDOR + "Dispensario/lista-dispensario-estacion.php?idEstacion=" + idEstacion;
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                response -> {
-                    try {
-                        JSONArray jsonArray = new JSONArray(response);
-
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject obj = jsonArray.getJSONObject(i);
-                            String id = obj.getString("id");
-                            String nodispensario = obj.getString("nodispensario");
-                            String marca = obj.getString("marca");
-                            // Ignorando otros campos no usados
-                            listaDispensarios.add(new dataDispensarios(id, nodispensario, marca, "", "", "", "", "", "", "", ""));
-                        }
-
-                        ArrayAdapter<dataDispensarios> adapter = new ArrayAdapter<>(
-                                ProfecoCrearEditar.this,
-                                android.R.layout.simple_spinner_dropdown_item,
-                                listaDispensarios
-                        );
-
-                        SpinnerDispensario.setAdapter(adapter);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        hideProgressDialog();
-                    }
-                },
-                error -> {
-                    error.printStackTrace();
-                    hideProgressDialog();
+        Volley.newRequestQueue(this).add(new StringRequest(Request.Method.GET, url, response -> {
+            try {
+                JSONArray array = new JSONArray(response);
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject obj = array.getJSONObject(i);
+                    listaDispensarios.add(new dataDispensarios(obj.getString("id"), obj.getString("nodispensario"), obj.getString("marca"), "", "", "", "", "", "", "", ""));
                 }
-        );
-
-        requestQueue.add(stringRequest);
+                SpinnerDispensario.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listaDispensarios));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } finally {
+                hideProgressDialog();
+            }
+        }, error -> {
+            error.printStackTrace();
+            hideProgressDialog();
+        }));
     }
 
     private void ListaResponsable() {
@@ -246,177 +222,144 @@ public class ProfecoCrearEditar extends BaseActivity {
         listaResponsable.add(new dataUsuario(0, ""));
         String url = URL_SERVIDOR + "Dispensario/lista-dispensario-responsable.php?idEstacion=" + idEstacion;
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                response -> {
-                    try {
-                        JSONArray jsonArray = new JSONArray(response);
-
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject obj = jsonArray.getJSONObject(i);
-                            String id = obj.getString("id");
-                            String nombre = obj.getString("nombre");
-
-                            listaResponsable.add(new dataUsuario(Integer.parseInt(id), nombre));
-                        }
-
-                        ArrayAdapter<dataUsuario> adapter = new ArrayAdapter<>(
-                                ProfecoCrearEditar.this,
-                                android.R.layout.simple_spinner_dropdown_item,
-                                listaResponsable
-                        );
-
-                        SpinnerResponsable.setAdapter(adapter);
-
-                        hideProgressDialog();
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        hideProgressDialog();
-                    }
-                },
-                error -> {
-                    error.printStackTrace();
-                    hideProgressDialog();
+        Volley.newRequestQueue(this).add(new StringRequest(Request.Method.GET, url, response -> {
+            try {
+                JSONArray array = new JSONArray(response);
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject obj = array.getJSONObject(i);
+                    listaResponsable.add(new dataUsuario(obj.getInt("id"), obj.getString("nombre")));
                 }
-        );
-
-        requestQueue.add(stringRequest);
+                SpinnerResponsable.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listaResponsable));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } finally {
+                hideProgressDialog();
+            }
+        }, error -> {
+            error.printStackTrace();
+            hideProgressDialog();
+        }));
     }
 
     private void validaProfeco() {
         if (Fecha.getText().toString().isEmpty()) {
             Fecha.setError("Seleccione una fecha");
             ToastUtils.show(this, "Seleccione una fecha", ToastUtils.INFO);
-        } else if (Hora.getText().toString().isEmpty()) {
+            return;
+        }
+        if (Hora.getText().toString().isEmpty()) {
             Hora.setError("Seleccione una hora");
             ToastUtils.show(this, "Seleccione una hora", ToastUtils.INFO);
-        } else {
-
-            dataDispensarios dispensarioSeleccionado = (dataDispensarios) SpinnerDispensario.getSelectedItem();
-            if (dispensarioSeleccionado.getId().equals("0")) {
-                ToastUtils.show(this, "Seleccione un dispensario", ToastUtils.INFO);
-                return;
-            }
-
-            String seleccion = SpinnerLado.getSelectedItem().toString();
-            if (seleccion.equals("Seleccione")) {
-                ToastUtils.show(this, "Seleccione un lado", ToastUtils.INFO);
-                return;
-            }
-
-            dataUsuario responsableSeleccionado = (dataUsuario) SpinnerResponsable.getSelectedItem();
-            if (responsableSeleccionado.getId() == 0) {
-                ToastUtils.show(this, "Seleccione un responsable", ToastUtils.INFO);
-                return;
-            }
-
-            AgregarProfeco();
+            return;
         }
+
+        // Validar dispensario
+        String textoDispensario = SpinnerDispensario.getText().toString();
+        ArrayAdapter<dataDispensarios> adapterDisp = (ArrayAdapter<dataDispensarios>) SpinnerDispensario.getAdapter();
+        dataDispensarios dispensario = null;
+        for (int i = 0; i < adapterDisp.getCount(); i++) {
+            dataDispensarios item = adapterDisp.getItem(i);
+            if (item != null && item.toString().equals(textoDispensario)) {
+                dispensario = item;
+                break;
+            }
+        }
+
+        if (dispensario == null || dispensario.getId().equals("0")) {
+            ToastUtils.show(this, "Seleccione un dispensario válido", ToastUtils.INFO);
+            return;
+        }
+
+        // Validar lado
+        if (SpinnerLado.getText().toString().equals("Seleccione")) {
+            ToastUtils.show(this, "Seleccione un lado", ToastUtils.INFO);
+            return;
+        }
+
+        // Validar responsable
+        String textoResponsable = SpinnerResponsable.getText().toString();
+        ArrayAdapter<dataUsuario> adapterResp = (ArrayAdapter<dataUsuario>) SpinnerResponsable.getAdapter();
+        dataUsuario responsable = null;
+        for (int i = 0; i < adapterResp.getCount(); i++) {
+            dataUsuario item = adapterResp.getItem(i);
+            if (item != null && item.toString().equals(textoResponsable)) {
+                responsable = item;
+                break;
+            }
+        }
+
+        if (responsable == null || responsable.getId() == 0) {
+            ToastUtils.show(this, "Seleccione un responsable válido", ToastUtils.INFO);
+            return;
+        }
+
+        AgregarProfeco(dispensario, responsable);
     }
 
-    private void AgregarProfeco() {
 
+    private void AgregarProfeco(dataDispensarios dispensario, dataUsuario responsable) {
         showProgressDialog(this);
-        String fecha = Fecha.getText().toString();
-        String hora = Hora.getText().toString();
-        String lado = SpinnerLado.getSelectedItem().toString();
+        ValProducto1 = Producto1.isChecked() ? ProductoUno : "";
+        ValProducto2 = Producto2.isChecked() ? ProductoDos : "";
+        ValProducto3 = Producto3.isChecked() ? ProductoTres : "";
 
-        dataDispensarios dispensarioSeleccionado = (dataDispensarios) SpinnerDispensario.getSelectedItem();
-        String idDispensario = dispensarioSeleccionado.getId();
-
-        String motivo = Motivo.getText().toString();
-        String observaciones = TxtObservaciones.getText().toString();
-
-        dataUsuario responsableSeleccionado = (dataUsuario) SpinnerResponsable.getSelectedItem();
-        String idResponsable = String.valueOf(responsableSeleccionado.getId());
-
-        // Reiniciar para evitar que valores queden de operaciones anteriores
-        ValProducto1 = "";
-        ValProducto2 = "";
-        ValProducto3 = "";
-
-        if (Producto1.isChecked()) {
-            ValProducto1 = ProductoUno;
-        }
-        if (Producto2.isChecked()) {
-            ValProducto2 = ProductoDos;
-        }
-        if (Producto3.isChecked()) {
-            ValProducto3 = ProductoTres;
-        }
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SERVIDOR + "Dispensario/agregar-bitacora-dispensario.php",
+        StringRequest request = new StringRequest(Request.Method.POST,
+                URL_SERVIDOR + "Dispensario/agregar-bitacora-dispensario.php",
                 response -> {
                     try {
-
-                        JSONArray jsonarray = new JSONArray(response);
-                        int estado = 0;
-                        String mensaje = "";
-
-                        if (jsonarray.length() > 0) {
-                            JSONObject obj = jsonarray.getJSONObject(0);
-                            estado = obj.getInt("estado");
-                            mensaje = obj.getString("mensaje");
-                        }
+                        JSONObject obj = new JSONArray(response).getJSONObject(0);
+                        int estado = obj.getInt("estado");
+                        String mensaje = obj.getString("mensaje");
 
                         if (estado == 1) {
-                            ToastUtils.showAndThen(ProfecoCrearEditar.this, mensaje, ToastUtils.SUCCESS, () -> {
+                            ToastUtils.showAndThen(this, mensaje, ToastUtils.SUCCESS, () -> {
                                 setResult(RESULT_OK);
                                 finish();
                             });
-
                         } else {
-                            hideProgressDialog();
-                            ToastUtils.show(ProfecoCrearEditar.this, mensaje, ToastUtils.ERROR);
+                            ToastUtils.show(this, mensaje, ToastUtils.ERROR);
                         }
-
                     } catch (Exception e) {
-                        Log.d("respuesta", e.toString());
-                        ToastUtils.show(ProfecoCrearEditar.this, e.toString(), ToastUtils.INFO);
+                        Log.e("ERROR", e.toString());
+                        ToastUtils.show(this, "Error: " + e.getMessage(), ToastUtils.INFO);
+                    } finally {
                         hideProgressDialog();
                     }
                 },
                 error -> {
-                    ToastUtils.show(ProfecoCrearEditar.this, error.toString(), ToastUtils.INFO);
+                    ToastUtils.show(this, error.toString(), ToastUtils.ERROR);
                     hideProgressDialog();
                 }) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("idEstacion", String.valueOf(idEstacion));
-                params.put("fecha", fecha);
-                params.put("hora", hora);
-                params.put("dispensario", idDispensario);
-                params.put("lado", lado);
+                params.put("fecha", Fecha.getText().toString());
+                params.put("hora", Hora.getText().toString());
+                params.put("dispensario", dispensario.getId());
+                params.put("lado", SpinnerLado.getText().toString());
                 params.put("producto1", ValProducto1);
                 params.put("producto2", ValProducto2);
                 params.put("producto3", ValProducto3);
-                params.put("motivo", motivo);
-                params.put("responsable", idResponsable);
-                params.put("observaciones", observaciones);
-
+                params.put("motivo", Motivo.getText().toString());
+                params.put("responsable", String.valueOf(responsable.getId()));
+                params.put("observaciones", TxtObservaciones.getText().toString());
                 return params;
-
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
 
+        Volley.newRequestQueue(this).add(request);
     }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        TecladoUtils.handleTouchEvent(this, event);
-        return super.dispatchTouchEvent(event);
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        TecladoUtils.handleTouchEvent(this, ev);
+        return super.dispatchTouchEvent(ev);
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            finish();
-        }
+        if (keyCode == KeyEvent.KEYCODE_BACK) finish();
         return super.onKeyDown(keyCode, event);
     }
 
