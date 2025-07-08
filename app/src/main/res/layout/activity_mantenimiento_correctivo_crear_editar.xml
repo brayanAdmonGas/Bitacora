@@ -53,7 +53,7 @@
       <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="10dp"
         android:backgroundTint="@android:color/white"
         app:cardCornerRadius="12dp"
         app:cardElevation="0dp">
@@ -71,12 +71,12 @@
             android:text="Nombre del equipo o área donde se detecta la anomalía:"
             android:textColor="#757575"
             android:textSize="14sp"
-            android:layout_marginBottom="6dp" />
+            android:layout_marginBottom="2dp" />
 
           <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="0dp"
             android:hint="Nombre del equipo"
             app:boxCornerRadiusBottomEnd="12dp"
             app:boxCornerRadiusBottomStart="12dp"
@@ -104,13 +104,13 @@
             android:text="Descripción del hallazgo que requiere mantenimiento:"
             android:textColor="#757575"
             android:textSize="14sp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="6dp" />
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="2dp" />
 
           <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="0dp"
             android:hint="Descrcipcion del hallazgo"
             app:boxCornerRadiusBottomEnd="12dp"
             app:boxCornerRadiusBottomStart="12dp"
@@ -138,13 +138,13 @@
             android:text="Descripción de las actividades de mantenimiento:"
             android:textColor="#757575"
             android:textSize="14sp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="6dp" />
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="2dp" />
 
           <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="0dp"
             android:hint="Descripcion de la actividad"
             app:boxCornerRadiusBottomEnd="12dp"
             app:boxCornerRadiusBottomStart="12dp"
@@ -172,13 +172,13 @@
             android:text="Herramienta utilizada para el mantenimiento:"
             android:textColor="#757575"
             android:textSize="14sp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="6dp" />
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="2dp" />
 
           <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="0dp"
             android:hint="Herramienta utilizada"
             app:boxCornerRadiusBottomEnd="12dp"
             app:boxCornerRadiusBottomStart="12dp"
@@ -205,7 +205,7 @@
       <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="10dp"
         android:backgroundTint="@android:color/white"
         app:cardCornerRadius="12dp"
         app:cardElevation="0dp">
