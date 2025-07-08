@@ -252,22 +252,50 @@ public class ProfecoCrearEditar extends BaseActivity {
             ToastUtils.show(this, "Seleccione una hora", ToastUtils.INFO);
             return;
         }
-        dataDispensarios dispensario = (dataDispensarios) SpinnerDispensario.getAdapter().getItem(SpinnerDispensario.getListSelection());
+
+        // Validar dispensario
+        String textoDispensario = SpinnerDispensario.getText().toString();
+        ArrayAdapter<dataDispensarios> adapterDisp = (ArrayAdapter<dataDispensarios>) SpinnerDispensario.getAdapter();
+        dataDispensarios dispensario = null;
+        for (int i = 0; i < adapterDisp.getCount(); i++) {
+            dataDispensarios item = adapterDisp.getItem(i);
+            if (item != null && item.toString().equals(textoDispensario)) {
+                dispensario = item;
+                break;
+            }
+        }
+
         if (dispensario == null || dispensario.getId().equals("0")) {
-            ToastUtils.show(this, "Seleccione un dispensario", ToastUtils.INFO);
+            ToastUtils.show(this, "Seleccione un dispensario válido", ToastUtils.INFO);
             return;
         }
+
+        // Validar lado
         if (SpinnerLado.getText().toString().equals("Seleccione")) {
             ToastUtils.show(this, "Seleccione un lado", ToastUtils.INFO);
             return;
         }
-        dataUsuario responsable = (dataUsuario) SpinnerResponsable.getAdapter().getItem(SpinnerResponsable.getListSelection());
+
+        // Validar responsable
+        String textoResponsable = SpinnerResponsable.getText().toString();
+        ArrayAdapter<dataUsuario> adapterResp = (ArrayAdapter<dataUsuario>) SpinnerResponsable.getAdapter();
+        dataUsuario responsable = null;
+        for (int i = 0; i < adapterResp.getCount(); i++) {
+            dataUsuario item = adapterResp.getItem(i);
+            if (item != null && item.toString().equals(textoResponsable)) {
+                responsable = item;
+                break;
+            }
+        }
+
         if (responsable == null || responsable.getId() == 0) {
-            ToastUtils.show(this, "Seleccione un responsable", ToastUtils.INFO);
+            ToastUtils.show(this, "Seleccione un responsable válido", ToastUtils.INFO);
             return;
         }
+
         AgregarProfeco(dispensario, responsable);
     }
+
 
     private void AgregarProfeco(dataDispensarios dispensario, dataUsuario responsable) {
         showProgressDialog(this);
