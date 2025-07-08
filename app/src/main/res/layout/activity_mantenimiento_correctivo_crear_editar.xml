@@ -1,295 +1,366 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="@color/white"
-    tools:context=".mantenimiento.MantenimientoCorrectivoCrearEditar">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/main"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="#F5F5F5"
+  android:fitsSystemWindows="true"
+  tools:context=".mantenimiento.MantenimientoCorrectivoCrearEditar">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+  <!-- AppBar -->
+  <com.google.android.material.appbar.AppBarLayout
+    android:id="@+id/appBarLayout"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorPrimary"
+    android:elevation="4dp"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent">
+
+    <androidx.appcompat.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      app:title="Crear Mantenimiento"
+      app:titleTextColor="@android:color/white"
+      app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+      app:titleTextAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+      app:navigationIcon="@drawable/ic_arrow_left_white" />
+  </com.google.android.material.appbar.AppBarLayout>
+
+  <!-- Scrollable content -->
+  <ScrollView
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:fillViewport="true"
+    app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:padding="16dp">
+
+      <include layout="@layout/mensaje_fuera_rango" />
+
+      <!-- CARD ÚNICA: Datos de mantenimiento -->
+      <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        tools:ignore="MissingConstraints">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:navigationIcon="?attr/actionModeCloseDrawable"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:titleTextAppearance="@style/ToolbarTitleStyle" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="65dp"
-        android:padding="10dp">
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@android:color/white"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp">
 
         <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:padding="16dp">
+
+          <!-- Nombre del equipo -->
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre del equipo o área donde se detecta la anomalía:"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            android:layout_marginBottom="6dp" />
+
+          <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_marginTop="2dp"
+            android:hint="Nombre del equipo"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:startIconDrawable="@drawable/ic_business"
+            app:startIconTint="#79747e"
+            android:textColorHint="#A6A6A6">
 
-            <include layout="@layout/mensaje_fuera_rango" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Nombre del equipo o área donde se detecta la anomalía "
-                android:gravity="center"
-                android:textSize="18sp"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/NombreEquipo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Nombre del equipo o área donde se detecta la anomalía "
-                    android:inputType="textMultiLine"
-                    android:padding="15dp"
-                    android:textSize="15sp"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Descripción breve del hallazgo detectado que requiere mantenimiento "
-                android:gravity="center"
-                android:textSize="18sp"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/DescripcionMantenimiento"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Descripción breve del hallazgo detectado que requiere mantenimiento"
-                    android:inputType="textMultiLine"
-                    android:padding="15dp"
-                    android:textSize="15sp"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Descripción de las actividades de mantenimiento "
-                android:gravity="center"
-                android:textSize="18sp"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/DescripcionActividad"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Descripción de las actividades de mantenimiento"
-                    android:inputType="textMultiLine"
-                    android:padding="15dp"
-                    android:textSize="15sp"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Herramienta utilizada para el mantenimiento"
-                android:gravity="center"
-                android:textSize="18sp"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/Herramienta"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Herramienta utilizada para el mantenimiento"
-                    android:inputType="textMultiLine"
-                    android:padding="15dp"
-                    android:textSize="15sp"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Personal que realiza el servicio:"
-                android:textColor="#9C9C9C"
-                android:paddingTop="3dp"/>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp">
+            <AutoCompleteTextView
+              android:id="@+id/NombreEquipo"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:focusable="false"
+              android:inputType="none"
+              android:padding="15dp"
+              android:textSize="15sp" />
+          </com.google.android.material.textfield.TextInputLayout>
 
 
-                <CheckBox
-                    android:id="@+id/Interno"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_marginRight="10dp"
-                    android:onClick="CheckboxClicked"
-                    android:paddingRight="5dp"
-                    android:text="Interno"
-                    android:textSize="15sp"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/Externo"
-                    app:layout_constraintEnd_toStartOf="@+id/Externo" />
+          <!-- Descripción del hallazgo -->
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Descripción del hallazgo que requiere mantenimiento:"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="6dp" />
 
-                <CheckBox
-                    android:id="@+id/Externo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:onClick="CheckboxClicked"
-                    android:text="Externo"
-                    android:textSize="15sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+          <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:hint="Descrcipcion del hallazgo"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:startIconDrawable="@drawable/ic_bitacora"
+            app:startIconTint="#79747e"
+            android:textColorHint="#A6A6A6">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                android:layout_marginTop="10dp"/>
-
-            <LinearLayout
-                android:id="@+id/LinearRealizaInterno"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp"
-                android:visibility="gone">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:hint="Trabajador que realiza la actividad"
-                    app:endIconMode="clear_text">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/PersonaRealizaInterno"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:padding="15dp"
-                        android:textSize="15sp" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/LinearRealizaExterno"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <Button
-                    android:id="@+id/BtbFirma"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:backgroundTint="#F58282"
-                    android:text="Trabajador que realiza la actividad"/>
+            <AutoCompleteTextView
+              android:id="@+id/DescripcionMantenimiento"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:focusable="false"
+              android:inputType="none"
+              android:padding="15dp"
+              android:textSize="15sp" />
+          </com.google.android.material.textfield.TextInputLayout>
 
 
-            </LinearLayout>
+          <!-- Descripción de actividades -->
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Descripción de las actividades de mantenimiento:"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="6dp" />
 
-            <TextView
-                android:id="@+id/TxtPersonalExterno"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:textSize="22dp"
-                android:layout_marginTop="10dp"
-                android:visibility="gone"
-                android:textAlignment="center"
-                />
-            <ImageView
-                android:id="@+id/ImageFirma"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="10dp"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                />
+          <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:hint="Descripcion de la actividad"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:startIconDrawable="@drawable/ic_detalle_lista"
+            app:startIconTint="#79747e"
+            android:textColorHint="#A6A6A6">
 
-            <LinearLayout
-                android:id="@+id/LinearGuardar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="?android:attr/listDivider"
-                    android:layout_marginTop="10dp"
-                    />
+            <AutoCompleteTextView
+              android:id="@+id/DescripcionActividad"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:focusable="false"
+              android:inputType="none"
+              android:padding="15dp"
+              android:textSize="15sp" />
+          </com.google.android.material.textfield.TextInputLayout>
 
-                <Button
-                    android:id="@+id/BtnGuardar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:backgroundTint="#5d84c3"
-                    android:clickable="false"
-                    android:text="Guardar Mantenimiento"
-                    android:textColor="#ffffff"
-                    android:textSize="18sp"
-                    android:padding="15dp"/>
 
-            </LinearLayout>
+          <!-- Herramienta -->
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Herramienta utilizada para el mantenimiento:"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="6dp" />
+
+          <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:hint="Herramienta utilizada"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:startIconDrawable="@drawable/ic_mantenimiento"
+            app:startIconTint="#79747e"
+            android:textColorHint="#A6A6A6">
+
+            <AutoCompleteTextView
+              android:id="@+id/Herramienta"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:focusable="false"
+              android:inputType="none"
+              android:padding="15dp"
+              android:textSize="15sp" />
+          </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
+      </com.google.android.material.card.MaterialCardView>
 
-    </ScrollView>
+      <!-- CARD 1: Selección del personal que realiza el servicio -->
+      <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@android:color/white"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp">
 
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:padding="16dp">
+
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Personal que realiza el servicio:"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp" />
+
+          <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+              android:id="@+id/Interno"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Interno"
+              android:onClick="CheckboxClicked"
+              android:textSize="15sp"
+              android:textColor="#424242" />
+
+            <Space
+              android:layout_width="16dp"
+              android:layout_height="wrap_content" />
+
+            <CheckBox
+              android:id="@+id/Externo"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Externo"
+              android:onClick="CheckboxClicked"
+              android:textSize="15sp"
+              android:textColor="#424242" />
+          </LinearLayout>
+        </LinearLayout>
+      </com.google.android.material.card.MaterialCardView>
+
+      <!-- CARD 2: Formulario Interno -->
+      <com.google.android.material.card.MaterialCardView
+        android:id="@+id/CardInterno"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@android:color/white"
+        android:visibility="gone"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+          android:id="@+id/LinearRealizaInterno"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:padding="16dp">
+
+          <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/LayoutPersonaInterna"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Trabajador que realiza la actividad"
+            app:startIconDrawable="@drawable/ic_user"
+            app:startIconTint="#757575"
+            app:endIconMode="clear_text"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp">
+
+            <AutoCompleteTextView
+              android:id="@+id/PersonaRealizaInterno"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:inputType="text"
+              android:padding="15dp"
+              android:textSize="15sp" />
+          </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        </LinearLayout>
+      </com.google.android.material.card.MaterialCardView>
+
+      <!-- CARD 3: Formulario Externo -->
+      <com.google.android.material.card.MaterialCardView
+        android:id="@+id/CardExterno"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@android:color/white"
+        android:visibility="gone"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+          android:id="@+id/LinearRealizaExterno"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:padding="16dp">
+
+          <com.google.android.material.button.MaterialButton
+            android:id="@+id/BtbFirma"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Trabajador que realiza la actividad"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#F58282"
+            app:cornerRadius="16dp" />
+
+          <TextView
+            android:id="@+id/TxtPersonalExterno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:textSize="22dp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            android:textAlignment="center" />
+
+          <ImageView
+            android:id="@+id/ImageFirma"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="10dp"
+            android:scaleType="fitCenter"
+            android:visibility="gone" />
+        </LinearLayout>
+      </com.google.android.material.card.MaterialCardView>
+
+      <com.google.android.material.button.MaterialButton
+        android:id="@+id/BtnGuardar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Guardar Mantenimiento"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:backgroundTint="#5d84c3"
+        android:visibility="gone"
+        app:cornerRadius="16dp" />
+
+    </LinearLayout>
+  </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
