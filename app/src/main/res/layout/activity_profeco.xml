@@ -5,75 +5,130 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E6E6E6"
+    android:background="#F5F5F5"
     android:fitsSystemWindows="true"
     tools:context=".profeco.Profeco">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <!-- AppBar -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarLayout"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="Bitácora PROFECO"
+            app:titleTextColor="@android:color/white"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:titleTextAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+            app:navigationIcon="@drawable/ic_arrow_left_white" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Card con Razón Social -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/carDispensariosES"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="12dp"
+        app:cardCornerRadius="16dp"
+        app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            android:orientation="horizontal">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:navigationIcon="?attr/actionModeCloseDrawable"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:title="Bitácora PROFECO"
-                app:titleTextAppearance="@style/ToolbarTitleStyle"/>
+            <!-- Línea de color lateral -->
+            <View
+                android:layout_width="4.5dp"
+                android:layout_height="match_parent"
+                android:background="#27843d" />
 
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <FrameLayout
-            android:id="@+id/frameLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:padding="7dp">
-
-            <TextView
-                android:id="@+id/RazonSocial"
-                android:layout_width="match_parent"
+            <!-- Contenido de Razón Social -->
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="7pt"
-                android:fontFamily="sans-serif-light"
-                android:textColor="@color/colorPrimaryDark"
-                />
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:gravity="center_vertical">
 
-        </FrameLayout>
+                <!-- Icono -->
+                <ImageView
+                    android:id="@+id/iconEstacion"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:padding="10dp"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/ic_business" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/Recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="10dp"
-            android:paddingTop="10dp"
-            android:paddingRight="10dp">
+                <!-- Textos -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-        </androidx.recyclerview.widget.RecyclerView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Razón Social:"
+                        android:textColor="#757575"
+                        android:textSize="14sp" />
 
-    </LinearLayout>
+                    <TextView
+                        android:id="@+id/RazonSocial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Aquí va el nombre de la estación"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#212121" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
+    <!-- RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/Recyclerview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/carDispensariosES"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Imagen Resultado -->
     <ImageView
         android:id="@+id/ImgResultado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        android:src="@drawable/informacion"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Mensaje vacío -->
     <TextView
         android:id="@+id/Mensaje"
         android:layout_width="wrap_content"
@@ -84,11 +139,12 @@
         android:textColor="#818181"
         android:textSize="20sp"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/ImgResultado"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ImgResultado"
-        android:layout_marginTop="10dp"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Botón Flotante -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/NuevoRegistro"
         android:layout_width="wrap_content"
@@ -96,13 +152,12 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:contentDescription="@string/descripcion_imagen"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/icon_agregar_32"
         android:tintMode="src_in"
         app:backgroundTint="@color/colorPrimary"
         app:tint="@color/white"
         app:elevation="0dp"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

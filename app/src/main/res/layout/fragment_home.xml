@@ -8,29 +8,36 @@ android:layout_height="match_parent"
 tools:context=".ui.home.HomeFragment"
 android:background="#F5F5F5">
 
-<!-- Fondo colorPrimary (superior) -->
+<ScrollView
+android:id="@+id/root_home"
+android:layout_width="match_parent"
+android:layout_height="0dp"
+android:fillViewport="true"
+app:layout_constraintTop_toTopOf="parent"
+app:layout_constraintBottom_toBottomOf="parent">
+
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical">
+
+<!-- Fondo colorPrimary -->
 <View
 android:id="@+id/backgroundTop"
-android:layout_width="0dp"
-android:layout_height="185dp"
-android:background="@color/colorPrimary"
-app:layout_constraintTop_toTopOf="parent"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintEnd_toEndOf="parent" />
+android:layout_width="match_parent"
+android:layout_height="170dp"
+android:background="@color/colorPrimary" />
 
+<!-- Card de información superpuesta -->
 <androidx.cardview.widget.CardView
 android:id="@+id/dataCard"
-android:layout_width="0dp"
+android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:layout_marginStart="16dp"
 android:layout_marginEnd="16dp"
-android:layout_marginTop="16dp"
+android:layout_marginTop="-145dp"
 app:cardCornerRadius="12dp"
-app:cardElevation="1dp"
-app:layout_constraintTop_toTopOf="parent"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintEnd_toEndOf="parent">
-
+app:cardElevation="1dp">
 
 <LinearLayout
 android:layout_width="match_parent"
@@ -38,34 +45,34 @@ android:layout_height="wrap_content"
 android:orientation="vertical"
 android:padding="16dp">
 
-<!-- Imagen superior -->
 <ImageView
 android:id="@+id/ImgLogo"
 android:layout_width="match_parent"
-android:layout_height="120dp"
+android:layout_height="wrap_content"
+android:maxHeight="120dp"
+android:scaleType="fitCenter"
 android:src="@drawable/logo_gbitacora" />
 
-<!-- Permiso CRE -->
 <TextView
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
+android:layout_marginTop="8dp"
 android:text="Permiso CRE:"
-android:textSize="14sp"
 android:textColor="@android:color/darker_gray"
-android:layout_marginTop="8dp" />
+android:textSize="14sp" />
 
 <LinearLayout
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
-android:orientation="horizontal"
+android:layout_marginTop="4dp"
 android:gravity="center_vertical"
-android:layout_marginTop="4dp">
+android:orientation="horizontal">
 
 <ImageView
 android:layout_width="20dp"
 android:layout_height="20dp"
-android:src="@drawable/ic_dispensarios"
-android:layout_marginEnd="12dp" />
+android:layout_marginEnd="12dp"
+android:src="@drawable/ic_dispensarios" />
 
 <TextView
 android:id="@+id/PermisoCre"
@@ -76,27 +83,26 @@ android:textColor="@android:color/black"
 android:textSize="16sp" />
 </LinearLayout>
 
-<!-- Razón Social -->
 <TextView
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
+android:layout_marginTop="12dp"
 android:text="Razón Social:"
-android:textSize="14sp"
 android:textColor="@android:color/darker_gray"
-android:layout_marginTop="12dp" />
+android:textSize="14sp" />
 
 <LinearLayout
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
-android:orientation="horizontal"
+android:layout_marginTop="4dp"
 android:gravity="center_vertical"
-android:layout_marginTop="4dp">
+android:orientation="horizontal">
 
 <ImageView
 android:layout_width="20dp"
 android:layout_height="20dp"
-android:src="@drawable/ic_business"
-android:layout_marginEnd="12dp" />
+android:layout_marginEnd="12dp"
+android:src="@drawable/ic_business" />
 
 <TextView
 android:id="@+id/RazonSocial"
@@ -108,27 +114,26 @@ android:textSize="16sp"
 android:textStyle="bold" />
 </LinearLayout>
 
-<!-- Dirección -->
 <TextView
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
+android:layout_marginTop="12dp"
 android:text="Dirección:"
-android:textSize="14sp"
 android:textColor="@android:color/darker_gray"
-android:layout_marginTop="12dp" />
+android:textSize="14sp" />
 
 <LinearLayout
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
-android:orientation="horizontal"
+android:layout_marginTop="4dp"
 android:gravity="center_vertical"
-android:layout_marginTop="4dp">
+android:orientation="horizontal">
 
 <ImageView
 android:layout_width="20dp"
 android:layout_height="20dp"
-android:src="@drawable/ic_ubicacion"
-android:layout_marginEnd="12dp" />
+android:layout_marginEnd="12dp"
+android:src="@drawable/ic_ubicacion" />
 
 <TextView
 android:id="@+id/Direccion"
@@ -137,32 +142,23 @@ android:layout_height="wrap_content"
 android:text="CAMINO LOS BERROS - VALLE DE BRAVO KM. 12.600 RANCHERIA DE SAN MARTIN OBISPO, DONATO GUERRA"
 android:textColor="@android:color/black"
 android:textSize="16sp" />
-
 </LinearLayout>
+
 <Button
 android:id="@+id/btnActualizar"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
-android:text="Actualizar"
-android:visibility="gone"
-android:textSize="16sp"
-android:textColor="@android:color/white"
+android:layout_marginTop="12dp"
 android:backgroundTint="@android:color/holo_blue_dark"
 android:gravity="center"
-android:layout_marginTop="12dp" />
-
+android:text="Actualizar"
+android:textColor="@android:color/white"
+android:textSize="16sp"
+android:visibility="gone" />
 </LinearLayout>
 </androidx.cardview.widget.CardView>
 
-<!-- Resto del contenido: ScrollView con GridLayout -->
-<ScrollView
-android:id="@+id/root_home"
-android:layout_width="match_parent"
-android:layout_height="0dp"
-android:fillViewport="true"
-app:layout_constraintTop_toBottomOf="@id/dataCard"
-app:layout_constraintBottom_toBottomOf="parent">
-
+<!-- Grid de opciones -->
 <GridLayout
 android:id="@+id/gridCards"
 android:layout_width="match_parent"
@@ -172,12 +168,13 @@ android:columnCount="1"
 android:orientation="horizontal"
 android:alignmentMode="alignMargins"
 android:rowOrderPreserved="false"
-android:layout_marginTop="0dp">
+android:layout_marginTop="8dp">
 
 <!-- Card 1 -->
 <androidx.cardview.widget.CardView
 android:layout_width="0dp"
-android:layout_height="195dp"
+android:layout_height="wrap_content"
+android:maxHeight="200dp"
 android:layout_margin="8dp"
 app:cardCornerRadius="12dp"
 app:cardElevation="1dp"
@@ -206,14 +203,14 @@ android:layout_marginTop="16dp"
 android:textColor="@android:color/black"
 android:textSize="16sp"
 android:gravity="center" />
-
 </LinearLayout>
 </androidx.cardview.widget.CardView>
 
 <!-- Card 2 -->
 <androidx.cardview.widget.CardView
 android:layout_width="0dp"
-android:layout_height="195dp"
+android:layout_height="wrap_content"
+android:maxHeight="200dp"
 android:layout_margin="8dp"
 app:cardCornerRadius="12dp"
 app:cardElevation="1dp"
@@ -248,7 +245,8 @@ android:gravity="center" />
 <!-- Card 3 -->
 <androidx.cardview.widget.CardView
 android:layout_width="0dp"
-android:layout_height="195dp"
+android:layout_height="wrap_content"
+android:maxHeight="200dp"
 android:layout_margin="8dp"
 app:cardCornerRadius="12dp"
 app:cardElevation="1dp"
@@ -284,7 +282,8 @@ android:gravity="center" />
 <androidx.cardview.widget.CardView
 android:id="@+id/Profeco"
 android:layout_width="0dp"
-android:layout_height="195dp"
+android:layout_height="wrap_content"
+android:maxHeight="200dp"
 android:layout_margin="8dp"
 app:cardCornerRadius="12dp"
 app:cardElevation="1dp"
@@ -317,5 +316,6 @@ android:gravity="center" />
 </androidx.cardview.widget.CardView>
 
 </GridLayout>
+</LinearLayout>
 </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,8 @@ package com.gestogas.gestoline;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.android.volley.Request;
@@ -17,6 +19,7 @@ import com.gestogas.gestoline.utils.DialogHelper;
 import com.gestogas.gestoline.utils.DistanciaUtils;
 import com.gestogas.gestoline.utils.TecladoUtils;
 import com.gestogas.gestoline.utils.ToastUtils;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.activity.EdgeToEdge;
@@ -113,11 +116,22 @@ public class DispensarioCrearEditar extends BaseActivity {
         if (validarDistancia) {
             BtnGuardar.setEnabled(true);
             layoutFueraRango.setVisibility(View.GONE);
+
         } else {
             BtnGuardar.setEnabled(false);
-            layoutFueraRango.setVisibility(VISIBLE);
-            BtnGuardar.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.color_inactivo));
+            layoutFueraRango.setVisibility(View.VISIBLE);
+
+            // Cambiar a gris (#757575)
+            int gris = Color.parseColor("#F5F5F5");
+            int gris2 = Color.parseColor("#757575");
+
+            MaterialButton boton = (MaterialButton) BtnGuardar; // casteo explícito
+            BtnGuardar.setTextColor(gris2);
+            boton.setStrokeColor(ColorStateList.valueOf(gris)); // cambia borde
+            BtnGuardar.setBackgroundTintList(ColorStateList.valueOf(gris)); // opcional si quieres también fondo gris
         }
+
+
 
         BtnGuardar.setOnClickListener(view -> {
             validarDispensario();

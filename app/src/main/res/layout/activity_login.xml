@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:id="@+id/main"
@@ -18,7 +19,7 @@ android:layout_height="wrap_content"
 android:visibility="gone"
 app:layout_constraintTop_toBottomOf="@id/cardView"
 app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintEnd_toEndOf="parent"/>
+app:layout_constraintEnd_toEndOf="parent" />
 
 <androidx.cardview.widget.CardView
 android:id="@+id/cardView"
@@ -32,18 +33,25 @@ app:layout_constraintBottom_toBottomOf="parent"
 app:layout_constraintStart_toStartOf="parent"
 app:layout_constraintEnd_toEndOf="parent">
 
+<ScrollView
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:fillViewport="true">
+
 <LinearLayout
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
-android:gravity="center_horizontal"
 android:orientation="vertical"
+android:gravity="center_horizontal"
 android:padding="24dp">
 
 <ImageView
-android:layout_width="285dp"
-android:layout_height="102dp"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
 android:layout_marginBottom="24dp"
+android:adjustViewBounds="true"
 android:contentDescription="@string/descripcion_imagen"
+android:maxHeight="150dp"
 android:scaleType="fitCenter"
 android:src="@drawable/logo_gbitacora" />
 
@@ -69,7 +77,6 @@ android:textColorHint="#888888"
 android:textSize="16sp" />
 </com.google.android.material.textfield.TextInputLayout>
 
-
 <com.google.android.material.textfield.TextInputLayout
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
@@ -79,12 +86,12 @@ app:boxCornerRadiusBottomEnd="12dp"
 app:boxCornerRadiusBottomStart="12dp"
 app:boxCornerRadiusTopEnd="12dp"
 app:boxCornerRadiusTopStart="12dp"
-app:startIconDrawable="@drawable/ic_password"
-app:startIconTint="?attr/colorControlNormal"
 app:boxStrokeColor="#DDDDDD"
 app:boxStrokeWidth="1dp"
 app:passwordToggleEnabled="true"
-app:passwordToggleTint="#888888">
+app:passwordToggleTint="#888888"
+app:startIconDrawable="@drawable/ic_password"
+app:startIconTint="?attr/colorControlNormal">
 
 <com.google.android.material.textfield.TextInputEditText
 android:id="@+id/InputPassword"
@@ -102,17 +109,14 @@ android:id="@+id/BtnEntrar"
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:layout_marginTop="12dp"
+android:backgroundTint="@color/colorPrimary"
+android:letterSpacing="0.2"
 android:text="@string/login_entrar"
 android:textColor="@android:color/white"
 android:textSize="16sp"
-android:insetTop="10dp"
-android:insetBottom="10dp"
-android:letterSpacing="0.2"
-android:fontFamily="sans-serif-medium"
-android:backgroundTint="@color/colorPrimary"
-app:iconGravity="textStart" />
-
+app:cornerRadius="16dp" />
 
 </LinearLayout>
+</ScrollView>
 </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

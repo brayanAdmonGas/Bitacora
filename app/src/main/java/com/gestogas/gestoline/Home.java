@@ -125,11 +125,15 @@ public class Home extends BaseActivity {
 
         GridLayout gridLayout = findViewById(R.id.gridCards);
         int orientation = getResources().getConfiguration().orientation;
+        int screenLayout = getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
+
+        boolean isTablet = screenLayout == Configuration.SCREENLAYOUT_SIZE_LARGE
+                || screenLayout == Configuration.SCREENLAYOUT_SIZE_XLARGE;
 
         if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            gridLayout.setColumnCount(4); // 4 columnas en horizontal
+            gridLayout.setColumnCount(isTablet ? 4 : 2); // Tablet: 4 columnas, Celular: 2 columnas
         } else {
-            gridLayout.setColumnCount(2); // 1 columna en vertical
+            gridLayout.setColumnCount(isTablet ? 2 : 1); // Tablet: 2 columnas, Celular: 1 columna
         }
 
 

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 import com.gestogas.gestoline.utils.Constantes;
 
 public class AppController extends Application {
@@ -16,6 +18,7 @@ public class AppController extends Application {
     public void onCreate(){
         super.onCreate();
         mInstance = this;
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
 
     public static synchronized AppController getInstance() {

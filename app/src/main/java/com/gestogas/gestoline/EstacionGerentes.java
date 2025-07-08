@@ -111,7 +111,7 @@ public class EstacionGerentes extends BaseActivity {
                             Mensaje.setVisibility(View.VISIBLE);
                             Mensaje.setText("No se encontró información para mostrar");
                             DialogHelper.hideProgressDialog();
-                            ImgResultado.setImageResource(R.drawable.icon_sin_informacion);
+                            ImgResultado.setImageResource(R.drawable.informacion);
                             ImgResultado.setVisibility(View.VISIBLE);
                         }
                     }
@@ -122,7 +122,7 @@ public class EstacionGerentes extends BaseActivity {
                         DialogHelper.hideProgressDialog();
                         Mensaje.setVisibility(View.VISIBLE);
                         Mensaje.setText("No se encontró información para mostrar");
-                        ImgResultado.setImageResource(R.drawable.icon_sin_informacion);
+                        ImgResultado.setImageResource(R.drawable.informacion);
                         ImgResultado.setVisibility(View.VISIBLE);
                     }
                 });

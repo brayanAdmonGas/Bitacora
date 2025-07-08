@@ -67,6 +67,7 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.android.gms:play-services-auth:21.3.0")
+    implementation("com.google.android.flexbox:flexbox:3.0.0")
     implementation(libs.glide)
     implementation (libs.play.services.location)
     implementation (libs.material)

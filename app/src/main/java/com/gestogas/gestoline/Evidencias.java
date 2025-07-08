@@ -204,7 +204,7 @@ public class Evidencias extends AppCompatActivity implements adapterImagen.OnEvi
     private void mostrarError() {
         Mensaje.setVisibility(View.VISIBLE);
         Mensaje.setText("No se encontró información para mostrar");
-        ImgResultado.setImageResource(R.drawable.icon_sin_informacion);
+        ImgResultado.setImageResource(R.drawable.informacion);
         ImgResultado.setVisibility(View.VISIBLE);
     }
 
@@ -233,7 +233,7 @@ public class Evidencias extends AppCompatActivity implements adapterImagen.OnEvi
     private void showImagePickerDialog() {
         String[] options = {"Cámara", "Galería"};
         new AlertDialog.Builder(this)
-                .setTitle("Seleccionar imagen desde")
+                .setTitle("Seleccionar imagen desde...")
                 .setItems(options, (dialog, which) -> {
                     if (which == 0) {
                         checkCameraPermissionAndOpenCamera(); // Cámara

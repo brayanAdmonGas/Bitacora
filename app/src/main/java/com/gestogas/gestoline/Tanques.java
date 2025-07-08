@@ -92,7 +92,7 @@ public class Tanques extends BaseActivity {
                 home.putExtra("notanque","");
                 home.putExtra("capacidad","");
                 home.putExtra("producto","");
-                home.putExtra("titulo","Crear Tanque");
+                home.putExtra("titulo","Agregar Tanque");
                 home.putExtra("tituloboton","GUARDAR TANQUE");
                 startActivityForResult(home, 1);
             }
@@ -171,7 +171,7 @@ public class Tanques extends BaseActivity {
     private void mostrarError() {
         Mensaje.setVisibility(View.VISIBLE);
         Mensaje.setText("No se encontró información para mostrar");
-        ImgResultado.setImageResource(R.drawable.icon_sin_informacion);
+        ImgResultado.setImageResource(R.drawable.informacion);
         ImgResultado.setVisibility(View.VISIBLE);
     }
 

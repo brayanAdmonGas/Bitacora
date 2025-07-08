@@ -17,8 +17,12 @@ import com.gestogas.gestoline.ExtintorCrearEditar;
 import com.gestogas.gestoline.R;
 import com.gestogas.gestoline.data.dataExtintores;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class adapterExtintores extends RecyclerView.Adapter<adapterExtintores.ItemViewHolder>{
 
@@ -84,10 +88,17 @@ public class adapterExtintores extends RecyclerView.Adapter<adapterExtintores.It
 
         holder.txv_noextintor.setText(noextintor);
         holder.txv_ubicacion.setText(ubicacion);
-        holder.txv_fecharecarga.setText(fecharecarga);
         holder.txv_tipoExtintor.setText(tipoextintor);
         holder.txv_pesokg.setText(peso);
-
+        try {
+            SimpleDateFormat formatoOriginal = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            SimpleDateFormat formatoNuevo = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es", "MX"));
+            Date fecha = formatoOriginal.parse(fecharecarga);
+            String fechaFormateada = formatoNuevo.format(fecha);
+            holder.txv_fecharecarga.setText(fechaFormateada);
+        } catch (ParseException e) {
+            holder.txv_fecharecarga.setText(fecharecarga); // Por si la conversión falla
+        }
         holder.ItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

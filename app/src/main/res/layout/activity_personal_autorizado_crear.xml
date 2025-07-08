@@ -1,105 +1,233 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".PersonalAutorizadoCrear">
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/main"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="#F5F5F5"
+android:fitsSystemWindows="true"
+tools:context=".PersonalAutorizado">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+<!-- AppBar -->
+<com.google.android.material.appbar.AppBarLayout
+android:id="@+id/appBarLayout"
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+android:background="?attr/colorPrimary"
+android:elevation="4dp"
+app:layout_constraintTop_toTopOf="parent"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintEnd_toEndOf="parent">
+
+<androidx.appcompat.widget.Toolbar
+android:id="@+id/toolbar"
+android:layout_width="match_parent"
+android:layout_height="?attr/actionBarSize"
+app:title="Agregar Personal Autorizado"
+app:titleTextColor="@android:color/white"
+app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+app:titleTextAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+app:navigationIcon="@drawable/ic_arrow_left_white" />
+</com.google.android.material.appbar.AppBarLayout>
+
+<!-- Scrollable content -->
+<ScrollView
+android:id="@+id/root_home"
+android:layout_width="0dp"
+android:layout_height="0dp"
+android:fillViewport="true"
+app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+app:layout_constraintBottom_toBottomOf="parent"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintEnd_toEndOf="parent">
+
+<!-- Content inside ScrollView must have a layout_width="match_parent" -->
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:padding="16dp">
+
+
+<com.google.android.material.card.MaterialCardView
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+app:cardCornerRadius="16dp"
+app:cardElevation="0dp"
+android:backgroundTint="#FFFFFF">
+
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:padding="16dp">
+
+<include layout="@layout/mensaje_fuera_rango" />
+
+<TextView
+android:id="@+id/txtCategoria"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:textSize="22sp"
+android:text="Recepción y descarga"
+android:layout_marginBottom="6dp"
+android:visibility="gone"
+/>
+
+
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Nombre completo del personal:"
+android:textColor="#757575"
+android:textSize="14sp" />
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        tools:ignore="MissingConstraints">
+        android:layout_marginTop="2dp"
+        android:hint="Selecciona el personal..."
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:startIconDrawable="@drawable/ic_user"
+        app:startIconTint="#79747e"
+        android:textColorHint="#A6A6A6">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:navigationIcon="?attr/actionModeCloseDrawable"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="Agregar Personal Autorizado"
-            app:titleTextAppearance="@style/ToolbarTitleStyle"
-            />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="65dp"
-        android:padding="10dp">
-
-        <LinearLayout
+        <AutoCompleteTextView
+            android:id="@+id/NombrePersonal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:focusable="false"
+            android:inputType="none"
+            android:padding="15dp"
+            android:textSize="15sp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <include layout="@layout/mensaje_fuera_rango" />
 
-            <TextView
-                android:id="@+id/txtCategoria"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:textSize="12pt"
-                android:visibility="gone"
-                />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                app:endIconMode="dropdown_menu">
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_marginTop="16dp"
+android:text="Autorización que tendra el personal:"
+android:textColor="#757575"
+android:textSize="14sp" />
 
-                <AutoCompleteTextView
-                    android:id="@+id/NombrePersonal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Personal"
-                    android:inputType="none"
-                    android:padding="15dp"
-                    android:textSize="15sp"
-                    android:focusable="false"
-                    />
+<!-- PRIMERA CARD -->
+<com.google.android.material.card.MaterialCardView
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_marginTop="8dp"
+app:cardCornerRadius="12dp"
+app:strokeColor="#79747e"
+app:strokeWidth="1dp"
+app:cardElevation="0dp"
+app:cardBackgroundColor="#FFFFFF"
+>
 
-            </com.google.android.material.textfield.TextInputLayout>
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:gravity="center_vertical"
+android:orientation="horizontal"
+android:padding="12dp">
 
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/RecepcionDescarga"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Recepción y Descarga"
-                android:fontFamily="sans-serif-light"
-                android:textSize="11pt"
-                android:visibility="gone"/>
+<!-- Icono de usuario -->
+<ImageView
+android:layout_width="24dp"
+android:layout_height="24dp"
+android:layout_marginEnd="12dp"
+android:src="@drawable/ic_recepcion_descarga"
+android:tint="#79747e" />
 
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/Mantenimiento"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Mantenimiento"
-                android:fontFamily="sans-serif-light"
-                android:textSize="11pt"
-                android:visibility="gone"/>
+<!-- Texto -->
+<TextView
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+android:layout_weight="1"
+android:fontFamily="sans-serif"
+android:text="Recepción y Descarga"
+android:textColor="#424242"
+android:textSize="15sp" />
 
-            <Button
-                android:id="@+id/BtnGuardar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="#5d84c3"
-                android:clickable="false"
-                android:text="Guardar tanque"
-                android:textColor="#ffffff"
-                android:textSize="16sp"
-                android:padding="15dp"/>
+<!-- Switch -->
+<androidx.appcompat.widget.SwitchCompat
+android:id="@+id/RecepcionDescarga"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:checked="false" />
+</LinearLayout>
+</com.google.android.material.card.MaterialCardView>
 
-        </LinearLayout>
-    </ScrollView>
+
+<!-- PRIMERA CARD -->
+<com.google.android.material.card.MaterialCardView
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_marginTop="12dp"
+app:cardCornerRadius="12dp"
+app:strokeColor="#79747e"
+app:strokeWidth="1dp"
+app:cardElevation="0dp"
+app:cardBackgroundColor="#FFFFFF"
+>
+
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:gravity="center_vertical"
+android:padding="12dp">
+
+<!-- Icono de usuario -->
+
+<!-- Texto -->
+
+<ImageView
+android:layout_width="24dp"
+android:layout_height="24dp"
+android:layout_marginEnd="12dp"
+android:src="@drawable/ic_mantenimiento"
+android:tint="#79747e" />
+
+<TextView
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+android:layout_weight="1"
+android:text="Mantenimiento"
+android:textSize="15sp"
+android:textColor="#424242"
+android:fontFamily="sans-serif" />
+
+<!-- Switch -->
+<androidx.appcompat.widget.SwitchCompat
+android:id="@+id/Mantenimiento"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:checked="false"/>
+</LinearLayout>
+</com.google.android.material.card.MaterialCardView>
+
+<com.google.android.material.button.MaterialButton
+android:id="@+id/BtnGuardar"
+style="@style/Widget.Material3.Button.OutlinedButton"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_marginTop="12dp"
+android:clickable="false"
+android:text="Guardar autorización"
+android:textAllCaps="false"
+android:textColor="?attr/colorPrimary"
+app:strokeColor="?attr/colorPrimary"
+app:cornerRadius="16dp"
+app:strokeWidth="1.5dp" />
+</LinearLayout>
+</com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>
+</ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

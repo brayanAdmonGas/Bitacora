@@ -2,12 +2,15 @@ package com.gestogas.gestoline;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +18,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -174,7 +178,7 @@ public class PersonalAutorizado extends BaseActivity {
     private void mostrarError() {
         Mensaje.setVisibility(View.VISIBLE);
         Mensaje.setText("No se encontró información para mostrar");
-        ImgResultado.setImageResource(R.drawable.icon_sin_informacion);
+        ImgResultado.setImageResource(R.drawable.informacion);
         ImgResultado.setVisibility(View.VISIBLE);
     }
 
@@ -191,6 +195,25 @@ public class PersonalAutorizado extends BaseActivity {
         // Usa el SearchView de androidx.appcompat
         SearchView searchView = (SearchView) searchItem.getActionView();
 
+        // Personalizar texto del SearchView
+        EditText searchEditText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+        searchEditText.setTextColor(Color.WHITE);            // Color del texto ingresado
+        searchEditText.setHintTextColor(Color.LTGRAY);       // Color del hint
+
+        // Personalizar ícono de lupa
+        ImageView searchIcon = searchView.findViewById(androidx.appcompat.R.id.search_mag_icon);
+        if (searchIcon != null) {
+            searchIcon.setColorFilter(Color.WHITE);
+        }
+
+        // Personalizar ícono de cerrar (x)
+        ImageView closeIcon = searchView.findViewById(androidx.appcompat.R.id.search_close_btn);
+        if (closeIcon != null) {
+            closeIcon.setColorFilter(Color.WHITE);
+        }
+
+
+        // Listener de búsqueda
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -208,6 +231,7 @@ public class PersonalAutorizado extends BaseActivity {
         return true;
     }
 
+
     public boolean onOptionsItemSelected(MenuItem item){
         if(item.getItemId() == R.id.action_buscar){
             mostrarBottomSheetBuscar();
@@ -222,22 +246,28 @@ public class PersonalAutorizado extends BaseActivity {
         View view = getLayoutInflater().inflate(R.layout.dialog_buscar_personal_autorizado, null);
         bottomSheetDialog.setContentView(view);
 
+        // Mostrar primero el BottomSheetDialog
+        bottomSheetDialog.show();
+
+        // Luego de mostrar, forzar el ancho completo
+        View bottomSheet = bottomSheetDialog.getDelegate().findViewById(com.google.android.material.R.id.design_bottom_sheet);
+        if (bottomSheet != null) {
+            bottomSheet.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
+            bottomSheet.setLayoutParams(bottomSheet.getLayoutParams()); // 👈 importante para aplicar el cambio
+        }
+
+        // Configura acciones de botones
         Button opcion1 = view.findViewById(R.id.opcion1);
         Button opcion2 = view.findViewById(R.id.opcion2);
 
-        opcion1.setOnClickListener(v -> {
-            bottomSheetDialog.show();
-            irPersonalAutorizado("RDP");
-        });
-
-        opcion2.setOnClickListener(v -> {
-            bottomSheetDialog.show();
-            irPersonalAutorizado("MPC");
-
-        });
+        opcion1.setOnClickListener(v -> irPersonalAutorizado("RDP"));
+        opcion2.setOnClickListener(v -> irPersonalAutorizado("MPC"));
     }
 
-       private void irPersonalAutorizado(String categoria){
+
+
+
+    private void irPersonalAutorizado(String categoria){
 
         Intent intent = new Intent(getApplicationContext(), PersonalAutorizado.class);
         intent.putExtra("categoria", categoria);

@@ -1,5 +1,7 @@
 package com.gestogas.gestoline;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.android.volley.Request;
@@ -15,6 +17,8 @@ import com.gestogas.gestoline.utils.DialogHelper;
 import com.gestogas.gestoline.utils.DistanciaUtils;
 import com.gestogas.gestoline.utils.TecladoUtils;
 import com.gestogas.gestoline.utils.ToastUtils;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import androidx.activity.EdgeToEdge;
 
@@ -106,14 +110,19 @@ public class TanqueCrearEditar extends BaseActivity {
          }
 
          String[] opciones = opcionesList.toArray(new String[0]);
-        // Adaptador para las opciones
-         ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                 this,
-                 android.R.layout.simple_dropdown_item_1line,
-                 opciones
-         );
 
-         producto.setAdapter(adapter);
+         producto.setOnClickListener(v -> {
+             int selectedIndex = opcionesList.indexOf(producto.getText().toString());
+
+             new MaterialAlertDialogBuilder(TanqueCrearEditar.this)
+                     .setTitle("Selecciona el producto")
+                     .setSingleChoiceItems(opcionesList.toArray(new String[0]), selectedIndex, (dialog, which) -> {
+                         producto.setText(opcionesList.get(which));
+                         dialog.dismiss();
+                     })
+                     .show();
+         });
+
 
          BtnGuardar.setOnClickListener(view -> {
              validaTanque();
@@ -135,7 +144,16 @@ public class TanqueCrearEditar extends BaseActivity {
          } else {
              BtnGuardar.setEnabled(false);
              layoutFueraRango.setVisibility(View.VISIBLE);
-             BtnGuardar.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.color_inactivo));
+
+             // Cambiar a gris (#757575)
+             int gris = Color.parseColor("#F5F5F5");
+             int gris2 = Color.parseColor("#757575");
+
+             MaterialButton boton = (MaterialButton) BtnGuardar; // casteo explícito
+             BtnGuardar.setTextColor(gris2);
+             boton.setStrokeColor(ColorStateList.valueOf(gris)); // cambia borde
+             BtnGuardar.setBackgroundTintList(ColorStateList.valueOf(gris));
+
          }
 
 

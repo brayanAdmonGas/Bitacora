@@ -2,14 +2,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_buscar"
-        android:icon="@drawable/ic_search_white"
+        android:icon="@drawable/ic_detalle_lista"
         android:title="Buscar"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_search"
         android:title="Personal"
-        android:icon="@drawable/icon_group_search"
+        android:icon="@drawable/ic_buscador_lista"
         app:showAsAction="always|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView" />
 

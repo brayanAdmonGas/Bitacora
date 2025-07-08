@@ -138,8 +138,6 @@ public class RecepcionBitacoraDetalle extends AppCompatActivity implements adapt
         Merma = findViewById(R.id.Merma);
 
         TxtObservaciones = findViewById(R.id.TxtObservaciones);
-        FrameLayoutC = findViewById(R.id.FrameLayoutC);
-        FrameLayoutO = findViewById(R.id.FrameLayoutO);
         FrameLayoutFPR = findViewById(R.id.FrameLayoutFPR);
         FrameLayoutFPS = findViewById(R.id.FrameLayoutFPS);
         ImagePR = findViewById(R.id.ImagePR);

@@ -1,6 +1,8 @@
 package com.gestogas.gestoline;
 
 import android.app.DatePickerDialog;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.android.volley.Request;
@@ -10,12 +12,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.gestogas.gestoline.controllers.AppController;
-import com.gestogas.gestoline.recepcion.RecepcionBitacoraCrearEditar;
 import com.gestogas.gestoline.utils.Constantes;
 import com.gestogas.gestoline.utils.DialogHelper;
 import com.gestogas.gestoline.utils.DistanciaUtils;
 import com.gestogas.gestoline.utils.TecladoUtils;
 import com.gestogas.gestoline.utils.ToastUtils;
+import com.google.android.material.button.MaterialButton;
 
 import androidx.activity.EdgeToEdge;
 
@@ -28,7 +30,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -112,7 +113,15 @@ public class ExtintorCrearEditar extends BaseActivity {
         } else {
             BtnGuardar.setEnabled(false);
             layoutFueraRango.setVisibility(View.VISIBLE);
-            BtnGuardar.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.color_inactivo));
+            // Cambiar a gris (#757575)
+            int gris = Color.parseColor("#F5F5F5");
+            int gris2 = Color.parseColor("#757575");
+
+            MaterialButton boton = (MaterialButton) BtnGuardar; // casteo explícito
+            BtnGuardar.setTextColor(gris2);
+            boton.setStrokeColor(ColorStateList.valueOf(gris)); // cambia borde
+            BtnGuardar.setBackgroundTintList(ColorStateList.valueOf(gris)); // opcional si quieres también fondo gris
+
         }
 
         // Crear el listener para el DatePicker

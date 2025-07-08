@@ -1,6 +1,8 @@
 package com.gestogas.gestoline;
 
 import android.annotation.SuppressLint;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -10,6 +12,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.google.android.material.button.MaterialButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +34,7 @@ import com.gestogas.gestoline.utils.DialogHelper;
 import com.gestogas.gestoline.utils.DistanciaUtils;
 import com.gestogas.gestoline.utils.TecladoUtils;
 import com.gestogas.gestoline.utils.ToastUtils;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -122,40 +126,58 @@ public class PersonalAutorizadoCrear extends AppCompatActivity {
         if (validarDistancia) {
             BtnGuardar.setEnabled(true);
             layoutFueraRango.setVisibility(View.GONE);
+
         } else {
             BtnGuardar.setEnabled(false);
             layoutFueraRango.setVisibility(View.VISIBLE);
-            BtnGuardar.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.color_inactivo));
+
+            // Cambiar a gris (#757575)
+            int gris = Color.parseColor("#F5F5F5");
+            int gris2 = Color.parseColor("#757575");
+
+            MaterialButton boton = (MaterialButton) BtnGuardar; // casteo explícito
+            BtnGuardar.setTextColor(gris2);
+            boton.setStrokeColor(ColorStateList.valueOf(gris)); // cambia borde
+            BtnGuardar.setBackgroundTintList(ColorStateList.valueOf(gris)); // opcional si quieres también fondo gris
         }
 
     }
 
     private void PersonalAutorizado() {
-
         DialogHelper.showProgressDialog(this);
+
         String url = Constantes.URL_SERVIDOR + "Autorizacion/autorizacion-recepcion.php?idEstacion=" + idEstacion + "&Categoria=" + categoria;
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
-                    @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
-                            // Limpia la lista actual
+                            opcionesList.clear(); // Asegúrate de limpiar la lista si ya tenía datos
+                            nombreIdMap.clear();  // Limpia el mapa si aplica
 
-                            // Recorre el JSONArray
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject jsonObject = response.getJSONObject(i);
 
                                 String idUsuario = jsonObject.getString("IdUsuario");
                                 String nombreUsuario = jsonObject.getString("NombreUsuario");
+
                                 opcionesList.add(nombreUsuario);
                                 nombreIdMap.put(nombreUsuario, idUsuario);
-
                             }
 
-                            adapter = new ArrayAdapter<>(PersonalAutorizadoCrear.this, android.R.layout.simple_dropdown_item_1line, opcionesList);
-                            NombrePersonal.setAdapter(adapter);
+                            // Habilitar el click del AutoCompleteTextView para mostrar el diálogo
+                            NombrePersonal.setOnClickListener(v -> {
+                                int selectedIndex = opcionesList.indexOf(NombrePersonal.getText().toString());
+
+                                new MaterialAlertDialogBuilder(PersonalAutorizadoCrear.this)
+                                        .setTitle("Selecciona el personal")
+                                        .setSingleChoiceItems(opcionesList.toArray(new String[0]), selectedIndex, (dialog, which) -> {
+                                            NombrePersonal.setText(opcionesList.get(which));
+                                            dialog.dismiss();
+                                        })
+                                        .show();
+                            });
 
                             DialogHelper.hideProgressDialog();
                         } catch (JSONException e) {
@@ -171,8 +193,8 @@ public class PersonalAutorizadoCrear extends AppCompatActivity {
                 });
 
         requestQueue.add(jsonArrayRequest);
-
     }
+
 
     private void validaPersonal() {
         if (NombrePersonal.getText().toString().isEmpty()) {

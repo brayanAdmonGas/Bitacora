@@ -5,9 +5,13 @@
     <color name="colorPrimary">#3772ac</color>
     <color name="colorPrimaryDark">#02294f</color>
     <color name="colorAccent">#27843d</color>
+    <color name="colorSecondary">#bdecb6</color>
 
     <color name="colorFondoDark">#204294</color>
 
     <color name="colorBorder">#B6B6B6FF</color>
     <color name="color_inactivo">#B6898989</color>
+
+    <color name="mi_color_hint_personalizado">#9E9E9E</color>
+
 </resources>

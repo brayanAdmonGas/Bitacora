@@ -1,30 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layoutFueraRango"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#FFCDD2"
-    android:padding="16dp"
-    android:orientation="horizontal"
-    android:visibility="gone"
-    android:layout_marginBottom="10dp">
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/layoutFueraRango"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:background="#FFCDD2"
+android:padding="16dp"
+android:orientation="horizontal"
+android:gravity="center"
+android:elevation="0dp"
+android:clipToPadding="false"
+android:backgroundTint="#FFCDD2"
+android:layout_marginBottom="16dp"
+android:visibility="gone"
+>
 
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@android:drawable/ic_dialog_alert"
-        android:tint="#B71C1C"
-        android:layout_gravity="center_vertical"
-        android:layout_marginEnd="8dp" />
+<ImageView
+android:layout_width="24dp"
+android:layout_height="24dp"
+android:src="@android:drawable/ic_dialog_alert"
+android:tint="#D32F2F"
+android:layout_marginEnd="12dp" />
 
-    <TextView
-        android:id="@+id/textFueraRango"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Estás fuera del rango permitido"
-        android:textColor="#B71C1C"
-        android:textSize="16sp"
-        android:layout_weight="1"
-        android:fontFamily="sans-serif-light"/>
+<TextView
+android:id="@+id/textFueraRango"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Estás fuera del rango permitido"
+android:textColor="#B71C1C"
+android:textSize="16sp"
+android:fontFamily="sans-serif-medium"
+android:gravity="center" />
 </LinearLayout>
