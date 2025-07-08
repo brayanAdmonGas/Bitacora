@@ -7,14 +7,16 @@ import static com.gestogas.gestoline.utils.DialogHelper.showProgressDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.AutoCompleteTextView;
+import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.widget.SwitchCompat;
@@ -23,6 +25,8 @@ import androidx.core.content.ContextCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.gestogas.gestoline.BaseActivity;
@@ -34,8 +38,6 @@ import com.gestogas.gestoline.utils.DialogHelper;
 import com.gestogas.gestoline.utils.DistanciaUtils;
 import com.gestogas.gestoline.utils.TecladoUtils;
 import com.gestogas.gestoline.utils.ToastUtils;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,12 +58,12 @@ public class ProfecoCrearEditar extends BaseActivity {
     ArrayList<String> lado;
     List<dataDispensarios> listaDispensarios = new ArrayList<>();
     List<dataUsuario> listaResponsable = new ArrayList<>();
+    Spinner SpinnerDispensario, SpinnerLado, SpinnerResponsable;
     private String ProductoUno, ProductoDos, ProductoTres, ValProducto1 = "", ValProducto2 = "", ValProducto3 = "";
     SwitchCompat Producto1, Producto2, Producto3;
     Button BtnGuardar;
     double latitudeEstacion = 0, longitudeEstacion = 0, latitudeEquipo = 0, longitudeEquipo = 0;
     int distMax = 0;
-    AutoCompleteTextView SpinnerLado, SpinnerDispensario, SpinnerResponsable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +78,7 @@ public class ProfecoCrearEditar extends BaseActivity {
         ProductoDos = AppController.getInstance().GetProductoDos();
         ProductoTres = AppController.getInstance().GetProductoTres();
 
+        // Evitar NullPointerException:
         if (ProductoUno == null) ProductoUno = "";
         if (ProductoDos == null) ProductoDos = "";
         if (ProductoTres == null) ProductoTres = "";
@@ -112,20 +115,36 @@ public class ProfecoCrearEditar extends BaseActivity {
         lado.add("Seleccione");
         lado.add("A");
         lado.add("B");
+        SpinnerLado.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, lado));
 
-        // Cargar lista dispensarios y responsables
+        if (ProductoUno.isEmpty()) {
+            Producto1.setVisibility(View.GONE);
+        }
+
+        if (ProductoDos.isEmpty()) {
+            Producto2.setVisibility(View.GONE);
+        }
+
+        if (ProductoTres.isEmpty()) {
+            Producto3.setVisibility(View.GONE);
+        }
+
+        Producto1.setText(ProductoUno);
+        Producto2.setText(ProductoDos);
+        Producto3.setText(ProductoTres);
+
         showProgressDialog(this);
         ListaDispensario();
         ListaResponsable();
 
-        // Configurar campos para que muestren diálogo modal con radio buttons
-        configurarDialogosSeleccion();
-
-        DatePickerDialog.OnDateSetListener dateSetListener = (view, year, month, dayOfMonth) -> {
-            calendar.set(Calendar.YEAR, year);
-            calendar.set(Calendar.MONTH, month);
-            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            fechaCalendario();
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                fechaCalendario();
+            }
         };
 
         Fecha.setOnClickListener(v -> new DatePickerDialog(this, dateSetListener,
@@ -135,18 +154,14 @@ public class ProfecoCrearEditar extends BaseActivity {
 
         Hora.setOnClickListener(v -> ObtenerHora());
 
-        if (ProductoUno.isEmpty()) Producto1.setVisibility(View.GONE);
-        if (ProductoDos.isEmpty()) Producto2.setVisibility(View.GONE);
-        if (ProductoTres.isEmpty()) Producto3.setVisibility(View.GONE);
-
-        Producto1.setText(ProductoUno);
-        Producto2.setText(ProductoDos);
-        Producto3.setText(ProductoTres);
-
         boolean validarDistancia = DistanciaUtils.validarDistancia(
-                getApplicationContext(), idPuesto,
-                latitudeEquipo, longitudeEquipo,
-                latitudeEstacion, longitudeEstacion, distMax
+                getApplicationContext(),
+                idPuesto,
+                latitudeEquipo,
+                longitudeEquipo,
+                latitudeEstacion,
+                longitudeEstacion,
+                distMax
         );
 
         if (validarDistancia) {
@@ -161,59 +176,6 @@ public class ProfecoCrearEditar extends BaseActivity {
         BtnGuardar.setOnClickListener(v -> validaProfeco());
     }
 
-    private void configurarDialogosSeleccion() {
-        // Dispensario
-        SpinnerDispensario.setKeyListener(null);
-        SpinnerDispensario.setOnClickListener(v -> {
-            List<String> dispensariosNombres = new ArrayList<>();
-            for (dataDispensarios d : listaDispensarios) {
-                dispensariosNombres.add(d.toString());
-            }
-            int selectedIndex = dispensariosNombres.indexOf(SpinnerDispensario.getText().toString());
-
-            new MaterialAlertDialogBuilder(this)
-                    .setTitle("Selecciona dispensario")
-                    .setSingleChoiceItems(dispensariosNombres.toArray(new String[0]), selectedIndex, (dialog, which) -> {
-                        SpinnerDispensario.setText(dispensariosNombres.get(which));
-                        dialog.dismiss();
-                    })
-                    .show();
-        });
-
-        // Lado
-        SpinnerLado.setKeyListener(null);
-        SpinnerLado.setOnClickListener(v -> {
-            String[] ladosArray = lado.toArray(new String[0]);
-            int selectedIndex = lado.indexOf(SpinnerLado.getText().toString());
-
-            new MaterialAlertDialogBuilder(this)
-                    .setTitle("Selecciona lado")
-                    .setSingleChoiceItems(ladosArray, selectedIndex, (dialog, which) -> {
-                        SpinnerLado.setText(ladosArray[which]);
-                        dialog.dismiss();
-                    })
-                    .show();
-        });
-
-        // Responsable
-        SpinnerResponsable.setKeyListener(null);
-        SpinnerResponsable.setOnClickListener(v -> {
-            List<String> responsablesNombres = new ArrayList<>();
-            for (dataUsuario u : listaResponsable) {
-                responsablesNombres.add(u.toString());
-            }
-            int selectedIndex = responsablesNombres.indexOf(SpinnerResponsable.getText().toString());
-
-            new MaterialAlertDialogBuilder(this)
-                    .setTitle("Selecciona responsable")
-                    .setSingleChoiceItems(responsablesNombres.toArray(new String[0]), selectedIndex, (dialog, which) -> {
-                        SpinnerResponsable.setText(responsablesNombres.get(which));
-                        dialog.dismiss();
-                    })
-                    .show();
-        });
-    }
-
     private void fechaCalendario() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         Fecha.setText(sdf.format(calendar.getTime()));
@@ -224,165 +186,224 @@ public class ProfecoCrearEditar extends BaseActivity {
         int hora = calendar.get(Calendar.HOUR_OF_DAY);
         int minuto = calendar.get(Calendar.MINUTE);
 
-        new TimePickerDialog(this, (view, hourOfDay, minuteSelected) -> {
+        TimePickerDialog picker = new TimePickerDialog(this, (view, hourOfDay, minuteSelected) -> {
             String horaFormateada = String.format("%02d", hourOfDay % 12 == 0 ? 12 : hourOfDay % 12);
             String minutoFormateado = String.format("%02d", minuteSelected);
             String amPm = (hourOfDay < 12) ? "a.m." : "p.m.";
-            Hora.setText(horaFormateada + ":" + minutoFormateado + " " + amPm);
-        }, hora, minuto, false).show();
+            String horaFinal = horaFormateada + ":" + minutoFormateado + " " + amPm;
+
+            Hora.setText(horaFinal);
+        }, hora, minuto, false);
+
+        picker.show();
     }
 
     private void ListaDispensario() {
         listaDispensarios.clear();
-        listaDispensarios.add(new dataDispensarios("0", "Seleccione", "", "", "", "", "", "", "", "", ""));
+        listaDispensarios.add(new dataDispensarios("0", "", "", "", "", "", "", "", "", "", ""));
         String url = URL_SERVIDOR + "Dispensario/lista-dispensario-estacion.php?idEstacion=" + idEstacion;
 
-        Volley.newRequestQueue(this).add(new StringRequest(Request.Method.GET, url,
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 response -> {
                     try {
                         JSONArray jsonArray = new JSONArray(response);
+
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject obj = jsonArray.getJSONObject(i);
-                            listaDispensarios.add(new dataDispensarios(
-                                    obj.getString("id"),
-                                    obj.getString("nodispensario"),
-                                    obj.getString("marca"),
-                                    "", "", "", "", "", "", "", ""));
+                            String id = obj.getString("id");
+                            String nodispensario = obj.getString("nodispensario");
+                            String marca = obj.getString("marca");
+                            // Ignorando otros campos no usados
+                            listaDispensarios.add(new dataDispensarios(id, nodispensario, marca, "", "", "", "", "", "", "", ""));
                         }
-                        // Actualizar adapter para el campo dispensario
+
                         ArrayAdapter<dataDispensarios> adapter = new ArrayAdapter<>(
-                                this, android.R.layout.simple_dropdown_item_1line, listaDispensarios);
+                                ProfecoCrearEditar.this,
+                                android.R.layout.simple_spinner_dropdown_item,
+                                listaDispensarios
+                        );
+
                         SpinnerDispensario.setAdapter(adapter);
+
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        hideProgressDialog();
                     }
-                    hideProgressDialog();
                 },
-                error -> hideProgressDialog()));
+                error -> {
+                    error.printStackTrace();
+                    hideProgressDialog();
+                }
+        );
+
+        requestQueue.add(stringRequest);
     }
 
     private void ListaResponsable() {
         listaResponsable.clear();
-        listaResponsable.add(new dataUsuario(0, "Seleccione"));
+        listaResponsable.add(new dataUsuario(0, ""));
         String url = URL_SERVIDOR + "Dispensario/lista-dispensario-responsable.php?idEstacion=" + idEstacion;
 
-        Volley.newRequestQueue(this).add(new StringRequest(Request.Method.GET, url,
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 response -> {
                     try {
                         JSONArray jsonArray = new JSONArray(response);
+
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject obj = jsonArray.getJSONObject(i);
-                            listaResponsable.add(new dataUsuario(
-                                    Integer.parseInt(obj.getString("id")),
-                                    obj.getString("nombre")));
+                            String id = obj.getString("id");
+                            String nombre = obj.getString("nombre");
+
+                            listaResponsable.add(new dataUsuario(Integer.parseInt(id), nombre));
                         }
-                        // Actualizar adapter para el campo responsable
+
                         ArrayAdapter<dataUsuario> adapter = new ArrayAdapter<>(
-                                this, android.R.layout.simple_dropdown_item_1line, listaResponsable);
+                                ProfecoCrearEditar.this,
+                                android.R.layout.simple_spinner_dropdown_item,
+                                listaResponsable
+                        );
+
                         SpinnerResponsable.setAdapter(adapter);
+
+                        hideProgressDialog();
+
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        hideProgressDialog();
                     }
-                    hideProgressDialog();
                 },
-                error -> hideProgressDialog()));
+                error -> {
+                    error.printStackTrace();
+                    hideProgressDialog();
+                }
+        );
+
+        requestQueue.add(stringRequest);
     }
 
     private void validaProfeco() {
         if (Fecha.getText().toString().isEmpty()) {
             Fecha.setError("Seleccione una fecha");
-            return;
-        }
-        if (Hora.getText().toString().isEmpty()) {
+            ToastUtils.show(this, "Seleccione una fecha", ToastUtils.INFO);
+        } else if (Hora.getText().toString().isEmpty()) {
             Hora.setError("Seleccione una hora");
-            return;
-        }
+            ToastUtils.show(this, "Seleccione una hora", ToastUtils.INFO);
+        } else {
 
-        String dispensarioStr = SpinnerDispensario.getText().toString();
-        dataDispensarios dispensarioSeleccionado = null;
-        for (dataDispensarios item : listaDispensarios) {
-            if (item.toString().equals(dispensarioStr)) {
-                dispensarioSeleccionado = item;
-                break;
+            dataDispensarios dispensarioSeleccionado = (dataDispensarios) SpinnerDispensario.getSelectedItem();
+            if (dispensarioSeleccionado.getId().equals("0")) {
+                ToastUtils.show(this, "Seleccione un dispensario", ToastUtils.INFO);
+                return;
             }
-        }
-        if (dispensarioSeleccionado == null || dispensarioSeleccionado.getId().equals("0")) {
-            ToastUtils.show(this, "Seleccione un dispensario válido", ToastUtils.INFO);
-            return;
-        }
 
-        String ladoStr = SpinnerLado.getText().toString();
-        if (ladoStr.equals("Seleccione")) {
-            ToastUtils.show(this, "Seleccione un lado válido", ToastUtils.INFO);
-            return;
-        }
-
-        String responsableStr = SpinnerResponsable.getText().toString();
-        dataUsuario responsableSeleccionado = null;
-        for (dataUsuario item : listaResponsable) {
-            if (item.toString().equals(responsableStr)) {
-                responsableSeleccionado = item;
-                break;
+            String seleccion = SpinnerLado.getSelectedItem().toString();
+            if (seleccion.equals("Seleccione")) {
+                ToastUtils.show(this, "Seleccione un lado", ToastUtils.INFO);
+                return;
             }
-        }
-        if (responsableSeleccionado == null || responsableSeleccionado.getId() == 0) {
-            ToastUtils.show(this, "Seleccione un responsable válido", ToastUtils.INFO);
-            return;
-        }
 
-        AgregarProfeco(dispensarioSeleccionado, ladoStr, responsableSeleccionado);
+            dataUsuario responsableSeleccionado = (dataUsuario) SpinnerResponsable.getSelectedItem();
+            if (responsableSeleccionado.getId() == 0) {
+                ToastUtils.show(this, "Seleccione un responsable", ToastUtils.INFO);
+                return;
+            }
+
+            AgregarProfeco();
+        }
     }
 
-    private void AgregarProfeco(dataDispensarios dispensario, String lado, dataUsuario responsable) {
-        showProgressDialog(this);
+    private void AgregarProfeco() {
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                URL_SERVIDOR + "Dispensario/agregar-bitacora-dispensario.php",
+        showProgressDialog(this);
+        String fecha = Fecha.getText().toString();
+        String hora = Hora.getText().toString();
+        String lado = SpinnerLado.getSelectedItem().toString();
+
+        dataDispensarios dispensarioSeleccionado = (dataDispensarios) SpinnerDispensario.getSelectedItem();
+        String idDispensario = dispensarioSeleccionado.getId();
+
+        String motivo = Motivo.getText().toString();
+        String observaciones = TxtObservaciones.getText().toString();
+
+        dataUsuario responsableSeleccionado = (dataUsuario) SpinnerResponsable.getSelectedItem();
+        String idResponsable = String.valueOf(responsableSeleccionado.getId());
+
+        // Reiniciar para evitar que valores queden de operaciones anteriores
+        ValProducto1 = "";
+        ValProducto2 = "";
+        ValProducto3 = "";
+
+        if (Producto1.isChecked()) {
+            ValProducto1 = ProductoUno;
+        }
+        if (Producto2.isChecked()) {
+            ValProducto2 = ProductoDos;
+        }
+        if (Producto3.isChecked()) {
+            ValProducto3 = ProductoTres;
+        }
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SERVIDOR + "Dispensario/agregar-bitacora-dispensario.php",
                 response -> {
                     try {
+
                         JSONArray jsonarray = new JSONArray(response);
-                        JSONObject obj = jsonarray.getJSONObject(0);
-                        int estado = obj.getInt("estado");
-                        String mensaje = obj.getString("mensaje");
+                        int estado = 0;
+                        String mensaje = "";
+
+                        if (jsonarray.length() > 0) {
+                            JSONObject obj = jsonarray.getJSONObject(0);
+                            estado = obj.getInt("estado");
+                            mensaje = obj.getString("mensaje");
+                        }
 
                         if (estado == 1) {
-                            ToastUtils.showAndThen(this, mensaje, ToastUtils.SUCCESS, () -> {
+                            ToastUtils.showAndThen(ProfecoCrearEditar.this, mensaje, ToastUtils.SUCCESS, () -> {
                                 setResult(RESULT_OK);
                                 finish();
                             });
+
                         } else {
-                            ToastUtils.show(this, mensaje, ToastUtils.ERROR);
                             hideProgressDialog();
+                            ToastUtils.show(ProfecoCrearEditar.this, mensaje, ToastUtils.ERROR);
                         }
 
                     } catch (Exception e) {
-                        ToastUtils.show(this, e.toString(), ToastUtils.INFO);
+                        Log.d("respuesta", e.toString());
+                        ToastUtils.show(ProfecoCrearEditar.this, e.toString(), ToastUtils.INFO);
                         hideProgressDialog();
                     }
                 },
                 error -> {
-                    ToastUtils.show(this, error.toString(), ToastUtils.INFO);
+                    ToastUtils.show(ProfecoCrearEditar.this, error.toString(), ToastUtils.INFO);
                     hideProgressDialog();
                 }) {
-
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("idEstacion", String.valueOf(idEstacion));
-                params.put("fecha", Fecha.getText().toString());
-                params.put("hora", Hora.getText().toString());
-                params.put("dispensario", dispensario.getId());
+                params.put("fecha", fecha);
+                params.put("hora", hora);
+                params.put("dispensario", idDispensario);
                 params.put("lado", lado);
-                params.put("producto1", Producto1.isChecked() ? ProductoUno : "");
-                params.put("producto2", Producto2.isChecked() ? ProductoDos : "");
-                params.put("producto3", Producto3.isChecked() ? ProductoTres : "");
-                params.put("motivo", Motivo.getText().toString());
-                params.put("responsable", String.valueOf(responsable.getId()));
-                params.put("observaciones", TxtObservaciones.getText().toString());
+                params.put("producto1", ValProducto1);
+                params.put("producto2", ValProducto2);
+                params.put("producto3", ValProducto3);
+                params.put("motivo", motivo);
+                params.put("responsable", idResponsable);
+                params.put("observaciones", observaciones);
+
                 return params;
+
             }
         };
-        Volley.newRequestQueue(this).add(stringRequest);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
     }
 
     @Override
