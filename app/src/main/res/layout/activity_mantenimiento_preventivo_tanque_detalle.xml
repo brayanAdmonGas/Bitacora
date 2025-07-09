@@ -1,0 +1,737 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E6E6E6"
+    android:fitsSystemWindows="true"
+    tools:context=".mantenimiento.MantenimientoPreventivoExtintorDetalle">
+
+    <com.google.android.material.appbar.AppBarLayout android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        tools:ignore="MissingConstraints">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:navigationIcon="?attr/actionModeCloseDrawable"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="Detalle Mantenimiento Preventivo"
+            app:titleTextAppearance="@style/ToolbarTitleStyle"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="67dp"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#FFFFFF"
+                        android:layout_marginBottom="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginRight="10dp"
+                            android:text="Folio:"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-light"
+                            app:layout_constraintEnd_toStartOf="@+id/TxtFolio"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/TxtFolio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-light"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <TextView
+                        android:id="@+id/TxtTitulo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif-light"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?android:attr/listDivider"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"/>
+
+                    <TextView
+                        android:id="@+id/TxtSublista1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:fontFamily="sans-serif-light"
+                        android:visibility="gone"
+                        android:textColor="@color/colorPrimary"
+                        android:padding="5dp"/>
+
+                    <!--     Inicio Lista 1     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            tools:ignore="MissingConstraints,RtlSymmetry"
+                            android:paddingEnd="20dp"/>
+
+                        <TextView
+                            android:id="@+id/TxtResultado1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-light"
+                            tools:ignore="MissingConstraints"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!--    Fin Lista 1     -->
+
+                    <!--     Inicio Lista 2     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            tools:ignore="MissingConstraints,RtlSymmetry"
+                            android:paddingEnd="20dp"/>
+
+                        <TextView
+                            android:id="@+id/TxtResultado2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-light"
+                            tools:ignore="MissingConstraints"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!--    Fin Lista 2     -->
+
+                    <!--     Inicio Lista 3     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            tools:ignore="MissingConstraints,RtlSymmetry"
+                            android:paddingEnd="20dp"/>
+
+                        <TextView
+                            android:id="@+id/TxtResultado3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-light"
+                            tools:ignore="MissingConstraints"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!--    Fin Lista 3     -->
+
+
+                    <!--     Inicio Lista 4     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            tools:ignore="MissingConstraints,RtlSymmetry"
+                            android:paddingEnd="20dp"/>
+
+                        <TextView
+                            android:id="@+id/TxtResultado4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-light"
+                            tools:ignore="MissingConstraints"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!--    Fin Lista 4     -->
+
+
+                    <!--     Inicio Lista 5     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            tools:ignore="MissingConstraints,RtlSymmetry"
+                            android:paddingEnd="20dp" />
+
+                        <TextView
+                            android:id="@+id/TxtResultado5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-light"
+                            tools:ignore="MissingConstraints"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!--    Fin Lista 5     -->
+
+
+                    <!--     Inicio Lista 6     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint6"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            tools:ignore="MissingConstraints">
+
+                            <TextView
+                                android:id="@+id/TxtVerificar6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-light"
+                                android:paddingEnd="20dp" />
+
+                            <TextView
+                                android:id="@+id/TxtResultado6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                android:textStyle="bold"
+                                android:fontFamily="sans-serif-light"
+                                android:layout_marginTop="10dp"/>
+                        </LinearLayout>
+
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!--    Fin Lista 6     -->
+
+                    <TextView
+                        android:id="@+id/TxtSublista4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:fontFamily="sans-serif-light"
+                        android:visibility="gone"
+                        android:textColor="@color/colorPrimary"
+                        android:padding="5dp"/>
+
+                    <!--     Inicio Lista 7     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint7"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            tools:ignore="MissingConstraints,RtlSymmetry"
+                            android:paddingEnd="20dp" />
+
+                        <TextView
+                            android:id="@+id/TxtResultado7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-light"
+                            tools:ignore="MissingConstraints"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!--    Fin Lista 7     -->
+
+                    <!--     Inicio Lista 8     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint8"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            tools:ignore="MissingConstraints,RtlSymmetry"
+                            android:paddingEnd="20dp" />
+
+                        <TextView
+                            android:id="@+id/TxtResultado8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-light"
+                            tools:ignore="MissingConstraints"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!--    Fin Lista 8     -->
+
+                    <!--     Inicio Lista 9     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint9"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            tools:ignore="MissingConstraints,RtlSymmetry"
+                            android:paddingEnd="20dp"/>
+
+                        <TextView
+                            android:id="@+id/TxtResultado9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-light"
+                            tools:ignore="MissingConstraints"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!--    Fin Lista 9     -->
+
+                    <!--     Inicio Lista 10     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint10"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            tools:ignore="MissingConstraints,RtlSymmetry"
+                            android:paddingEnd="20dp" />
+
+                        <TextView
+                            android:id="@+id/TxtResultado10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-light"
+                            tools:ignore="MissingConstraints"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!--    Fin Lista 10     -->
+
+                    <!--     Inicio Lista 11     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint11"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            tools:ignore="MissingConstraints,RtlSymmetry"
+                            android:paddingEnd="20dp" />
+
+                        <TextView
+                            android:id="@+id/TxtResultado11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-light"
+                            tools:ignore="MissingConstraints"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!--    Fin Lista 11     -->
+
+                    <!--     Inicio Lista 12     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint12"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            tools:ignore="MissingConstraints,RtlSymmetry"
+                            android:paddingEnd="20dp" />
+
+                        <TextView
+                            android:id="@+id/TxtResultado12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-light"
+                            tools:ignore="MissingConstraints"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!--    Fin Lista 12     -->
+
+                    <!--     Inicio Lista 13     -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/Constraint13"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/TxtVerificar13"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            tools:ignore="MissingConstraints,RtlSymmetry"
+                            android:paddingEnd="20dp" />
+
+                        <TextView
+                            android:id="@+id/TxtResultado13"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-light"
+                            tools:ignore="MissingConstraints"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!--    Fin Lista 13     -->
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
+
+                        <TextView
+                            android:id="@+id/TxtFechaHora"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#B4B4B4"
+                            android:textSize="15dp"
+                            android:fontFamily="sans-serif-light"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:background="#FFFFFF"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Observaciones"
+                        android:layout_marginBottom="5dp"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif-light"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <TextView
+                        android:id="@+id/TxtObservaciones"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:textSize="17sp"
+                        />
+
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/FrameLayoutFPR"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:background="#FFFFFF"
+                android:padding="10dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Firma de persona que realizo"
+                        android:layout_marginBottom="5dp"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif-light"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <ImageView
+                        android:id="@+id/ImagePR"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp" />
+
+                    <TextView
+                        android:id="@+id/NomPR"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:gravity="center"
+                        android:fontFamily="sans-serif-light"
+                        />
+
+                </LinearLayout>
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/FrameLayoutFPS"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:background="#FFFFFF"
+                android:padding="10dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Firma de persona que superviso"
+                        android:layout_marginBottom="5dp"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif-light"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <ImageView
+                        android:id="@+id/ImagePS"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp" />
+
+                    <TextView
+                        android:id="@+id/NomPS"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:gravity="center"
+                        android:fontFamily="sans-serif-light"
+                        />
+
+
+                </LinearLayout>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:background="#FFFFFF"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Evidencias"
+                        android:layout_marginBottom="5dp"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif-light"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <Button
+                        android:id="@+id/Evidencia"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFFFFF"
+                        android:backgroundTint="@color/color_inactivo"
+                        android:layout_marginTop="10dp"
+                        android:padding="8dp"
+                        android:text="Agregar Evidencia"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/Recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/Editar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_margin="10dp"
+        android:contentDescription="@string/descripcion_imagen"
+        android:src="@drawable/icon_edit_32"
+        app:backgroundTint="#5499E7"
+        app:tint="@color/white"
+        app:elevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

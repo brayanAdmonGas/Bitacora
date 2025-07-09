@@ -16,6 +16,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -49,6 +50,7 @@ import com.gestogas.gestoline.utils.ImageNameGenerator;
 import com.gestogas.gestoline.utils.SignatureView;
 import com.gestogas.gestoline.utils.TecladoUtils;
 import com.gestogas.gestoline.utils.ToastUtils;
+import com.google.android.material.card.MaterialCardView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,6 +71,7 @@ public class MantenimientoCorrectivoCrearEditar extends BaseActivity {
     ImageView ImageFirma;
     LinearLayout LinearRealizaInterno, LinearRealizaExterno, LinearGuardar;
     Button BtbFirma, BtnGuardar;
+    MaterialCardView CardInterno, CardExterno;
 
     String idSeleccionado = "0";
     private AutoCompleteTextView PersonaRealizaInterno;
@@ -86,6 +89,9 @@ public class MantenimientoCorrectivoCrearEditar extends BaseActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        CardInterno = findViewById(R.id.CardInterno);
+        CardExterno = findViewById(R.id.CardExterno);
 
         idEstacion = AppController.getInstance().GetIdestacion();
         IdUsuario = AppController.getInstance().GetidUsuario();
@@ -447,34 +453,53 @@ public class MantenimientoCorrectivoCrearEditar extends BaseActivity {
 
     public void CheckboxClicked(View view) {
         boolean checked = ((CheckBox) view).isChecked();
-        int viewId = view.getId(); // Get the ID once
+        int viewId = view.getId();
 
         if (viewId == R.id.Interno) {
             if (checked) {
                 Externo.setEnabled(false);
+
+                CardInterno.setVisibility(View.VISIBLE);     // Mostrar tarjeta completa
+                CardExterno.setVisibility(View.GONE);        // Ocultar si estaba activa
+
                 LinearRealizaInterno.setVisibility(View.VISIBLE);
-                LinearGuardar.setVisibility(View.VISIBLE);
+                LinearRealizaExterno.setVisibility(View.GONE);
                 ListaPersonal();
-            }else{
+
+                // Mueve el botón al contenedor Interno
+                ((ViewGroup) BtnGuardar.getParent()).removeView(BtnGuardar);
+                LinearRealizaInterno.addView(BtnGuardar);
+                BtnGuardar.setVisibility(View.VISIBLE);
+            } else {
                 Externo.setEnabled(true);
-                LinearRealizaInterno.setVisibility(View.GONE);
-                LinearGuardar.setVisibility(View.GONE);
-                limpiarAutoComplete();
+                CardInterno.setVisibility(View.GONE);        // Ocultar tarjeta
+                BtnGuardar.setVisibility(View.GONE);
             }
         } else if (viewId == R.id.Externo) {
             if (checked) {
                 Interno.setEnabled(false);
+
+                CardExterno.setVisibility(View.VISIBLE);     // Mostrar tarjeta completa
+                CardInterno.setVisibility(View.GONE);        // Ocultar si estaba activa
+
                 LinearRealizaExterno.setVisibility(View.VISIBLE);
-                LinearGuardar.setVisibility(View.VISIBLE);
+                LinearRealizaInterno.setVisibility(View.GONE);
                 limpiarAutoComplete();
-            }else{
+
+                // Mueve el botón al contenedor Externo
+                ((ViewGroup) BtnGuardar.getParent()).removeView(BtnGuardar);
+                LinearRealizaExterno.addView(BtnGuardar);
+                BtnGuardar.setVisibility(View.VISIBLE);
+            } else {
                 Interno.setEnabled(true);
-                LinearRealizaExterno.setVisibility(View.GONE);
-                LinearGuardar.setVisibility(View.GONE);
-                limpiarAutoComplete();
+                CardExterno.setVisibility(View.GONE);        // Ocultar tarjeta
+                BtnGuardar.setVisibility(View.GONE);
             }
         }
     }
+
+
+
 
     private void limpiarAutoComplete() {
         idSeleccionado = "0";
