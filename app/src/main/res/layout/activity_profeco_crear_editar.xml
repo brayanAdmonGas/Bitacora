@@ -1,415 +1,412 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#F5F5F5"
-    android:fitsSystemWindows="true"
-    tools:context=".profeco.ProfecoCrearEditar">
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/main"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="#F5F5F5"
+android:fitsSystemWindows="true"
+tools:context=".profeco.ProfecoCrearEditar">
 
-    <!-- AppBar -->
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+<!-- AppBar -->
+<com.google.android.material.appbar.AppBarLayout
+android:id="@+id/appBarLayout"
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+android:background="?attr/colorPrimary"
+android:elevation="4dp"
+app:layout_constraintTop_toTopOf="parent"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintEnd_toEndOf="parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:title="Agregar Bitácora PROFECO"
-            app:titleTextColor="@android:color/white"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:titleTextAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
-            app:navigationIcon="@drawable/ic_arrow_left_white" />
-    </com.google.android.material.appbar.AppBarLayout>
+<androidx.appcompat.widget.Toolbar
+android:id="@+id/toolbar"
+android:layout_width="match_parent"
+android:layout_height="?attr/actionBarSize"
+app:title="Agregar Bitácora PROFECO"
+app:titleTextColor="@android:color/white"
+app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+app:titleTextAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+app:navigationIcon="@drawable/ic_arrow_left_white" />
+</com.google.android.material.appbar.AppBarLayout>
 
-    <ScrollView
-        android:id="@+id/root_home"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/appBarLayout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+<ScrollView
+android:id="@+id/root_home"
+android:layout_width="0dp"
+android:layout_height="0dp"
+android:fillViewport="true"
+app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+app:layout_constraintBottom_toBottomOf="parent"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintEnd_toEndOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:padding="16dp">
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp"
-                android:backgroundTint="#FFFFFF">
+<com.google.android.material.card.MaterialCardView
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+app:cardCornerRadius="16dp"
+app:cardElevation="2dp"
+android:backgroundTint="#FFFFFF">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:padding="16dp">
 
-                    <include layout="@layout/mensaje_fuera_rango" />
+<include layout="@layout/mensaje_fuera_rango" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Fecha de registro de bitacora:"
-                        android:textColor="#757575"
-                        android:textSize="12sp" />
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Fecha de registro de bitacora:"
+android:textColor="#757575"
+android:textSize="12sp" />
 
-                    <!-- FECHA -->
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:startIconDrawable="@drawable/ic_calendar"
-                        app:startIconTint="#79747e"
-                        android:textColorHint="#A6A6A6">
+<!-- FECHA -->
+<com.google.android.material.textfield.TextInputLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+app:startIconDrawable="@drawable/ic_calendar"
+app:startIconTint="#79747e"
+android:textColorHint="#A6A6A6">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/Fecha"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:clickable="true"
-                            android:focusable="false"
-                            android:hint="Fecha"
-                            android:inputType="none"
-                            android:padding="15dp"
-                            android:textSize="15sp" />
-                    </com.google.android.material.textfield.TextInputLayout>
+<com.google.android.material.textfield.TextInputEditText
+android:id="@+id/Fecha"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:clickable="true"
+android:focusable="false"
+android:hint="Fecha"
+android:inputType="none"
+android:padding="15dp"
+android:textSize="15sp" />
+</com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- HORA -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Hora de registro de bitacora:"
-                        android:textColor="#757575"
-                        android:textSize="12sp"
-                        android:layout_marginTop="10dp"
-                        />
+<!-- HORA -->
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Hora de registro de bitacora:"
+android:textColor="#757575"
+android:textSize="12sp"
+android:layout_marginTop="10dp"
+/>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Hora"
-                        app:startIconDrawable="@drawable/ic_reloj"
-                        app:startIconTint="#79747e"
-                        android:textColorHint="#A6A6A6">
+<com.google.android.material.textfield.TextInputLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:hint="Hora"
+app:startIconDrawable="@drawable/ic_reloj"
+app:startIconTint="#79747e"
+android:textColorHint="#A6A6A6">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/Hora"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:clickable="true"
-                            android:focusable="false"
-                            android:inputType="none"
-                            android:padding="15dp"
-                            android:textSize="15sp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-
-                    <!-- Dispensario -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Dispensario de registro de bitacora:"
-                        android:textColor="#757575"
-                        android:textSize="12sp"
-                        android:layout_marginTop="10dp"
-                        />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Dispensario"
-                        app:startIconDrawable="@drawable/ic_dispensarios"
-                        app:startIconTint="#79747e"
-                        android:textColorHint="#A6A6A6">
-
-                        <AutoCompleteTextView
-                            android:id="@+id/SpinnerDispensario"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:focusable="false"
-                            android:inputType="none"
-                            android:padding="15dp"
-                            android:textSize="15sp" />
-                    </com.google.android.material.textfield.TextInputLayout>
+<com.google.android.material.textfield.TextInputEditText
+android:id="@+id/Hora"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:clickable="true"
+android:focusable="false"
+android:inputType="none"
+android:padding="15dp"
+android:textSize="15sp" />
+</com.google.android.material.textfield.TextInputLayout>
 
 
-                    <!-- Dispensario -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Lado del dispensario:"
-                        android:textColor="#757575"
-                        android:textSize="12sp"
-                        android:layout_marginTop="10dp"
-                        />
+<!-- Dispensario -->
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Dispensario de registro de bitacora:"
+android:textColor="#757575"
+android:textSize="12sp"
+android:layout_marginTop="10dp"
+/>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Lado"
-                        app:startIconDrawable="@drawable/ic_posicion"
-                        app:startIconTint="#79747e"
-                        android:textColorHint="#A6A6A6">
+<com.google.android.material.textfield.TextInputLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:hint="Dispensario"
+app:startIconDrawable="@drawable/ic_dispensarios"
+app:startIconTint="#79747e"
+android:textColorHint="#A6A6A6">
 
+<AutoCompleteTextView
+android:id="@+id/SpinnerDispensario"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:focusable="false"
+android:inputType="none"
+android:padding="15dp"
+android:textSize="15sp" />
+</com.google.android.material.textfield.TextInputLayout>
 
-                        <AutoCompleteTextView
-                            android:id="@+id/SpinnerLado"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:focusable="false"
-                            android:inputType="none"
-                            android:padding="15dp"
-                            android:textSize="15sp" />
-                    </com.google.android.material.textfield.TextInputLayout>
+<!-- Dispensario -->
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Lado del dispensario:"
+android:textColor="#757575"
+android:textSize="12sp"
+android:layout_marginTop="10dp"
+/>
 
-
-                    <!-- Producto -->
-
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="PRODUCTOS"
-                        android:textColor="#212121"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginTop="16dp"
-                        android:textSize="14sp" />
-
-                    <!-- PRODUCTO 87 OCT -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="12dp"
-                        app:strokeColor="#79747e"
-                        app:strokeWidth="1dp"
-                        app:cardElevation="0dp"
-                        app:cardBackgroundColor="#FFFFFF">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:padding="12dp">
+<com.google.android.material.textfield.TextInputLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:hint="Lado"
+app:startIconDrawable="@drawable/ic_posicion"
+app:startIconTint="#79747e"
+android:textColorHint="#A6A6A6">
 
 
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_marginEnd="12dp"
-                                android:src="@drawable/ic_dispensarios"
-                                android:tint="#79747e" />
+<AutoCompleteTextView
+android:id="@+id/SpinnerLado"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:focusable="false"
+android:inputType="none"
+android:padding="15dp"
+android:textSize="15sp" />
+</com.google.android.material.textfield.TextInputLayout>
 
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:fontFamily="sans-serif"
-                                android:textColor="#424242"
-                                android:textSize="15sp" />
-
-                            <androidx.appcompat.widget.SwitchCompat
-                                android:id="@+id/Producto1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:checked="false" />
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <!-- PRODUCTO 91 OCT -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        app:cardCornerRadius="12dp"
-                        app:strokeColor="#79747e"
-                        app:strokeWidth="1dp"
-                        app:cardElevation="0dp"
-                        app:cardBackgroundColor="#FFFFFF">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:padding="12dp">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_marginEnd="12dp"
-                                android:src="@drawable/ic_dispensarios"
-                                android:tint="#79747e" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:fontFamily="sans-serif"
-                                android:textColor="#424242"
-                                android:textSize="15sp" />
-
-                            <androidx.appcompat.widget.SwitchCompat
-                                android:id="@+id/Producto2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:checked="false" />
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <!-- PRODUCTO D -->
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        app:cardCornerRadius="12dp"
-                        app:strokeColor="#79747e"
-                        app:strokeWidth="1dp"
-                        app:cardElevation="0dp"
-                        app:cardBackgroundColor="#FFFFFF">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:padding="12dp">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_marginEnd="12dp"
-                                android:src="@drawable/ic_dispensarios"
-                                android:tint="#79747e" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:fontFamily="sans-serif"
-                                android:textColor="#424242"
-                                android:textSize="15sp" />
-
-                            <androidx.appcompat.widget.SwitchCompat
-                                android:id="@+id/Producto3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:checked="false" />
-                        </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
+<!-- Producto -->
 
 
-                    <!-- Motivo -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Motivo de la bitácora:"
-                        android:textColor="#757575"
-                        android:textSize="12sp"
-                        android:layout_marginTop="10dp"
-                        />
+<TextView
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:text="PRODUCTOS"
+android:textColor="#212121"
+android:textStyle="bold"
+android:layout_marginBottom="4dp"
+android:layout_marginTop="16dp"
+android:textSize="14sp" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Motivo"
-                        app:startIconDrawable="@drawable/ic_bitacora"
-                        app:startIconTint="#79747e"
-                        android:textColorHint="#A6A6A6">
+<!-- PRODUCTO 87 OCT -->
+<com.google.android.material.card.MaterialCardView
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+app:cardCornerRadius="12dp"
+app:strokeColor="#79747e"
+app:strokeWidth="1dp"
+app:cardElevation="0dp"
+app:cardBackgroundColor="#FFFFFF">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/TxtMotivo"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:textSize="15sp"
-                            android:padding="15dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:gravity="center_vertical"
+android:orientation="horizontal"
+android:padding="12dp">
+
+<ImageView
+android:layout_width="24dp"
+android:layout_height="24dp"
+android:layout_marginEnd="12dp"
+android:src="@drawable/ic_dispensarios"
+android:tint="#79747e" />
+
+<TextView
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+android:layout_weight="1"
+android:fontFamily="sans-serif"
+android:textColor="#424242"
+android:textSize="15sp" />
+
+<androidx.appcompat.widget.SwitchCompat
+android:id="@+id/Producto1"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:checked="false" />
+</LinearLayout>
+</com.google.android.material.card.MaterialCardView>
+
+<!-- PRODUCTO 91 OCT -->
+<com.google.android.material.card.MaterialCardView
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_marginTop="8dp"
+app:cardCornerRadius="12dp"
+app:strokeColor="#79747e"
+app:strokeWidth="1dp"
+app:cardElevation="0dp"
+app:cardBackgroundColor="#FFFFFF">
+
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:gravity="center_vertical"
+android:orientation="horizontal"
+android:padding="12dp">
+
+<ImageView
+android:layout_width="24dp"
+android:layout_height="24dp"
+android:layout_marginEnd="12dp"
+android:src="@drawable/ic_dispensarios"
+android:tint="#79747e" />
+
+<TextView
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+android:layout_weight="1"
+android:fontFamily="sans-serif"
+android:textColor="#424242"
+android:textSize="15sp" />
+
+<androidx.appcompat.widget.SwitchCompat
+android:id="@+id/Producto2"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:checked="false" />
+</LinearLayout>
+</com.google.android.material.card.MaterialCardView>
+
+<!-- PRODUCTO D -->
+<com.google.android.material.card.MaterialCardView
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_marginTop="8dp"
+app:cardCornerRadius="12dp"
+app:strokeColor="#79747e"
+app:strokeWidth="1dp"
+app:cardElevation="0dp"
+app:cardBackgroundColor="#FFFFFF">
+
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:gravity="center_vertical"
+android:orientation="horizontal"
+android:padding="12dp">
+
+<ImageView
+android:layout_width="24dp"
+android:layout_height="24dp"
+android:layout_marginEnd="12dp"
+android:src="@drawable/ic_dispensarios"
+android:tint="#79747e" />
+
+<TextView
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+android:layout_weight="1"
+android:fontFamily="sans-serif"
+android:textColor="#424242"
+android:textSize="15sp" />
+
+<androidx.appcompat.widget.SwitchCompat
+android:id="@+id/Producto3"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:checked="false" />
+</LinearLayout>
+</com.google.android.material.card.MaterialCardView>
 
 
-                    <!-- Responsable -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Personal que que lleva a cabo la bitácora:"
-                        android:textColor="#757575"
-                        android:textSize="12sp"
-                        android:layout_marginTop="10dp"
-                        />
+<!-- Motivo -->
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Motivo de la bitácora:"
+android:textColor="#757575"
+android:textSize="12sp"
+android:layout_marginTop="10dp"
+/>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Responsable"
-                        app:startIconDrawable="@drawable/ic_user"
-                        app:startIconTint="#79747e"
-                        android:textColorHint="#A6A6A6">
+<com.google.android.material.textfield.TextInputLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:hint="Motivo"
+app:startIconDrawable="@drawable/ic_bitacora"
+app:startIconTint="#79747e"
+android:textColorHint="#A6A6A6">
 
-                        <AutoCompleteTextView
-                            android:id="@+id/SpinnerResponsable"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:focusable="false"
-                            android:inputType="none"
-                            android:padding="15dp"
-                            android:textSize="15sp" />
-                    </com.google.android.material.textfield.TextInputLayout>
+<com.google.android.material.textfield.TextInputEditText
+android:id="@+id/TxtMotivo"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:inputType="text"
+android:textSize="15sp"
+android:padding="15dp" />
+</com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Observaciones -->
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Observaciones"
-                        app:startIconDrawable="@drawable/ic_detalle_ojo"
-                        app:startIconTint="#79747e"
-                        android:textColorHint="#A6A6A6"
-                        android:layout_marginTop="10dp"
-                        >
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/TxtObservaciones"
-                            android:layout_width="match_parent"
-                            android:layout_height="150dp"
-                            android:inputType="none"
-                            android:textSize="15sp"
-                            android:padding="15dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
+<!-- Responsable -->
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Personal que que lleva a cabo la bitácora:"
+android:textColor="#757575"
+android:textSize="12sp"
+android:layout_marginTop="10dp"
+/>
 
-                    <!-- Botón Guardar -->
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/BtnGuardar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:clickable="false"
-                        android:text="Guardar"
-                        android:textAllCaps="false"
-                        android:textColor="#FFFFFF"
-                        android:backgroundTint="#5d84c3"
-                        app:cornerRadius="16dp" />
+<com.google.android.material.textfield.TextInputLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:hint="Responsable"
+app:startIconDrawable="@drawable/ic_user"
+app:startIconTint="#79747e"
+android:textColorHint="#A6A6A6">
 
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-        </LinearLayout>
-    </ScrollView>
+<AutoCompleteTextView
+android:id="@+id/SpinnerResponsable"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:focusable="false"
+android:inputType="none"
+android:padding="15dp"
+android:textSize="15sp" />
+</com.google.android.material.textfield.TextInputLayout>
+
+<!-- Observaciones -->
+<com.google.android.material.textfield.TextInputLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:hint="Observaciones"
+app:startIconDrawable="@drawable/ic_detalle_ojo"
+app:startIconTint="#79747e"
+android:textColorHint="#A6A6A6"
+android:layout_marginTop="10dp"
+>
+
+<com.google.android.material.textfield.TextInputEditText
+android:id="@+id/TxtObservaciones"
+android:layout_width="match_parent"
+android:layout_height="150dp"
+android:inputType="none"
+android:textSize="15sp"
+android:padding="15dp" />
+</com.google.android.material.textfield.TextInputLayout>
+
+<!-- Botón Guardar -->
+<com.google.android.material.button.MaterialButton
+android:id="@+id/BtnGuardar"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_marginTop="16dp"
+android:clickable="false"
+android:text="Guardar"
+android:textAllCaps="false"
+android:textColor="#FFFFFF"
+android:backgroundTint="#5d84c3"
+app:cornerRadius="16dp" />
+
+</LinearLayout>
+</com.google.android.material.card.MaterialCardView>
+</LinearLayout>
+</ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
