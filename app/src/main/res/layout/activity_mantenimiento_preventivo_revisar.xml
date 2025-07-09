@@ -141,6 +141,13 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                     <!--    Fin Lista 1     -->
 
+                    <EditText
+                        android:id="@+id/EditText1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="17sp"
+                        android:visibility="gone"/>
+
                     <!--    Inicio Lista 2     -->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/Constraint2"
@@ -188,6 +195,13 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                     <!--    Fin Lista 2     -->
 
+                    <EditText
+                        android:id="@+id/EditText2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="17sp"
+                        android:visibility="gone"/>
+
                     <!--    Inicio Lista 3     -->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/Constraint3"
@@ -234,6 +248,13 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                     <!--    Fin Lista 3     -->
+
+                    <EditText
+                        android:id="@+id/EditText3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="17sp"
+                        android:visibility="gone"/>
 
 
                     <TextView
@@ -294,6 +315,13 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                     <!--    Fin Lista 4     -->
+
+                    <EditText
+                        android:id="@+id/EditText4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="17sp"
+                        android:visibility="gone"/>
 
 
                     <TextView
@@ -569,7 +597,12 @@
 
                     <!--    Fin Lista 9     -->
 
-
+                    <EditText
+                        android:id="@+id/EditText9"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="17sp"
+                        android:visibility="gone"/>
 
                     <!--    Inicio Lista 10     -->
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -619,7 +652,12 @@
 
                     <!--    Fin Lista 10     -->
 
-
+                    <EditText
+                        android:id="@+id/EditText10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="17sp"
+                        android:visibility="gone"/>
 
                     <!--    Inicio Lista 11     -->
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -668,6 +706,13 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <!--    Fin Lista 11     -->
+
+                    <EditText
+                        android:id="@+id/EditText11"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="17sp"
+                        android:visibility="gone"/>
 
 
                     <!--    Inicio Lista 12     -->
@@ -718,6 +763,13 @@
 
                     <!--    Fin Lista 12     -->
 
+                    <EditText
+                        android:id="@+id/EditText12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="17sp"
+                        android:visibility="gone"/>
+
 
                     <!--    Inicio Lista 13     -->
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -766,6 +818,13 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <!--    Fin Lista 13     -->
+
+                    <EditText
+                        android:id="@+id/EditText13"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="17sp"
+                        android:visibility="gone"/>
 
                 </LinearLayout>
 
