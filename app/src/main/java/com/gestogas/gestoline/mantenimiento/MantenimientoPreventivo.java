@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -179,6 +180,8 @@ public class MantenimientoPreventivo extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
+
+                            Log.d("Response", response.toString());
                             // Limpia la lista actual
                             itemList.clear();
 

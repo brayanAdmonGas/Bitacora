@@ -61,13 +61,17 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class MantenimientoPreventivoRevisar extends BaseActivity {
-    int idEstacion, IdUsuario, idPuesto, estado, distMax = 0;
-    String idMantenimiento, NumeroEquipo, NombreEquipo, valExterno = "";
+    int idEstacion, IdUsuario, idPuesto, distMax = 0;
+    String idMantenimiento, NumeroEquipo, NombreEquipo, estado, valExterno = "";
     String firmaBase64, nombreImagen = "";
     TextView TxtSublista1,TxtSublista2,TxtSublista3,TxtSublista4,TxtSublista5;
     CheckBox Interno,Externo;
@@ -106,7 +110,7 @@ public class MantenimientoPreventivoRevisar extends BaseActivity {
         idMantenimiento = getIntent().getStringExtra("idMantenimiento");
         NumeroEquipo = getIntent().getStringExtra("NumeroEquipo");
         NombreEquipo = getIntent().getStringExtra("NombreEquipo");
-        estado = getIntent().getIntExtra("NombreEquipo", 0);
+        estado = getIntent().getStringExtra("estado");
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Mantenimiento Preventivo");
@@ -226,79 +230,115 @@ public class MantenimientoPreventivoRevisar extends BaseActivity {
                             // Obtener el array de detalles
                             JSONArray detallesArray = response.getJSONArray("detalles");
 
+                            // Declara el mapa al inicio de tu método o como atributo si es general
+                            Map<Integer, Set<Integer>> editTextConfig = new HashMap<>();
+
+                            editTextConfig.put(28, new HashSet<>(Arrays.asList(1,9,10,11,12,13)));
+                            editTextConfig.put(29, new HashSet<>(Collections.singletonList(1)));
+                            editTextConfig.put(30, new HashSet<>(Collections.singletonList(2)));
+                            editTextConfig.put(32, new HashSet<>(Collections.singletonList(1)));
+                            editTextConfig.put(33, new HashSet<>(Collections.singletonList(1)));
+                            editTextConfig.put(34, new HashSet<>(Collections.singletonList(1)));
+                            editTextConfig.put(35, new HashSet<>(Collections.singletonList(1)));
+                            editTextConfig.put(36, new HashSet<>(Collections.singletonList(2)));
+                            editTextConfig.put(38, new HashSet<>(Collections.singletonList(1)));
+                            editTextConfig.put(39, new HashSet<>(Collections.singletonList(1)));
+                            editTextConfig.put(45, new HashSet<>(Arrays.asList(1, 2, 4)));
+
                             for (int i = 0; i < detallesArray.length(); i++) {
                                 JSONObject detalle = detallesArray.getJSONObject(i);
 
                                 int idDetalle = detalle.getInt("iddetalle");
-                                int numList = detalle.getInt("num_list"); // ← el número que usarás
+                                int numList = detalle.getInt("num_list");
                                 String nomActividad = detalle.getString("nom_actividad");
                                 String resultado = detalle.getString("resultado");
 
-                                // Construye los IDs dinámicamente a partir de num_list
                                 int Constraint = getResources().getIdentifier("Constraint" + numList, "id", getPackageName());
                                 int txtId = getResources().getIdentifier("TxtVerificar" + numList, "id", getPackageName());
                                 int siId = getResources().getIdentifier("Si_" + numList, "id", getPackageName());
                                 int noId = getResources().getIdentifier("No_" + numList, "id", getPackageName());
+                                int editId = getResources().getIdentifier("EditText" + numList, "id", getPackageName());
 
-                                // Busca las vistas
                                 ConstraintLayout constraintLayout = findViewById(Constraint);
                                 TextView txtVerificar = findViewById(txtId);
                                 CheckBox siCheck = findViewById(siId);
                                 CheckBox noCheck = findViewById(noId);
+                                EditText editText = findViewById(editId);
 
-                                // Verifica si existen las vistas antes de operar sobre ellas
-                                if (txtVerificar != null && siCheck != null && noCheck != null) {
+                                // Verifica si este idEquipo requiere EditText en este numList
+                                boolean usaEditText = editTextConfig.containsKey(idEquipo) && editTextConfig.get(idEquipo).contains(numList);
+
+                                if (usaEditText) {
+                                    // Mostrar EditText
+                                    constraintLayout.setVisibility(View.VISIBLE);
+                                    txtVerificar.setVisibility(View.VISIBLE);
+                                    editText.setVisibility(View.VISIBLE);
+
+                                    if (siCheck != null) siCheck.setVisibility(View.GONE);
+                                    if (noCheck != null) noCheck.setVisibility(View.GONE);
+
+                                    txtVerificar.setText(nomActividad);
+                                    editText.setText(resultado);
+
+                                    editText.addTextChangedListener(new TextWatcher() {
+                                        @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                                        @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                                        @Override public void afterTextChanged(Editable s) {
+                                            String textoIngresado = s.toString().trim();
+                                            actualizarResultado(resultados, idDetalle, textoIngresado);
+                                        }
+                                    });
+                                } else {
+                                    // Mostrar CheckBox (lógica original)
                                     if (nomActividad.trim().isEmpty()) {
                                         constraintLayout.setVisibility(View.GONE);
-                                        txtVerificar.setVisibility(View.GONE);
-                                        siCheck.setVisibility(View.GONE);
-                                        noCheck.setVisibility(View.GONE);
                                     } else {
-                                        constraintLayout.setVisibility(VISIBLE);
-                                        txtVerificar.setVisibility(VISIBLE);
-                                        siCheck.setVisibility(VISIBLE);
-                                        noCheck.setVisibility(VISIBLE);
-
+                                        constraintLayout.setVisibility(View.VISIBLE);
+                                        txtVerificar.setVisibility(View.VISIBLE);
                                         txtVerificar.setText(nomActividad);
-                                    }
 
-                                    if(resultado.isEmpty()){
-                                        siCheck.setChecked(false);
-                                        noCheck.setChecked(false);
-                                    }else{
-
-                                        if (resultado.equals("Si")) {
-                                            siCheck.setChecked(true);
-                                            noCheck.setEnabled(false);
-                                        }else{
-                                            noCheck.setChecked(true);
-                                            siCheck.setEnabled(false);
+                                        if (siCheck != null && noCheck != null) {
+                                            siCheck.setVisibility(View.VISIBLE);
+                                            noCheck.setVisibility(View.VISIBLE);
                                         }
 
-                                    }
-
-
-
-                                    siCheck.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                                       if (isChecked) {
-                                            noCheck.setChecked(false);
-                                            noCheck.setEnabled(false);
-                                           actualizarResultado(resultados, idDetalle, "Si");
-                                        } else {
-                                            noCheck.setEnabled(true);
+                                        if (editText != null) {
+                                            editText.setVisibility(View.GONE);
                                         }
-                                    });
 
-                                    noCheck.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                                        if (isChecked) {
+                                        if (resultado.isEmpty()) {
                                             siCheck.setChecked(false);
-                                            siCheck.setEnabled(false);
-                                            actualizarResultado(resultados, idDetalle, "No");
+                                            noCheck.setChecked(false);
                                         } else {
-                                            siCheck.setEnabled(true);
+                                            if (resultado.equals("Si")) {
+                                                siCheck.setChecked(true);
+                                                noCheck.setEnabled(false);
+                                            } else {
+                                                noCheck.setChecked(true);
+                                                siCheck.setEnabled(false);
+                                            }
                                         }
-                                    });
 
+                                        siCheck.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                                            if (isChecked) {
+                                                noCheck.setChecked(false);
+                                                noCheck.setEnabled(false);
+                                                actualizarResultado(resultados, idDetalle, "Si");
+                                            } else {
+                                                noCheck.setEnabled(true);
+                                            }
+                                        });
+
+                                        noCheck.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                                            if (isChecked) {
+                                                siCheck.setChecked(false);
+                                                siCheck.setEnabled(false);
+                                                actualizarResultado(resultados, idDetalle, "No");
+                                            } else {
+                                                siCheck.setEnabled(true);
+                                            }
+                                        });
+                                    }
                                 }
                             }
 
@@ -636,7 +676,7 @@ public class MantenimientoPreventivoRevisar extends BaseActivity {
                 params.put("idPersonalRealiza", idSeleccionado);
                 params.put("PersonalRealiza", finalPersonal);
                 params.put("imagenFirma", nombreImagen);
-                params.put("estado", String.valueOf(estado));
+                params.put("estado", estado);
 
 
                 return params;
