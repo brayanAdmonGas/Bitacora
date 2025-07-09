@@ -90,7 +90,7 @@ public class RecepcionBitacora extends AppCompatActivity {
         NuevaRecepcion.setOnClickListener(view -> {
             Intent home = new Intent(view.getContext(), RecepcionBitacoraCrearEditar.class);
             home.putExtra("idRecepcion", "");
-            home.putExtra("titulo", "Crear Recepción");
+            home.putExtra("titulo", "Agregar Recepción");
             home.putExtra("tituloboton", "GUARDAR RECEPCIÓN");
             startActivityForResult(home, 1);
         });

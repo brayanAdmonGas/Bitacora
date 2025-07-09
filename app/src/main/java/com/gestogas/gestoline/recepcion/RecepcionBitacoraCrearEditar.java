@@ -8,6 +8,8 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -47,6 +49,8 @@ import com.gestogas.gestoline.utils.DialogHelper;
 import com.gestogas.gestoline.utils.DistanciaUtils;
 import com.gestogas.gestoline.utils.TecladoUtils;
 import com.gestogas.gestoline.utils.ToastUtils;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONArray;
@@ -214,7 +218,15 @@ public class RecepcionBitacoraCrearEditar extends BaseActivity {
         } else {
             BtnGuardar.setEnabled(false);
             layoutFueraRango.setVisibility(View.VISIBLE);
-            BtnGuardar.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.color_inactivo));
+            // Cambiar a gris (#757575)
+            int gris = Color.parseColor("#F5F5F5");
+            int gris2 = Color.parseColor("#757575");
+
+            MaterialButton boton = (MaterialButton) BtnGuardar; // casteo explícito
+            BtnGuardar.setTextColor(gris2);
+            boton.setStrokeColor(ColorStateList.valueOf(gris)); // cambia borde
+            BtnGuardar.setBackgroundTintList(ColorStateList.valueOf(gris)); // opcional si quieres también fondo gris
+
         }
 
         //------------------------------------------------------------------------------------------
@@ -630,10 +642,13 @@ public class RecepcionBitacoraCrearEditar extends BaseActivity {
     }
 
     private void ListaPersonal() {
+        DialogHelper.showProgressDialog(this);
+
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                URL_SERVIDOR + "Autorizacion/personal-autorizado.php",
+        String url = URL_SERVIDOR + "Autorizacion/personal-autorizado.php";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -653,43 +668,38 @@ public class RecepcionBitacoraCrearEditar extends BaseActivity {
                                 mapaPersonal.put(nombre, id);
                             }
 
-                            adapter = new ArrayAdapter<>(RecepcionBitacoraCrearEditar.this,
-                                    android.R.layout.simple_dropdown_item_1line, listaNombres);
-                            personaRecibe.setAdapter(adapter);
-                            personaRecibe.setThreshold(1); // muestra sugerencias desde 1 letra
+                            // Configura el click para abrir pop-up
+                            personaRecibe.setOnClickListener(v -> {
+                                int selectedIndex = listaNombres.indexOf(personaRecibe.getText().toString());
 
-                            personaRecibe.setOnItemClickListener((parent, view, position, id) -> {
-                                String nombreSeleccionado = adapter.getItem(position);
-                                idSeleccionado = mapaPersonal.getOrDefault(nombreSeleccionado, "0");
+                                new MaterialAlertDialogBuilder(RecepcionBitacoraCrearEditar.this)
+                                        .setTitle("Selecciona el personal")
+                                        .setSingleChoiceItems(listaNombres.toArray(new String[0]), selectedIndex, (dialog, which) -> {
+                                            String seleccionado = listaNombres.get(which);
+                                            personaRecibe.setText(seleccionado);
 
+                                            idSeleccionado = mapaPersonal.getOrDefault(seleccionado, "0");
+
+                                            dialog.dismiss();
+                                        })
+                                        .show();
                             });
-
-                            // Si se borra el texto o se edita manualmente, restablecer idSeleccionado a "0"
-                            personaRecibe.addTextChangedListener(new TextWatcher() {
-                                @Override
-                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                                @Override
-                                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                    // Verifica si el texto ingresado está en la lista
-                                    String textoActual = s.toString();
-                                    if (!mapaPersonal.containsKey(textoActual)) {
-                                        idSeleccionado = "0";
-                                    }
-                                }
-
-                                @Override
-                                public void afterTextChanged(Editable s) {}
-                            });
-
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                        } finally {
+                            DialogHelper.hideProgressDialog();
                         }
                     }
-                }, error -> {
-            error.printStackTrace();
-        }) {
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        DialogHelper.hideProgressDialog();
+                    }
+                }
+        ) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
@@ -701,6 +711,7 @@ public class RecepcionBitacoraCrearEditar extends BaseActivity {
 
         requestQueue.add(stringRequest);
     }
+
 
     public void validarCampos() {
 
