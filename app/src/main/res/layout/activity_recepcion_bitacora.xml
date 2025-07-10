@@ -63,7 +63,7 @@ android:layout_width="0dp"
 android:layout_height="wrap_content"
 android:layout_weight="1"
 android:orientation="horizontal"
-android:padding="12dp"
+android:padding="2dp"
 android:gravity="center_vertical">
 
 <!-- Ícono circular -->
@@ -73,7 +73,7 @@ android:layout_width="48dp"
 android:layout_height="48dp"
 android:padding="10dp"
 android:src="@drawable/ic_business"
-android:layout_marginEnd="12dp" />
+android:layout_marginEnd="2dp" />
 
 <!-- Textos -->
 <LinearLayout
@@ -81,20 +81,20 @@ android:layout_width="0dp"
 android:layout_height="wrap_content"
 android:layout_weight="1"
 android:orientation="vertical">
-
+<!--
 <TextView
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
 android:text="Razón Social:"
 android:textSize="14sp"
 android:textColor="#757575" />
-
+-->
 <TextView
 android:id="@+id/RazonSocial"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
 android:text="Aqui va el nombre de la estación"
-android:textSize="16sp"
+android:textSize="14sp"
 android:textStyle="bold"
 android:textColor="#212121" />
 </LinearLayout>
