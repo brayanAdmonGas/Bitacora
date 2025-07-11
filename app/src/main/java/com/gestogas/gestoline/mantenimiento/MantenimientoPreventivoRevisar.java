@@ -18,6 +18,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -54,6 +55,9 @@ import com.gestogas.gestoline.utils.ResultadoValida;
 import com.gestogas.gestoline.utils.SignatureView;
 import com.gestogas.gestoline.utils.TecladoUtils;
 import com.gestogas.gestoline.utils.ToastUtils;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -78,6 +82,8 @@ public class MantenimientoPreventivoRevisar extends BaseActivity {
     TextView TxtPersonalExterno;
     ImageView ImageFirma;
     LinearLayout LinearRealizaInterno, LinearRealizaExterno, LinearGuardar;
+    MaterialCardView CardInterno, CardExterno;
+
     Button BtbFirma, BtnGuardar;
     String idSeleccionado = "0";
     private AutoCompleteTextView PersonaRealizaInterno;
@@ -96,6 +102,9 @@ public class MantenimientoPreventivoRevisar extends BaseActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        CardInterno = findViewById(R.id.CardInterno);
+        CardExterno = findViewById(R.id.CardExterno);
 
         idEstacion = AppController.getInstance().GetIdestacion();
         IdUsuario = AppController.getInstance().GetidUsuario();
@@ -185,10 +194,17 @@ public class MantenimientoPreventivoRevisar extends BaseActivity {
             layoutFueraRango.setVisibility(View.GONE);
         } else {
             BtnGuardar.setEnabled(false);
-            layoutFueraRango.setVisibility(VISIBLE);
-            BtnGuardar.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.color_inactivo));
-        }
+            layoutFueraRango.setVisibility(View.VISIBLE);
+            // Cambiar a gris (#757575)
+            int gris = Color.parseColor("#F5F5F5");
+            int gris2 = Color.parseColor("#757575");
 
+            MaterialButton boton = (MaterialButton) BtnGuardar; // casteo explícito
+            BtnGuardar.setTextColor(gris2);
+            boton.setStrokeColor(ColorStateList.valueOf(gris)); // cambia borde
+            BtnGuardar.setBackgroundTintList(ColorStateList.valueOf(gris)); // opcional si quieres también fondo gris
+
+        }
         fechtMantenimiento();
 
     }
@@ -257,12 +273,14 @@ public class MantenimientoPreventivoRevisar extends BaseActivity {
                                 int siId = getResources().getIdentifier("Si_" + numList, "id", getPackageName());
                                 int noId = getResources().getIdentifier("No_" + numList, "id", getPackageName());
                                 int editId = getResources().getIdentifier("EditText" + numList, "id", getPackageName());
+                                int textoInputId = getResources().getIdentifier("EditTextInfo" + numList, "id", getPackageName());
 
                                 ConstraintLayout constraintLayout = findViewById(Constraint);
                                 TextView txtVerificar = findViewById(txtId);
                                 CheckBox siCheck = findViewById(siId);
                                 CheckBox noCheck = findViewById(noId);
                                 EditText editText = findViewById(editId);
+                                TextInputLayout inputText = findViewById(textoInputId);
 
                                 // Verifica si este idEquipo requiere EditText en este numList
                                 boolean usaEditText = editTextConfig.containsKey(idEquipo) && editTextConfig.get(idEquipo).contains(numList);
@@ -272,6 +290,7 @@ public class MantenimientoPreventivoRevisar extends BaseActivity {
                                     constraintLayout.setVisibility(View.VISIBLE);
                                     txtVerificar.setVisibility(View.VISIBLE);
                                     editText.setVisibility(View.VISIBLE);
+                                    inputText.setVisibility(View.VISIBLE);
 
                                     if (siCheck != null) siCheck.setVisibility(View.GONE);
                                     if (noCheck != null) noCheck.setVisibility(View.GONE);
@@ -303,6 +322,8 @@ public class MantenimientoPreventivoRevisar extends BaseActivity {
 
                                         if (editText != null) {
                                             editText.setVisibility(View.GONE);
+                                            inputText.setVisibility(View.GONE);
+
                                         }
 
                                         if (resultado.isEmpty()) {
@@ -344,6 +365,10 @@ public class MantenimientoPreventivoRevisar extends BaseActivity {
                             if(IDFPR.equals("0")){
                                 Externo.setChecked(true);
                                 Interno.setEnabled(false);
+
+                                CardInterno.setVisibility(View.GONE);     // Mostrar tarjeta completa
+                                CardExterno.setVisibility(View.VISIBLE);        // Ocultar si estaba activa
+
                                 LinearRealizaExterno.setVisibility(VISIBLE);
                                 LinearGuardar.setVisibility(VISIBLE);
                                 limpiarAutoComplete();
@@ -369,9 +394,16 @@ public class MantenimientoPreventivoRevisar extends BaseActivity {
                                 if(IDFPR.isEmpty()){
                                     Interno.setChecked(false);
                                     Externo.setChecked(false);
+
+                                    CardInterno.setVisibility(View.GONE);     // Mostrar tarjeta completa
+                                    CardExterno.setVisibility(View.GONE);        // Ocultar si estaba activa
+
                                 }else{
                                     Interno.setChecked(true);
                                     Externo.setEnabled(false);
+
+                                    CardInterno.setVisibility(View.VISIBLE);     // Mostrar tarjeta completa
+                                    CardExterno.setVisibility(View.GONE);        // Ocultar si estaba activa
 
                                     LinearRealizaInterno.setVisibility(VISIBLE);
                                     LinearGuardar.setVisibility(VISIBLE);
@@ -413,31 +445,53 @@ public class MantenimientoPreventivoRevisar extends BaseActivity {
 
     public void CheckboxClicked(View view) {
         boolean checked = ((CheckBox) view).isChecked();
-        int viewId = view.getId(); // Get the ID once
+        int viewId = view.getId();
 
         if (viewId == R.id.Interno) {
             if (checked) {
                 Externo.setEnabled(false);
-                LinearRealizaInterno.setVisibility(VISIBLE);
-                LinearGuardar.setVisibility(VISIBLE);
+
+                CardInterno.setVisibility(View.VISIBLE);     // Mostrar tarjeta Interno
+                CardExterno.setVisibility(View.GONE);        // Ocultar tarjeta Externo
+
+                LinearRealizaInterno.setVisibility(View.VISIBLE);
+                LinearRealizaExterno.setVisibility(View.GONE);
                 ListaPersonal();
-            }else{
+
+                // Mueve el botón al contenedor Interno
+                ((ViewGroup) BtnGuardar.getParent()).removeView(BtnGuardar);
+                LinearRealizaInterno.addView(BtnGuardar);
+                BtnGuardar.setVisibility(View.VISIBLE);
+            } else {
                 Externo.setEnabled(true);
+                CardInterno.setVisibility(View.GONE);
+                CardExterno.setVisibility(View.GONE);    // Asegura ocultar Externo
                 LinearRealizaInterno.setVisibility(View.GONE);
-                LinearGuardar.setVisibility(View.GONE);
-                limpiarAutoComplete();
+                LinearRealizaExterno.setVisibility(View.GONE);
+                BtnGuardar.setVisibility(View.GONE);
             }
         } else if (viewId == R.id.Externo) {
             if (checked) {
                 Interno.setEnabled(false);
-                LinearRealizaExterno.setVisibility(VISIBLE);
-                LinearGuardar.setVisibility(VISIBLE);
+
+                CardExterno.setVisibility(View.VISIBLE);     // Mostrar tarjeta Externo
+                CardInterno.setVisibility(View.GONE);        // Ocultar tarjeta Interno
+
+                LinearRealizaExterno.setVisibility(View.VISIBLE);
+                LinearRealizaInterno.setVisibility(View.GONE);
                 limpiarAutoComplete();
-            }else{
+
+                // Mueve el botón al contenedor Externo
+                ((ViewGroup) BtnGuardar.getParent()).removeView(BtnGuardar);
+                LinearRealizaExterno.addView(BtnGuardar);
+                BtnGuardar.setVisibility(View.VISIBLE);
+            } else {
                 Interno.setEnabled(true);
+                CardExterno.setVisibility(View.GONE);
+                CardInterno.setVisibility(View.GONE);    // Asegura ocultar Interno
+                LinearRealizaInterno.setVisibility(View.GONE);
                 LinearRealizaExterno.setVisibility(View.GONE);
-                LinearGuardar.setVisibility(View.GONE);
-                limpiarAutoComplete();
+                BtnGuardar.setVisibility(View.GONE);
             }
         }
     }

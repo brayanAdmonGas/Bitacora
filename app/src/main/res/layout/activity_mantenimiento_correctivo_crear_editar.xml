@@ -65,15 +65,16 @@ android:orientation="vertical"
 android:padding="16dp">
 
 <!-- Nombre del equipo -->
-<TextView
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="Nombre del equipo o área donde se detecta la anomalía:"
-android:textColor="#757575"
-android:textSize="14sp"
-android:layout_marginBottom="2dp" />
 
-<com.google.android.material.textfield.TextInputLayout
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:text="Nombre del equipo o área donde se detecta la anomalía:"
+        android:textColor="#757575"
+        android:textSize="14sp" />
+
+    <com.google.android.material.textfield.TextInputLayout
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:layout_marginTop="0dp"
@@ -446,7 +447,6 @@ app:strokeColor="?attr/colorPrimary"
 app:cornerRadius="16dp"
 app:strokeWidth="1.5dp"
 android:visibility="gone"
-
 />
 
 </LinearLayout>
