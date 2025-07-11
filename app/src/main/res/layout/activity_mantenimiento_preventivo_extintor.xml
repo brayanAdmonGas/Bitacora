@@ -25,7 +25,7 @@
             app:navigationIcon="?attr/actionModeCloseDrawable"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:titleTextAppearance="@style/ToolbarTitleStyle"
-            app:title="Mantenimiento Preventivo"/>
+            app:title="Mantenimiento Extintores"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 

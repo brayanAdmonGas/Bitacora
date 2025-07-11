@@ -180,8 +180,6 @@ public class MantenimientoPreventivo extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
-
-                            Log.d("Response", response.toString());
                             // Limpia la lista actual
                             itemList.clear();
 
@@ -208,7 +206,6 @@ public class MantenimientoPreventivo extends AppCompatActivity {
                             adapter.updateData(itemList);
                             ocultarError();
                             DialogHelper.hideProgressDialog();
-
 
                         } catch (JSONException e) {
                             DialogHelper.hideProgressDialog();

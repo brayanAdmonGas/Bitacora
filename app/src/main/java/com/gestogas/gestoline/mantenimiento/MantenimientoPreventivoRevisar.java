@@ -81,7 +81,7 @@ public class MantenimientoPreventivoRevisar extends BaseActivity {
     Button BtbFirma, BtnGuardar;
     String idSeleccionado = "0";
     private AutoCompleteTextView PersonaRealizaInterno;
-    private EditText Observaciones, PersonaRealizaExterno;
+    private EditText Observaciones;
     private ArrayAdapter<String> adapter;
     private final Map<String, String> mapaPersonal = new HashMap<>();
     private final List<String> listaNombres = new ArrayList<>();
@@ -130,7 +130,6 @@ public class MantenimientoPreventivoRevisar extends BaseActivity {
         BtbFirma = findViewById(R.id.BtbFirma);
         LinearGuardar = findViewById(R.id.LinearGuardar);
         BtnGuardar = findViewById(R.id.BtnGuardar);
-        PersonaRealizaExterno = findViewById(R.id.et_nombre);
         TxtSublista1 = findViewById(R.id.TxtSublista1);
         TxtSublista2 = findViewById(R.id.TxtSublista2);
         TxtSublista3 = findViewById(R.id.TxtSublista3);
