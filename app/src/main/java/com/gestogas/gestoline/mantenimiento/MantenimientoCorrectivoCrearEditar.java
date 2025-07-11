@@ -50,6 +50,7 @@ import com.gestogas.gestoline.utils.ImageNameGenerator;
 import com.gestogas.gestoline.utils.SignatureView;
 import com.gestogas.gestoline.utils.TecladoUtils;
 import com.gestogas.gestoline.utils.ToastUtils;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 
 import org.json.JSONArray;
@@ -127,8 +128,6 @@ public class MantenimientoCorrectivoCrearEditar extends BaseActivity {
         ImageFirma = findViewById(R.id.ImageFirma);
 
         BtbFirma = findViewById(R.id.BtbFirma);
-
-        LinearGuardar = findViewById(R.id.LinearGuardar);
         BtnGuardar = findViewById(R.id.BtnGuardar);
         BtnGuardar.setText(tituloboton);
 
@@ -163,7 +162,15 @@ public class MantenimientoCorrectivoCrearEditar extends BaseActivity {
         } else {
             BtnGuardar.setEnabled(false);
             layoutFueraRango.setVisibility(View.VISIBLE);
-            BtnGuardar.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.color_inactivo));
+            // Cambiar a gris (#757575)
+            int gris = Color.parseColor("#F5F5F5");
+            int gris2 = Color.parseColor("#757575");
+
+            MaterialButton boton = (MaterialButton) BtnGuardar; // casteo explícito
+            BtnGuardar.setTextColor(gris2);
+            boton.setStrokeColor(ColorStateList.valueOf(gris)); // cambia borde
+            BtnGuardar.setBackgroundTintList(ColorStateList.valueOf(gris)); // opcional si quieres también fondo gris
+
         }
 
     }
@@ -213,8 +220,11 @@ public class MantenimientoCorrectivoCrearEditar extends BaseActivity {
 
                                 Externo.setChecked(true);
                                 Interno.setEnabled(false);
+
+                                CardInterno.setVisibility(View.GONE);     // Mostrar tarjeta completa
+                                CardExterno.setVisibility(View.VISIBLE);        // Ocultar si estaba activa
+
                                 LinearRealizaExterno.setVisibility(View.VISIBLE);
-                                LinearGuardar.setVisibility(View.VISIBLE);
                                 limpiarAutoComplete();
 
                                 BtbFirma.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#82F5A5")));
@@ -232,15 +242,27 @@ public class MantenimientoCorrectivoCrearEditar extends BaseActivity {
                                 idSeleccionado = IDFPR;
                                 nombreImagen = FPR;
 
+                                ((ViewGroup) BtnGuardar.getParent()).removeView(BtnGuardar);
+                                LinearRealizaExterno.addView(BtnGuardar);
+                                BtnGuardar.setVisibility(View.VISIBLE);
+
                             }else{
                                 Interno.setChecked(true);
                                 Externo.setEnabled(false);
+
+                                CardInterno.setVisibility(View.VISIBLE);     // Mostrar tarjeta completa
+                                CardExterno.setVisibility(View.GONE);        // Ocultar si estaba activa
+
                                 LinearRealizaInterno.setVisibility(View.VISIBLE);
-                                LinearGuardar.setVisibility(View.VISIBLE);
                                 ListaPersonal();
 
                                 PersonaRealizaInterno.setText(PFPR);
                                 idSeleccionado = IDFPR;
+
+
+                                ((ViewGroup) BtnGuardar.getParent()).removeView(BtnGuardar);
+                                LinearRealizaInterno.addView(BtnGuardar);
+                                BtnGuardar.setVisibility(View.VISIBLE);
                             }
 
                             DialogHelper.hideProgressDialog();
@@ -323,7 +345,14 @@ public class MantenimientoCorrectivoCrearEditar extends BaseActivity {
         StringRequest request = new StringRequest(Request.Method.POST, url,
                 response -> {
 
-                    BtbFirma.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#82F5A5")));
+                    // Cambiar a gris (#757575)
+                    int gris = Color.parseColor("#4CAF50");
+                    int gris2 = Color.parseColor("#4CAF50");
+
+                    MaterialButton boton = (MaterialButton) BtbFirma; // casteo explícito
+                    BtbFirma.setTextColor(gris2);
+                    boton.setStrokeColor(ColorStateList.valueOf(gris)); // cambia borde
+
                     TxtPersonalExterno.setVisibility(View.VISIBLE);
                     valExterno = PersonaRealizaExterno.getText().toString();
                     TxtPersonalExterno.setText(PersonaRealizaExterno.getText().toString());
@@ -459,8 +488,8 @@ public class MantenimientoCorrectivoCrearEditar extends BaseActivity {
             if (checked) {
                 Externo.setEnabled(false);
 
-                CardInterno.setVisibility(View.VISIBLE);     // Mostrar tarjeta completa
-                CardExterno.setVisibility(View.GONE);        // Ocultar si estaba activa
+                CardInterno.setVisibility(View.VISIBLE);     // Mostrar tarjeta Interno
+                CardExterno.setVisibility(View.GONE);        // Ocultar tarjeta Externo
 
                 LinearRealizaInterno.setVisibility(View.VISIBLE);
                 LinearRealizaExterno.setVisibility(View.GONE);
@@ -472,15 +501,18 @@ public class MantenimientoCorrectivoCrearEditar extends BaseActivity {
                 BtnGuardar.setVisibility(View.VISIBLE);
             } else {
                 Externo.setEnabled(true);
-                CardInterno.setVisibility(View.GONE);        // Ocultar tarjeta
+                CardInterno.setVisibility(View.GONE);
+                CardExterno.setVisibility(View.GONE);    // Asegura ocultar Externo
+                LinearRealizaInterno.setVisibility(View.GONE);
+                LinearRealizaExterno.setVisibility(View.GONE);
                 BtnGuardar.setVisibility(View.GONE);
             }
         } else if (viewId == R.id.Externo) {
             if (checked) {
                 Interno.setEnabled(false);
 
-                CardExterno.setVisibility(View.VISIBLE);     // Mostrar tarjeta completa
-                CardInterno.setVisibility(View.GONE);        // Ocultar si estaba activa
+                CardExterno.setVisibility(View.VISIBLE);     // Mostrar tarjeta Externo
+                CardInterno.setVisibility(View.GONE);        // Ocultar tarjeta Interno
 
                 LinearRealizaExterno.setVisibility(View.VISIBLE);
                 LinearRealizaInterno.setVisibility(View.GONE);
@@ -492,11 +524,15 @@ public class MantenimientoCorrectivoCrearEditar extends BaseActivity {
                 BtnGuardar.setVisibility(View.VISIBLE);
             } else {
                 Interno.setEnabled(true);
-                CardExterno.setVisibility(View.GONE);        // Ocultar tarjeta
+                CardExterno.setVisibility(View.GONE);
+                CardInterno.setVisibility(View.GONE);    // Asegura ocultar Interno
+                LinearRealizaInterno.setVisibility(View.GONE);
+                LinearRealizaExterno.setVisibility(View.GONE);
                 BtnGuardar.setVisibility(View.GONE);
             }
         }
     }
+
 
 
 

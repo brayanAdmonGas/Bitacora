@@ -15,7 +15,7 @@ android:orientation="horizontal">
 <!-- Línea de color lateral izquierdo -->
 <View
 android:id="@+id/view_color"
-android:layout_width="4.5dp"
+android:layout_width="5dp"
 android:layout_height="match_parent"
 android:background="@color/colorPrimary" />
 
@@ -25,7 +25,7 @@ android:layout_width="0dp"
 android:layout_height="wrap_content"
 android:layout_weight="1"
 android:orientation="horizontal"
-android:padding="12dp"
+android:padding="10dp"
 android:gravity="center_vertical">
 
 <!-- Ícono circular -->
@@ -50,7 +50,7 @@ android:id="@+id/txt1"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
 android:text="Nombre Completo:"
-android:textSize="14sp"
+android:textSize="12sp"
 android:textColor="#757575" />
 
 <!-- Valor: Nombre del usuario -->
@@ -59,7 +59,7 @@ android:id="@+id/NombreCompleto"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
 android:text="Aqui va el nombre completo del usuario"
-android:textSize="16sp"
+android:textSize="14sp"
 android:textColor="#212121" />
 
 <!-- Título: Autorización -->
@@ -68,7 +68,7 @@ android:id="@+id/txt2"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
 android:text="Autorización:"
-android:textSize="14sp"
+android:textSize="12sp"
 android:textColor="#757575"
 android:layout_marginTop="6dp" />
 
@@ -78,7 +78,7 @@ android:id="@+id/Autorizacion"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
 android:text="Aqui va la autorizacion"
-android:textSize="16sp"
+android:textSize="14sp"
 android:textStyle="bold"
 android:textColor="#212121" />
 

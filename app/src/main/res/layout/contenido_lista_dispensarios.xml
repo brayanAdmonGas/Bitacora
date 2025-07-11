@@ -4,51 +4,75 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
-android:layout_marginBottom="12dp"
+android:layout_marginBottom="14dp"
 app:cardCornerRadius="16dp"
-android:elevation="6dp">
+android:elevation="0dp">
 
 <LinearLayout
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
-android:orientation="horizontal"
+android:orientation="vertical"
 android:background="@android:color/white">
 
-<!-- Bloque Azul -->
+<!-- ENCABEZADO AZUL -->
 <LinearLayout
-android:layout_width="120dp"
-android:layout_height="match_parent"
-android:orientation="vertical"
-android:gravity="center"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:background="@color/colorPrimary"
 android:padding="12dp"
-android:background="@color/colorPrimary">
+android:orientation="horizontal">
 
+<!-- Icono izquierda -->
+<ImageView
+android:id="@+id/iconoGasolineraEncabezado"
+android:layout_width="20dp"
+android:layout_height="20dp"
+android:src="@drawable/ic_dispensarios"
+android:tint="@color/white"
+android:layout_gravity="center_vertical" />
+
+<!-- Espacio flexible -->
+<View
+android:layout_width="0dp"
+android:layout_height="0dp"
+android:layout_weight="1" />
+
+<!-- Folio -->
 <TextView
+android:id="@+id/textView6"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
-android:text="No. Dispensario:"
+android:text="No. Dispensario: "
 android:textSize="14sp"
 android:textColor="@android:color/white"
-android:textAlignment="center"/>
+android:textStyle="bold" />
+
 <TextView
 android:id="@+id/NoDispensario"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
 android:text="1"
-android:textSize="28sp"
+android:textSize="14sp"
 android:textColor="@android:color/white"
 android:textStyle="bold" />
 </LinearLayout>
 
-<!-- Contenido: Marca/Modelo/Serie + Producto1/2/3 -->
+<!-- CONTENIDO -->
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal">
+
+<!-- Contenido central -->
 <LinearLayout
 android:layout_width="0dp"
-android:layout_height="wrap_content"
+android:layout_height="match_parent"
 android:layout_weight="1"
 android:orientation="vertical"
-android:padding="12dp">
+android:padding="12dp"
+android:gravity="center_vertical">
 
-<!-- Fila 1: Marca + Producto 1 -->
+<!-- Fila 1: Producto y Litros de compra -->
 <LinearLayout
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
@@ -75,7 +99,6 @@ android:text="Wayne"
 android:textSize="14sp"
 android:textColor="#212121" />
 </LinearLayout>
-
 <!-- Producto 1 -->
 <LinearLayout
 android:layout_width="0dp"
@@ -86,6 +109,7 @@ android:orientation="vertical">
 android:id="@+id/NomProducto1"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
+android:textStyle="bold"
 android:text="Producto 1:"
 android:textSize="12sp"
 android:textColor="#757575" />
@@ -98,7 +122,6 @@ android:textSize="14sp"
 android:textColor="#212121" />
 </LinearLayout>
 </LinearLayout>
-
 <!-- Fila 2: Modelo + Producto 2 -->
 <LinearLayout
 android:layout_width="match_parent"
@@ -137,6 +160,7 @@ android:orientation="vertical">
 android:id="@+id/NomProducto2"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
+android:textStyle="bold"
 android:text="Producto 2:"
 android:textSize="12sp"
 android:textColor="#757575" />
@@ -188,6 +212,7 @@ android:visibility="gone">
 android:id="@+id/NomProducto3"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
+android:textStyle="bold"
 android:text="Producto 3:"
 android:textSize="12sp"
 android:textColor="#757575" />
@@ -200,20 +225,9 @@ android:textSize="14sp"
 android:textColor="#212121" />
 </LinearLayout>
 </LinearLayout>
+
 </LinearLayout>
-
-<!-- Ícono -->
-<LinearLayout
-android:layout_width="60dp"
-android:layout_height="match_parent"
-android:gravity="center"
-android:orientation="vertical">
-
-<ImageView
-android:id="@+id/iconoGasolinera2"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:src="@drawable/ic_dispensarios" />
+    
 </LinearLayout>
 </LinearLayout>
 </androidx.cardview.widget.CardView>

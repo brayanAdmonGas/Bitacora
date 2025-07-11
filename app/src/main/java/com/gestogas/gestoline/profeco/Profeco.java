@@ -209,7 +209,7 @@ public class Profeco extends AppCompatActivity {
     private void mostrarError() {
         Mensaje.setVisibility(View.VISIBLE);
         Mensaje.setText("No se encontró información para mostrar");
-        ImgResultado.setImageResource(R.drawable.icon_sin_informacion);
+        ImgResultado.setImageResource(R.drawable.informacion);
         ImgResultado.setVisibility(View.VISIBLE);
     }
 
