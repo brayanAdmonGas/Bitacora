@@ -75,9 +75,6 @@ public class MantenimientoPreventivoExtintorDetalle extends AppCompatActivity {
         NumeroEquipo = getIntent().getStringExtra("NumeroEquipo");
         NombreEquipo = getIntent().getStringExtra("NombreEquipo");
 
-        TextView RazonSocial = findViewById(R.id.RazonSocial);
-        RazonSocial.setText(AppController.getInstance().GetRazonSocial());
-
         Editar = findViewById(R.id.Editar);
         Mensaje = findViewById(R.id.Mensaje);
         ImgResultado = findViewById(R.id.ImgResultado);

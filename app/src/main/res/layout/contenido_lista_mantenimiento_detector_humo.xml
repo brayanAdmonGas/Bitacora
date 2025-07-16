@@ -1,149 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp">
+<androidx.cardview.widget.CardView
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_marginBottom="14dp"
+app:cardCornerRadius="16dp"
+android:elevation="0dp">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="4dp"
-        tools:ignore="MissingConstraints">
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:background="@android:color/white">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="5dp"
-            tools:ignore="UselessLeaf">
+<!-- ENCABEZADO AZUL -->
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:background="@color/colorPrimary"
+android:padding="12dp"
+android:orientation="horizontal">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/NoDetectorHumo"
-                app:layout_constraintTop_toBottomOf="@+id/NoDetectorHumo">
+<!-- Icono izquierda -->
+<ImageView
+android:id="@+id/iconoGasolineraEncabezado"
+android:layout_width="20dp"
+android:layout_height="20dp"
+android:src="@drawable/ic_detector_humo"
+android:tint="@color/white"
+android:layout_gravity="center_vertical" />
 
-                <TextView
-                    android:id="@+id/textView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="No. Detector de humo"
-                    android:fontFamily="sans-serif-light"
-                    android:textSize="16dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+<!-- Espacio flexible -->
+<View
+android:layout_width="0dp"
+android:layout_height="0dp"
+android:layout_weight="1" />
 
-                <TextView
-                    android:id="@+id/NoDetectorHumo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:textSize="16dp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/textView1"
-                    app:layout_constraintTop_toBottomOf="@+id/textView1" />
+<!-- Folio -->
+<TextView
+android:id="@+id/textView6"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="No. Detector de Humo: "
+android:textSize="14sp"
+android:textColor="@android:color/white"
+android:textStyle="bold" />
+
+<TextView
+android:id="@+id/NoDetectorHumo"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="1"
+android:textSize="14sp"
+android:textColor="@android:color/white"
+android:textStyle="bold" />
+</LinearLayout>
+
+<!-- CONTENIDO -->
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal">
+
+<!-- Contenido central -->
+<LinearLayout
+android:layout_width="0dp"
+android:layout_height="match_parent"
+android:layout_weight="1"
+android:orientation="vertical"
+android:padding="12dp"
+android:gravity="center_vertical">
+
+<!-- Fila 2: Modelo + Producto 2 -->
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:layout_marginBottom="4dp">
+
+<!-- Modelo -->
+<LinearLayout
+android:layout_width="0dp"
+android:layout_weight="1"
+android:layout_height="wrap_content"
+android:orientation="vertical">
+
+<TextView
+android:id="@+id/txt2"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Ubicación:"
+android:textSize="12sp"
+android:textColor="#757575" />
+<TextView
+android:id="@+id/Ubicacion"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:textSize="14sp"
+android:textColor="#212121" />
+
+</LinearLayout>
+</LinearLayout>
+
+<!-- Producto 2 -->
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:layout_marginBottom="4dp">
+<LinearLayout
+android:layout_width="0dp"
+android:layout_weight="1"
+android:layout_height="wrap_content"
+android:orientation="vertical">
+<TextView
+android:id="@+id/TxtRevision1"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Revisión auditiva (Emisión de sonido):"
+android:textSize="12sp"
+android:textColor="#757575" />
+<TextView
+android:id="@+id/TxtResultado1"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:textSize="14sp"
+android:textStyle="bold"
+android:textColor="#212121" />
+</LinearLayout>
+</LinearLayout>
+
+<!-- Producto 2 -->
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:layout_marginBottom="4dp">
+<LinearLayout
+android:layout_width="0dp"
+android:layout_weight="1"
+android:layout_height="wrap_content"
+android:orientation="vertical">
+<TextView
+android:id="@+id/TxtRevision2"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Revisión visual (Emisión de luz indicadora):"
+android:textSize="12sp"
+android:textColor="#757575" />
+<TextView
+android:id="@+id/TxtResultado2"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:textSize="14sp"
+android:textStyle="bold"
+android:textColor="#212121" />
+</LinearLayout>
+</LinearLayout>
+
+<!-- Producto 2 -->
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:layout_marginBottom="4dp">
+<LinearLayout
+android:layout_width="0dp"
+android:layout_weight="1"
+android:layout_height="wrap_content"
+android:orientation="vertical">
+<TextView
+android:id="@+id/TxtRevision3"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="¿La medición del detector es el óptimo?:"
+android:textSize="12sp"
+android:textColor="#757575" />
+<TextView
+android:id="@+id/TxtResultado3"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:textSize="14sp"
+android:textStyle="bold"
+android:textColor="#212121" />
+</LinearLayout>
+</LinearLayout>
+
+<!-- Producto 2 -->
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:layout_marginBottom="4dp">
+<LinearLayout
+android:layout_width="0dp"
+android:layout_weight="1"
+android:layout_height="wrap_content"
+android:orientation="vertical">
+<TextView
+android:id="@+id/TxtRevision4"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="¿Requiere cambio de batería?:"
+android:textSize="12sp"
+android:textColor="#757575" />
+<TextView
+android:id="@+id/TxtResultado4"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:textSize="14sp"
+android:textStyle="bold"
+android:textColor="#212121" />
+</LinearLayout>
+</LinearLayout>
 
 
-                <TextView
-                    android:id="@+id/textView18"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ubicación"
-                    android:fontFamily="sans-serif-light"
-                    android:textSize="16dp"
-                    app:layout_constraintStart_toStartOf="@+id/NoDetectorHumo"
-                    app:layout_constraintTop_toBottomOf="@+id/NoDetectorHumo" />
-
-                <TextView
-                    android:id="@+id/Ubicacion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:textSize="16dp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView18" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"/>
-
-            <TextView
-                android:id="@+id/TxtRevision1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Fecha:"
-                android:textColor="@color/colorPrimary"
-                android:fontFamily="sans-serif-light"
-                android:textSize="18dp"/>
-
-            <TextView
-                android:id="@+id/TxtResultado1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:textSize="16dp"/>
-
-            <TextView
-                android:id="@+id/TxtRevision2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Fecha:"
-                android:textColor="@color/colorPrimary"
-                android:fontFamily="sans-serif-light"
-                android:textSize="18dp"/>
-
-            <TextView
-                android:id="@+id/TxtResultado2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:textSize="16dp"/>
-
-            <TextView
-                android:id="@+id/TxtRevision3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Fecha:"
-                android:textColor="@color/colorPrimary"
-                android:fontFamily="sans-serif-light"
-                android:textSize="18dp"/>
-
-            <TextView
-                android:id="@+id/TxtResultado3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:textSize="16dp"/>
-
-            <TextView
-                android:id="@+id/TxtRevision4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Fecha:"
-                android:textColor="@color/colorPrimary"
-                android:fontFamily="sans-serif-light"
-                android:textSize="18dp"/>
-
-            <TextView
-                android:id="@+id/TxtResultado4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:textSize="16dp"/>
-
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
+</LinearLayout>
+</LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -48,11 +48,15 @@ import com.bumptech.glide.Glide;
 import com.gestogas.gestoline.Evidencias;
 import com.gestogas.gestoline.R;
 import com.gestogas.gestoline.controllers.AppController;
+import com.gestogas.gestoline.recepcion.RecepcionBitacoraCrearEditar;
 import com.gestogas.gestoline.utils.DialogHelper;
 import com.gestogas.gestoline.utils.DistanciaUtils;
 import com.gestogas.gestoline.utils.ResultadoValida;
 import com.gestogas.gestoline.utils.TecladoUtils;
 import com.gestogas.gestoline.utils.ToastUtils;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -73,6 +77,7 @@ public class MantenimientoPreventivoExtintor extends AppCompatActivity {
     TextView TxtTitulo;
     EditText Fecha,Manometro,BoquillaDescarga,Manguera,Funcionalidad,Observaciones;
     private AutoCompleteTextView PersonaRealizaInterno;
+    private TextInputLayout PersonaRealizaInterno2;
     private ArrayAdapter<String> adapter;
     private final Map<String, String> mapaPersonal = new HashMap<>();
     private final List<String> listaNombres = new ArrayList<>();
@@ -121,6 +126,7 @@ public class MantenimientoPreventivoExtintor extends AppCompatActivity {
         BtnSiguiente = findViewById(R.id.BtnSiguiente);
         BtnAnterior = findViewById(R.id.BtnAnterior);
         PersonaRealizaInterno = findViewById(R.id.PersonaRealizaInterno);
+        PersonaRealizaInterno2 = findViewById(R.id.PersonaRealizaInterno2);
         BtnGuardar = findViewById(R.id.BtnGuardar);
 
         TxtTitulo.setText(NombreEquipo);
@@ -163,13 +169,33 @@ public class MantenimientoPreventivoExtintor extends AppCompatActivity {
             layoutFueraRango.setVisibility(View.GONE);
         } else {
             BtnGuardar.setEnabled(false);
-            layoutFueraRango.setVisibility(VISIBLE);
-            BtnGuardar.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.color_inactivo));
+            layoutFueraRango.setVisibility(View.VISIBLE);
+
+            // Colores
+            int grisFondo = Color.parseColor("#F5F5F5");
+            int grisTexto = Color.parseColor("#757575");
+
+            // Configurar BtnGuardar
+            MaterialButton botonGuardar = (MaterialButton) BtnGuardar;
+            BtnGuardar.setTextColor(grisTexto);
+            botonGuardar.setStrokeColor(ColorStateList.valueOf(grisFondo));
+            BtnGuardar.setBackgroundTintList(ColorStateList.valueOf(grisFondo));
+
+            // Configurar BtnSiguiente
             BtnSiguiente.setEnabled(false);
-            BtnSiguiente.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.color_inactivo));
+            MaterialButton botonSiguiente = (MaterialButton) BtnSiguiente;
+            BtnSiguiente.setTextColor(grisTexto);
+            botonSiguiente.setStrokeColor(ColorStateList.valueOf(grisFondo));
+            BtnSiguiente.setBackgroundTintList(ColorStateList.valueOf(grisFondo));
+
+            // Configurar BtnAnterior
             BtnAnterior.setEnabled(false);
-            BtnAnterior.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.color_inactivo));
+            MaterialButton botonAnterior = (MaterialButton) BtnAnterior;
+            BtnAnterior.setTextColor(grisTexto);
+            botonAnterior.setStrokeColor(ColorStateList.valueOf(grisFondo));
+            BtnAnterior.setBackgroundTintList(ColorStateList.valueOf(grisFondo));
         }
+
 
         BtnSiguiente.setOnClickListener(view -> {
 
@@ -281,6 +307,8 @@ public class MantenimientoPreventivoExtintor extends AppCompatActivity {
                             }else {
                                 BtnGuardar.setVisibility(View.VISIBLE);
                                 PersonaRealizaInterno.setVisibility(View.VISIBLE);
+                                PersonaRealizaInterno2.setVisibility(View.VISIBLE);
+
                                 ListaPersonal();
                             }
 
@@ -301,10 +329,13 @@ public class MantenimientoPreventivoExtintor extends AppCompatActivity {
     }
 
     private void ListaPersonal() {
+        DialogHelper.showProgressDialog(this);
+
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                URL_SERVIDOR + "Autorizacion/personal-autorizado.php",
+        String url = URL_SERVIDOR + "Autorizacion/personal-autorizado.php";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -324,48 +355,43 @@ public class MantenimientoPreventivoExtintor extends AppCompatActivity {
                                 mapaPersonal.put(nombre, id);
                             }
 
-                            adapter = new ArrayAdapter<>(MantenimientoPreventivoExtintor.this,
-                                    android.R.layout.simple_dropdown_item_1line, listaNombres);
-                            PersonaRealizaInterno.setAdapter(adapter);
-                            PersonaRealizaInterno.setThreshold(1); // muestra sugerencias desde 1 letra
+                            // Configura el click para abrir pop-up
+                            PersonaRealizaInterno.setOnClickListener(v -> {
+                                int selectedIndex = listaNombres.indexOf(PersonaRealizaInterno.getText().toString());
 
-                            PersonaRealizaInterno.setOnItemClickListener((parent, view, position, id) -> {
-                                String nombreSeleccionado = adapter.getItem(position);
-                                idSeleccionado = mapaPersonal.getOrDefault(nombreSeleccionado, "0");
+                                new MaterialAlertDialogBuilder(MantenimientoPreventivoExtintor.this)
+                                        .setTitle("Selecciona el personal")
+                                        .setSingleChoiceItems(listaNombres.toArray(new String[0]), selectedIndex, (dialog, which) -> {
+                                            String seleccionado = listaNombres.get(which);
+                                            PersonaRealizaInterno.setText(seleccionado);
 
+                                            idSeleccionado = mapaPersonal.getOrDefault(seleccionado, "0");
+
+                                            dialog.dismiss();
+                                        })
+                                        .show();
                             });
-
-                            // Si se borra el texto o se edita manualmente, restablecer idSeleccionado a "0"
-                            PersonaRealizaInterno.addTextChangedListener(new TextWatcher() {
-                                @Override
-                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                                @Override
-                                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                    // Verifica si el texto ingresado está en la lista
-                                    String textoActual = s.toString();
-                                    if (!mapaPersonal.containsKey(textoActual)) {
-                                        idSeleccionado = "0";
-                                    }
-                                }
-
-                                @Override
-                                public void afterTextChanged(Editable s) {}
-                            });
-
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                        } finally {
+                            DialogHelper.hideProgressDialog();
                         }
                     }
-                }, error -> {
-            error.printStackTrace();
-        }) {
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        DialogHelper.hideProgressDialog();
+                    }
+                }
+        ) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("idEstacion", String.valueOf(idEstacion));
-                params.put("Categoria", "MPC");
+                params.put("Categoria", "RDP");
                 return params;
             }
         };

@@ -370,7 +370,10 @@ public class MantenimientoPreventivoRevisar extends BaseActivity {
                                 CardExterno.setVisibility(View.VISIBLE);        // Ocultar si estaba activa
 
                                 LinearRealizaExterno.setVisibility(VISIBLE);
-                                LinearGuardar.setVisibility(VISIBLE);
+
+                                ((ViewGroup) LinearGuardar.getParent()).removeView(LinearGuardar);
+                                LinearRealizaExterno.addView(LinearGuardar);
+                                LinearGuardar.setVisibility(View.VISIBLE);
                                 limpiarAutoComplete();
 
                                 BtbFirma.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#82F5A5")));
@@ -405,8 +408,10 @@ public class MantenimientoPreventivoRevisar extends BaseActivity {
                                     CardInterno.setVisibility(View.VISIBLE);     // Mostrar tarjeta completa
                                     CardExterno.setVisibility(View.GONE);        // Ocultar si estaba activa
 
-                                    LinearRealizaInterno.setVisibility(VISIBLE);
-                                    LinearGuardar.setVisibility(VISIBLE);
+                                    ((ViewGroup) LinearGuardar.getParent()).removeView(LinearGuardar);
+                                    LinearRealizaInterno.addView(LinearGuardar);
+                                    LinearGuardar.setVisibility(View.VISIBLE);
+
                                     ListaPersonal();
                                 }
 
@@ -459,16 +464,18 @@ public class MantenimientoPreventivoRevisar extends BaseActivity {
                 ListaPersonal();
 
                 // Mueve el botón al contenedor Interno
-                ((ViewGroup) BtnGuardar.getParent()).removeView(BtnGuardar);
-                LinearRealizaInterno.addView(BtnGuardar);
-                BtnGuardar.setVisibility(View.VISIBLE);
+                ((ViewGroup) LinearGuardar.getParent()).removeView(LinearGuardar);
+                LinearRealizaInterno.addView(LinearGuardar);
+                LinearGuardar.setVisibility(View.VISIBLE);
+
+
             } else {
                 Externo.setEnabled(true);
                 CardInterno.setVisibility(View.GONE);
                 CardExterno.setVisibility(View.GONE);    // Asegura ocultar Externo
                 LinearRealizaInterno.setVisibility(View.GONE);
                 LinearRealizaExterno.setVisibility(View.GONE);
-                BtnGuardar.setVisibility(View.GONE);
+                LinearGuardar.setVisibility(View.GONE);
             }
         } else if (viewId == R.id.Externo) {
             if (checked) {
@@ -482,16 +489,16 @@ public class MantenimientoPreventivoRevisar extends BaseActivity {
                 limpiarAutoComplete();
 
                 // Mueve el botón al contenedor Externo
-                ((ViewGroup) BtnGuardar.getParent()).removeView(BtnGuardar);
-                LinearRealizaExterno.addView(BtnGuardar);
-                BtnGuardar.setVisibility(View.VISIBLE);
+                ((ViewGroup) LinearGuardar.getParent()).removeView(LinearGuardar);
+                LinearRealizaExterno.addView(LinearGuardar);
+                LinearGuardar.setVisibility(View.VISIBLE);
             } else {
                 Interno.setEnabled(true);
                 CardExterno.setVisibility(View.GONE);
                 CardInterno.setVisibility(View.GONE);    // Asegura ocultar Interno
                 LinearRealizaInterno.setVisibility(View.GONE);
                 LinearRealizaExterno.setVisibility(View.GONE);
-                BtnGuardar.setVisibility(View.GONE);
+                LinearGuardar.setVisibility(View.GONE);
             }
         }
     }
