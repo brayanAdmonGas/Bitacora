@@ -19,6 +19,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -59,6 +60,7 @@ import com.gestogas.gestoline.utils.ResultadoValida;
 import com.gestogas.gestoline.utils.SignatureView;
 import com.gestogas.gestoline.utils.TecladoUtils;
 import com.gestogas.gestoline.utils.ToastUtils;
+import com.google.android.material.button.MaterialButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -83,7 +85,7 @@ public class MantenimientoPreventivoDetectorHumo extends AppCompatActivity {
     CheckBox Interno,Externo;
     TextView TxtPersonalExterno;
     ImageView ImageFirma;
-    LinearLayout LinearRealizaInterno, LinearRealizaExterno, LinearGuardar;
+    LinearLayout LinearRealizaInterno, LinearRealizaExterno, LinearGuardar, LayoutRealiza, LayoutObservaciones, LinearContenidoExterno, LinearContenidoInterno;
     Button BtbFirma, BtnGuardar,BtnSiguiente, BtnAnterior;
     String idSeleccionado = "0";
     private AutoCompleteTextView PersonaRealizaInterno;
@@ -98,7 +100,6 @@ public class MantenimientoPreventivoDetectorHumo extends AppCompatActivity {
     double latitudeEstacion = 0, longitudeEstacion = 0, latitudeEquipo = 0, longitudeEquipo = 0;
     List<ResultadoValida> resultados = new ArrayList<>();
 
-    ConstraintLayout LayoutRealiza;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +153,10 @@ public class MantenimientoPreventivoDetectorHumo extends AppCompatActivity {
 
         Observaciones = findViewById(R.id.Observaciones);
         LayoutRealiza = findViewById(R.id.LayoutRealiza);
+        LayoutObservaciones = findViewById(R.id.LayoutObservaciones);
+
+        LinearContenidoInterno = findViewById(R.id.LinearContenidoInterno);
+        LinearContenidoExterno = findViewById(R.id.LinearContenidoExterno);
 
         BtnAnterior = findViewById(R.id.BtnAnterior);
         BtnSiguiente = findViewById(R.id.BtnSiguiente);
@@ -221,14 +226,24 @@ public class MantenimientoPreventivoDetectorHumo extends AppCompatActivity {
         });
 
 
+
         if (validarDistancia) {
             BtnGuardar.setEnabled(true);
             layoutFueraRango.setVisibility(View.GONE);
         } else {
             BtnGuardar.setEnabled(false);
-            layoutFueraRango.setVisibility(VISIBLE);
-            BtnGuardar.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.color_inactivo));
+            layoutFueraRango.setVisibility(View.VISIBLE);
+            // Cambiar a gris (#757575)
+            int gris = Color.parseColor("#F5F5F5");
+            int gris2 = Color.parseColor("#757575");
+
+            MaterialButton boton = (MaterialButton) BtnGuardar; // casteo explícito
+            BtnGuardar.setTextColor(gris2);
+            boton.setStrokeColor(ColorStateList.valueOf(gris)); // cambia borde
+            BtnGuardar.setBackgroundTintList(ColorStateList.valueOf(gris)); // opcional si quieres también fondo gris
+
         }
+
 
            fechtMantenimiento();
 
@@ -348,7 +363,8 @@ public class MantenimientoPreventivoDetectorHumo extends AppCompatActivity {
                             }else if(totaldetector == Integer.parseInt(NumeroPagina)){
 
                                 BtnSiguiente.setVisibility(View.GONE);
-                                Observaciones.setVisibility(View.VISIBLE);
+                                LayoutObservaciones.setVisibility(View.VISIBLE);
+
                                 TxtPersonal.setVisibility(View.VISIBLE);
                                 LayoutRealiza.setVisibility(View.VISIBLE);
 
@@ -356,6 +372,11 @@ public class MantenimientoPreventivoDetectorHumo extends AppCompatActivity {
                                     Externo.setChecked(true);
                                     Interno.setEnabled(false);
                                     LinearRealizaExterno.setVisibility(VISIBLE);
+
+                                    // Mueve el botón al contenedor Interno
+                                    ((ViewGroup) LinearGuardar.getParent()).removeView(LinearGuardar);
+                                    LinearContenidoExterno.addView(LinearGuardar);
+
                                     LinearGuardar.setVisibility(VISIBLE);
                                     limpiarAutoComplete();
 
@@ -385,6 +406,11 @@ public class MantenimientoPreventivoDetectorHumo extends AppCompatActivity {
                                         Externo.setEnabled(false);
 
                                         LinearRealizaInterno.setVisibility(VISIBLE);
+
+                                        // Mueve el botón al contenedor Interno
+                                        ((ViewGroup) LinearGuardar.getParent()).removeView(LinearGuardar);
+                                        LinearContenidoInterno.addView(LinearGuardar);
+
                                         LinearGuardar.setVisibility(VISIBLE);
                                         ListaPersonal();
                                     }
@@ -440,11 +466,17 @@ public class MantenimientoPreventivoDetectorHumo extends AppCompatActivity {
             if (checked) {
                 Externo.setEnabled(false);
                 LinearRealizaInterno.setVisibility(VISIBLE);
+
+                // Mueve el botón al contenedor Interno
+                ((ViewGroup) LinearGuardar.getParent()).removeView(LinearGuardar);
+                LinearContenidoInterno.addView(LinearGuardar);
                 LinearGuardar.setVisibility(VISIBLE);
                 ListaPersonal();
             }else{
                 Externo.setEnabled(true);
                 LinearRealizaInterno.setVisibility(View.GONE);
+                ((ViewGroup) LinearGuardar.getParent()).removeView(LinearGuardar);
+                LinearContenidoInterno.addView(LinearGuardar);
                 LinearGuardar.setVisibility(View.GONE);
                 limpiarAutoComplete();
             }
@@ -452,11 +484,18 @@ public class MantenimientoPreventivoDetectorHumo extends AppCompatActivity {
             if (checked) {
                 Interno.setEnabled(false);
                 LinearRealizaExterno.setVisibility(VISIBLE);
+
+                // Mueve el botón al contenedor Externo
+                ((ViewGroup) LinearGuardar.getParent()).removeView(LinearGuardar);
+                LinearContenidoExterno.addView(LinearGuardar);
                 LinearGuardar.setVisibility(VISIBLE);
                 limpiarAutoComplete();
             }else{
                 Interno.setEnabled(true);
                 LinearRealizaExterno.setVisibility(View.GONE);
+                // Mueve el botón al contenedor Externo
+                ((ViewGroup) LinearGuardar.getParent()).removeView(LinearGuardar);
+                LinearContenidoExterno.addView(LinearGuardar);
                 LinearGuardar.setVisibility(View.GONE);
                 limpiarAutoComplete();
             }

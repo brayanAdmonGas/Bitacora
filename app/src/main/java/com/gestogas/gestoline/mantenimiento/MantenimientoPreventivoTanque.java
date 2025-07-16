@@ -20,6 +20,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -60,6 +61,7 @@ import com.gestogas.gestoline.utils.ResultadoValida;
 import com.gestogas.gestoline.utils.SignatureView;
 import com.gestogas.gestoline.utils.TecladoUtils;
 import com.gestogas.gestoline.utils.ToastUtils;
+import com.google.android.material.button.MaterialButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -78,7 +80,7 @@ public class MantenimientoPreventivoTanque extends AppCompatActivity {
     double latitudeEstacion = 0, longitudeEstacion = 0, latitudeEquipo = 0, longitudeEquipo = 0;
     TextView TxtTitulo, TxtPersonalExterno;
     ImageView ImageFirma;
-    FrameLayout FLTipoBase, FLTipoSi, FLTipoNo;
+    LinearLayout FLTipoBase, FLTipoSi, FLTipoNo, LinearContenidoExterno, LinearContenidoInterno;
     CheckBox Si_1, No_1,
             Si_2, No_2,
             Si_3, No_3,
@@ -103,7 +105,7 @@ public class MantenimientoPreventivoTanque extends AppCompatActivity {
 
     Button BtbFirma, BtnFinalizar;
     ImageView RealizaImage, ResponsableTImage;
-    LinearLayout LinearTecnico, LinearFinalizar;
+    LinearLayout LinearInterno, LinearTecnico, LinearFinalizar;
 
     EditText Observaciones;
 
@@ -167,6 +169,10 @@ public class MantenimientoPreventivoTanque extends AppCompatActivity {
         FLTipoSi = findViewById(R.id.FLTipoSi);
         FLTipoNo = findViewById(R.id.FLTipoNo);
 
+        LinearContenidoInterno = findViewById(R.id.LinearContenidoInterno);
+        LinearContenidoExterno = findViewById(R.id.LinearContenidoExterno);
+
+
         Si_1 = findViewById(R.id.Si_1);
         No_1 = findViewById(R.id.No_1);
         Si_2 = findViewById(R.id.Si_2);
@@ -207,6 +213,7 @@ public class MantenimientoPreventivoTanque extends AppCompatActivity {
         EquipoULIT6 = findViewById(R.id.EquipoULIT6);
         PersonaRealizaInterno = findViewById(R.id.PersonaRealizaInterno);
 
+        LinearInterno = findViewById(R.id.LinearInterno);
         LinearTecnico = findViewById(R.id.LinearTecnico);
         LinearFinalizar = findViewById(R.id.LinearFinalizar);
         TxtPersonalExterno = findViewById(R.id.TxtPersonalExterno);
@@ -233,11 +240,19 @@ public class MantenimientoPreventivoTanque extends AppCompatActivity {
 
         if (validarDistancia) {
             BtnFinalizar.setEnabled(true);
-            layoutFueraRango.setVisibility(GONE);
+            layoutFueraRango.setVisibility(View.GONE);
         } else {
             BtnFinalizar.setEnabled(false);
-            layoutFueraRango.setVisibility(VISIBLE);
-            BtnFinalizar.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.color_inactivo));
+            layoutFueraRango.setVisibility(View.VISIBLE);
+            // Cambiar a gris (#757575)
+            int gris = Color.parseColor("#F5F5F5");
+            int gris2 = Color.parseColor("#757575");
+
+            MaterialButton boton = (MaterialButton) BtnFinalizar; // casteo explícito
+            BtnFinalizar.setTextColor(gris2);
+            boton.setStrokeColor(ColorStateList.valueOf(gris)); // cambia borde
+            BtnFinalizar.setBackgroundTintList(ColorStateList.valueOf(gris)); // opcional si quieres también fondo gris
+
         }
 
         BtnFinalizar.setOnClickListener(v-> {
@@ -404,21 +419,35 @@ public class MantenimientoPreventivoTanque extends AppCompatActivity {
     private void actualizarVistaNum2(boolean isSiChecked) {
         if (isSiChecked) {
             if (No_2 != null) No_2.setEnabled(false);
-            if (PersonaRealizaInterno != null) PersonaRealizaInterno.setVisibility(View.VISIBLE);
-            if (LinearFinalizar != null) LinearFinalizar.setVisibility(View.VISIBLE);
+            if (LinearInterno != null) LinearInterno.setVisibility(View.VISIBLE);
             ListaPersonal();
+
+            ViewGroup parent = (ViewGroup) LinearFinalizar.getParent();
+            if (parent != null) {
+                parent.removeView(LinearFinalizar);
+            }
+            LinearContenidoInterno.addView(LinearFinalizar);
+            if (LinearFinalizar != null) LinearFinalizar.setVisibility(View.VISIBLE);
+
         } else {
             if (Si_2 != null) Si_2.setEnabled(false);
             if (LinearTecnico != null) LinearTecnico.setVisibility(View.VISIBLE);
-            if (LinearFinalizar != null) LinearFinalizar.setVisibility(View.VISIBLE);
             limpiarAutoComplete();
+
+            ViewGroup parent = (ViewGroup) LinearFinalizar.getParent();
+            if (parent != null) {
+                parent.removeView(LinearFinalizar);
+            }
+            LinearContenidoExterno.addView(LinearFinalizar);
+            if (LinearFinalizar != null) LinearFinalizar.setVisibility(View.VISIBLE);
         }
     }
+
 
     private void reiniciarVistaNum2() {
         if (No_2 != null) No_2.setEnabled(true);
         if (Si_2 != null) Si_2.setEnabled(true);
-        if (PersonaRealizaInterno != null) PersonaRealizaInterno.setVisibility(View.GONE);
+        if (LinearInterno != null) LinearInterno.setVisibility(View.GONE);
         if (LinearTecnico != null) LinearTecnico.setVisibility(View.GONE);
         if (LinearFinalizar != null) LinearFinalizar.setVisibility(View.GONE);
     }
@@ -537,33 +566,7 @@ public class MantenimientoPreventivoTanque extends AppCompatActivity {
 
             }
 
-        }else if(view.getId() == R.id.Si_2) {
-            if (checked){
 
-                No_2.setEnabled(false);
-                PersonaRealizaInterno.setVisibility(View.VISIBLE);
-                LinearFinalizar.setVisibility(View.VISIBLE);
-                ListaPersonal();
-
-                }else{
-                No_2.setEnabled(true);
-                PersonaRealizaInterno.setVisibility(View.GONE);
-                LinearFinalizar.setVisibility(View.GONE);
-                limpiarAutoComplete();
-
-                }
-        }else if(view.getId() == R.id.No_2) {
-            if (checked){
-                Si_2.setEnabled(false);
-                LinearTecnico.setVisibility(View.VISIBLE);
-                LinearFinalizar.setVisibility(View.VISIBLE);
-                ListaPersonal();
-                }else{
-                Si_2.setEnabled(true);
-                LinearTecnico.setVisibility(View.GONE);
-                LinearFinalizar.setVisibility(View.GONE);
-                limpiarAutoComplete();
-                }
         }else if(view.getId() == R.id.Si_3) {
             No_3.setEnabled(!checked);
         }else if(view.getId() == R.id.No_3) {
@@ -628,6 +631,41 @@ public class MantenimientoPreventivoTanque extends AppCompatActivity {
             No_19.setEnabled(!checked);
         }else if (view.getId() == R.id.No_19) {
             Si_19.setEnabled(!checked);
+        }else if(view.getId() == R.id.Si_2) {
+            if (checked){
+
+                No_2.setEnabled(false);
+                LinearInterno.setVisibility(View.VISIBLE);
+                ((ViewGroup) LinearFinalizar.getParent()).removeView(LinearFinalizar);
+                LinearContenidoInterno.addView(LinearFinalizar);
+                LinearFinalizar.setVisibility(View.VISIBLE);
+                ListaPersonal();
+
+            }else{
+                No_2.setEnabled(true);
+                LinearInterno.setVisibility(View.GONE);
+                ((ViewGroup) LinearFinalizar.getParent()).removeView(LinearFinalizar);
+                LinearContenidoInterno.addView(LinearFinalizar);
+                LinearFinalizar.setVisibility(View.GONE);
+                limpiarAutoComplete();
+
+            }
+        }else if(view.getId() == R.id.No_2) {
+            if (checked) {
+                Si_2.setEnabled(false);
+                LinearTecnico.setVisibility(View.VISIBLE);
+                ((ViewGroup) LinearFinalizar.getParent()).removeView(LinearFinalizar);
+                LinearContenidoExterno.addView(LinearFinalizar);
+                LinearFinalizar.setVisibility(View.VISIBLE);
+                ListaPersonal();
+            } else {
+                Si_2.setEnabled(true);
+                LinearTecnico.setVisibility(View.GONE);
+                ((ViewGroup) LinearFinalizar.getParent()).removeView(LinearFinalizar);
+                LinearContenidoExterno.addView(LinearFinalizar);
+                LinearFinalizar.setVisibility(View.GONE);
+                limpiarAutoComplete();
+            }
         }
     }
 

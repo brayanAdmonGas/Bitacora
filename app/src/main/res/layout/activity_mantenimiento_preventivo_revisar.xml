@@ -1319,7 +1319,6 @@ android:textColor="?attr/colorPrimary"
 app:strokeColor="?attr/colorPrimary"
 app:cornerRadius="16dp"
 app:strokeWidth="1.5dp"
-android:visibility="gone"
 />
 
 

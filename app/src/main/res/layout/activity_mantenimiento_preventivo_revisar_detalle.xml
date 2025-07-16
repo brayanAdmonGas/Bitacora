@@ -49,7 +49,6 @@ android:layout_height="wrap_content"
 android:orientation="vertical">
 
 <!-- Card datos de la recepcion -->
-<!-- Card datos de la recepcion -->
 <androidx.cardview.widget.CardView
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
@@ -838,7 +837,7 @@ android:gravity="center">
 android:id="@+id/encabezadoRecibe"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
-android:text="Nombre y firma de la persona que recibe"
+android:text="Nombre y firma de la persona que realizo"
 android:textColor="@android:color/white"
 android:textSize="14sp"
 android:textStyle="bold"/>

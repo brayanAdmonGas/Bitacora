@@ -19,6 +19,7 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -67,7 +68,9 @@ public class RecepcionBitacoraDetalle extends AppCompatActivity implements adapt
             Merma;
 
     ImageView ImagePR, ImagePS;
-    FrameLayout FrameLayoutC, FrameLayoutO, FrameLayoutFPR, FrameLayoutFPS;
+    FrameLayout FrameLayoutC, FrameLayoutO;
+
+    CardView FrameLayoutFPR, FrameLayoutFPS;
     FloatingActionButton Editar, Cancelar;
     Button  Evidencia;
     double latitudeEstacion = 0, longitudeEstacion = 0, latitudeEquipo = 0, longitudeEquipo = 0;

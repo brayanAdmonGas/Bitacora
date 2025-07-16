@@ -2,11 +2,13 @@ package com.gestogas.gestoline.mantenimiento;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -125,6 +127,23 @@ public class MantenimientoCorrectivo extends AppCompatActivity {
 
         // Usa el SearchView de androidx.appcompat
         SearchView searchView = (SearchView) searchItem.getActionView();
+
+        // Personalizar texto del SearchView
+        EditText searchEditText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+        searchEditText.setTextColor(Color.WHITE);            // Color del texto ingresado
+        searchEditText.setHintTextColor(Color.LTGRAY);       // Color del hint
+
+        // Personalizar ícono de lupa
+        ImageView searchIcon = searchView.findViewById(androidx.appcompat.R.id.search_mag_icon);
+        if (searchIcon != null) {
+            searchIcon.setColorFilter(Color.WHITE);
+        }
+
+        // Personalizar ícono de cerrar (x)
+        ImageView closeIcon = searchView.findViewById(androidx.appcompat.R.id.search_close_btn);
+        if (closeIcon != null) {
+            closeIcon.setColorFilter(Color.WHITE);
+        }
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

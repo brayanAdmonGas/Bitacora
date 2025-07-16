@@ -1,219 +1,318 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp">
+<androidx.cardview.widget.CardView
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_marginBottom="14dp"
+app:cardCornerRadius="16dp"
+android:elevation="0dp">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="4dp"
-        tools:ignore="MissingConstraints">
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:background="@android:color/white">
 
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:orientation="vertical"
-           android:padding="5dp"
-           tools:ignore="UselessLeaf">
+<!-- ENCABEZADO AZUL -->
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:background="@color/colorPrimary"
+android:padding="12dp"
+android:orientation="horizontal">
 
-           <androidx.constraintlayout.widget.ConstraintLayout
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:layout_marginTop="5dp"
-               app:layout_constraintBottom_toBottomOf="@+id/NuExtintor"
-               app:layout_constraintTop_toBottomOf="@+id/NuExtintor">
+<!-- Icono izquierda -->
+<ImageView
+android:id="@+id/iconoGasolineraEncabezado"
+android:layout_width="20dp"
+android:layout_height="20dp"
+android:src="@drawable/ic_extintores"
+android:tint="@color/white"
+android:layout_gravity="center_vertical" />
 
-               <TextView
-                   android:id="@+id/textView1"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="No. De extintor "
-                   android:fontFamily="sans-serif-light"
-                   android:textSize="16dp"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toTopOf="parent" />
+<!-- Espacio flexible -->
+<View
+android:layout_width="0dp"
+android:layout_height="0dp"
+android:layout_weight="1" />
 
-               <TextView
-                   android:id="@+id/NuExtintor"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:fontFamily="sans-serif-light"
-                   android:textSize="16dp"
-                   android:textStyle="bold"
-                   app:layout_constraintStart_toStartOf="@+id/textView1"
-                   app:layout_constraintTop_toBottomOf="@+id/textView1" />
+<!-- Folio -->
+<TextView
+android:id="@+id/textView6"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="No. Extintor: "
+android:textSize="14sp"
+android:textColor="@android:color/white"
+android:textStyle="bold" />
 
-               <TextView
-                   android:id="@+id/textView2"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Tipo de Extintor"
-                   android:fontFamily="sans-serif-light"
-                   android:textSize="16dp"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintTop_toTopOf="parent" />
+<TextView
+android:id="@+id/NuExtintor"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="1"
+android:textSize="14sp"
+android:textColor="@android:color/white"
+android:textStyle="bold" />
+</LinearLayout>
 
-               <TextView
-                   android:id="@+id/TipoExtintor"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:fontFamily="sans-serif-light"
-                   android:textSize="16dp"
-                   android:textStyle="bold"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintTop_toBottomOf="@+id/textView2" />
+<!-- CONTENIDO -->
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal">
 
-               <TextView
-                   android:id="@+id/textView18"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Ubicación"
-                   android:fontFamily="sans-serif-light"
-                   android:textSize="16dp"
-                   app:layout_constraintStart_toStartOf="@+id/NuExtintor"
-                   app:layout_constraintTop_toBottomOf="@+id/NuExtintor" />
+<!-- Contenido central -->
+<LinearLayout
+android:layout_width="0dp"
+android:layout_height="match_parent"
+android:layout_weight="1"
+android:orientation="vertical"
+android:padding="12dp"
+android:gravity="center_vertical">
 
-               <TextView
-                   android:id="@+id/Ubicacion"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:fontFamily="sans-serif-light"
-                   android:textSize="16dp"
-                   android:textStyle="bold"
-                   app:layout_constraintStart_toStartOf="parent"
-                   app:layout_constraintTop_toBottomOf="@+id/textView18" />
+<!-- Fila 1: Producto y Litros de compra -->
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:layout_marginBottom="4dp">
 
-               <TextView
-                   android:id="@+id/textView19"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Peso Kg"
-                   android:fontFamily="sans-serif-light"
-                   android:textSize="16dp"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintTop_toBottomOf="@+id/TipoExtintor" />
+<!-- Producto -->
+<LinearLayout
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+android:layout_weight="1"
+android:orientation="vertical">
 
-               <TextView
-                   android:id="@+id/PesoKg"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:fontFamily="sans-serif-light"
-                   android:textSize="16dp"
-                   android:textStyle="bold"
-                   app:layout_constraintEnd_toEndOf="parent"
-                   app:layout_constraintTop_toBottomOf="@+id/textView19" />
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Peso (Kg):"
+android:textSize="12sp"
+android:textColor="#757575" />
 
-           </androidx.constraintlayout.widget.ConstraintLayout>
+<TextView
+android:id="@+id/PesoKg"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:textSize="14sp"
+android:textColor="#212121" />
+</LinearLayout>
 
-           <View
-               android:layout_width="match_parent"
-               android:layout_height="1dp"
-               android:background="?android:attr/listDivider"
-               android:layout_marginTop="5dp"
-               android:layout_marginBottom="5dp"/>
+<!-- Litros de compra -->
+<LinearLayout
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+android:layout_weight="1"
+android:orientation="vertical">
 
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="Fecha:"
-               android:textColor="@color/colorPrimary"
-               android:fontFamily="sans-serif-light"
-               android:textSize="18dp"/>
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Tipo:"
+android:textSize="12sp"
+android:textColor="#757575" />
 
-           <TextView
-               android:id="@+id/TxtFecha"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:fontFamily="sans-serif-light"
-               android:textSize="16dp"/>
+<TextView
+android:id="@+id/TipoExtintor"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:textSize="14sp"
+android:textColor="#212121" />
+</LinearLayout>
+</LinearLayout>
 
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="Manómetro:"
-               android:textColor="@color/colorPrimary"
-               android:fontFamily="sans-serif-light"
-               android:textSize="18dp"
-               android:layout_marginTop="5dp"/>
+<!-- Fila 2: Modelo + Producto 2 -->
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:layout_marginBottom="4dp">
 
-           <TextView
-               android:id="@+id/TxtManometro"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:fontFamily="sans-serif-light"
-               android:textSize="16dp"/>
+<!-- Modelo -->
+<LinearLayout
+android:layout_width="0dp"
+android:layout_weight="1"
+android:layout_height="wrap_content"
+android:orientation="vertical">
 
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="Boquilla de descarga:"
-               android:textColor="@color/colorPrimary"
-               android:fontFamily="sans-serif-light"
-               android:textSize="18dp"
-               android:layout_marginTop="5dp"/>
+<TextView
+android:id="@+id/txt2"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Ubicación:"
+android:textSize="12sp"
+android:textColor="#757575" />
+<TextView
+android:id="@+id/Ubicacion"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:textSize="14sp"
+android:textColor="#212121" />
 
-           <TextView
-               android:id="@+id/TxtBoquillaDescarga"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:fontFamily="sans-serif-light"
-               android:textSize="16dp"/>
+</LinearLayout>
+</LinearLayout>
 
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="Manguera:"
-               android:textColor="@color/colorPrimary"
-               android:fontFamily="sans-serif-light"
-               android:textSize="18dp"
-               android:layout_marginTop="5dp"/>
+<!-- Producto 2 -->
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:layout_marginBottom="4dp">
+<LinearLayout
+android:layout_width="0dp"
+android:layout_weight="1"
+android:layout_height="wrap_content"
+android:orientation="vertical">
+<TextView
+android:id="@+id/txt3"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Fecha de recarga:"
+android:textSize="12sp"
+android:textColor="#757575" />
+<TextView
+android:id="@+id/TxtFecha"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:textSize="14sp"
+android:textColor="#212121" />
+</LinearLayout>
+</LinearLayout>
 
-           <TextView
-               android:id="@+id/TxtManguera"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:fontFamily="sans-serif-light"
-               android:textSize="16dp"/>
+<!-- Fila 1: Producto y Litros de compra -->
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:layout_marginBottom="4dp">
 
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="Funcionalidad:"
-               android:textColor="@color/colorPrimary"
-               android:fontFamily="sans-serif-light"
-               android:textSize="18dp"
-               android:layout_marginTop="5dp"/>
+<!-- Producto -->
+<LinearLayout
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+android:layout_weight="1"
+android:orientation="vertical">
 
-           <TextView
-               android:id="@+id/TxtFuncionalidad"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:fontFamily="sans-serif-light"
-               android:textSize="16dp"/>
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Manómetro:"
+android:textSize="12sp"
+android:textColor="#757575" />
 
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="Observaciones:"
-               android:textColor="@color/colorPrimary"
-               android:fontFamily="sans-serif-light"
-               android:textSize="18dp"
-               android:layout_marginTop="5dp"
-               />
+<TextView
+android:id="@+id/TxtManometro"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:textSize="14sp"
+android:textColor="#212121" />
+</LinearLayout>
 
-           <TextView
-               android:id="@+id/TxtObservaciones"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:fontFamily="sans-serif-light"
-               android:textSize="16dp"/>
+<!-- Litros de compra -->
+<LinearLayout
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+android:layout_weight="1"
+android:orientation="vertical">
 
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Boquilla de descarga:"
+android:textSize="12sp"
+android:textColor="#757575" />
 
-       </LinearLayout>
+<TextView
+android:id="@+id/TxtBoquillaDescarga"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:textSize="14sp"
+android:textColor="#212121" />
+</LinearLayout>
+</LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+<!-- Fila 1: Producto y Litros de compra -->
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:layout_marginBottom="4dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<!-- Producto -->
+<LinearLayout
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+android:layout_weight="1"
+android:orientation="vertical">
+
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Manguera:"
+android:textSize="12sp"
+android:textColor="#757575" />
+
+<TextView
+android:id="@+id/TxtManguera"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:textSize="14sp"
+android:textColor="#212121" />
+</LinearLayout>
+
+<!-- Litros de compra -->
+<LinearLayout
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+android:layout_weight="1"
+android:orientation="vertical">
+
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Funcionalidad:"
+android:textSize="12sp"
+android:textColor="#757575" />
+
+<TextView
+android:id="@+id/TxtFuncionalidad"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:textSize="14sp"
+android:textColor="#212121" />
+</LinearLayout>
+</LinearLayout>
+
+<!-- Producto 2 -->
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:layout_marginBottom="4dp">
+<LinearLayout
+android:layout_width="0dp"
+android:layout_weight="1"
+android:layout_height="wrap_content"
+android:orientation="vertical">
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Observaciones:"
+android:textSize="12sp"
+android:textColor="#757575" />
+<TextView
+android:id="@+id/TxtObservaciones"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:textSize="14sp"
+android:textColor="#212121" />
+</LinearLayout>
+</LinearLayout>
+
+</LinearLayout>
+</LinearLayout>
+</LinearLayout>
+</androidx.cardview.widget.CardView>
