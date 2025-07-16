@@ -1,6 +1,7 @@
 package com.gestogas.gestoline.mantenimiento;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,12 +17,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -46,7 +49,6 @@ import java.util.List;
 
 public class MantenimientoPreventivo extends AppCompatActivity {
     private int Idestacion;
-
     private RecyclerView recyclerView;
     private adapterMantenimeinto adapter;
     private List<dataMantenimiento> itemList;
@@ -54,6 +56,11 @@ public class MantenimientoPreventivo extends AppCompatActivity {
     String estado;
     TextView Mensaje;
     ImageView ImgResultado;
+    private int currentPage = 1;
+    private final int perPage = 200;
+    private boolean isLoading = false;
+    private boolean isLastPage = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +94,25 @@ public class MantenimientoPreventivo extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
         fetchMantenimiento();
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int totalItemCount = layoutManager.getItemCount();
+                int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+
+                int visibleThreshold = 5;
+
+                if (!isLoading && !isLastPage && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+                    isLoading = true;
+                    adapter.addLoading(); // muestra el item loading
+                    fetchMantenimiento();
+                }
+            }
+        });
 
     }
 
@@ -151,28 +177,32 @@ public class MantenimientoPreventivo extends AppCompatActivity {
         Button opcion2 = view.findViewById(R.id.opcion2);
 
         opcion1.setOnClickListener(v -> {
+            bottomSheetDialog.dismiss();
             Intent intent = new Intent(getApplicationContext(), MantenimientoPreventivo.class);
             intent.putExtra("estado", "0");
             startActivity(intent);
             finish();
-
         });
 
         opcion2.setOnClickListener(v -> {
+            bottomSheetDialog.dismiss();
             Intent intent = new Intent(getApplicationContext(), MantenimientoPreventivo.class);
             intent.putExtra("estado", "1");
             startActivity(intent);
             finish();
-
         });
 
         bottomSheetDialog.show();
     }
 
-    private void fetchMantenimiento() {
 
-        DialogHelper.showProgressDialog(this);
-        String url = Constantes.URL_SERVIDOR + "Mantenimiento/lista-mantenimiento-preventivo-estacion.php?idEstacion=" + Idestacion + "&estado=" + estado;
+    private void fetchMantenimiento() {
+        if (currentPage == 1) {
+            DialogHelper.showProgressDialog(this);
+        }
+
+        String url = Constantes.URL_SERVIDOR + "Mantenimiento/lista-mantenimiento-preventivo-estacion.php?idEstacion="
+                + Idestacion + "&estado=" + estado + "&page=" + currentPage + "&per_page=" + perPage;
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
@@ -180,36 +210,51 @@ public class MantenimientoPreventivo extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
-                            // Limpia la lista actual
-                            itemList.clear();
-
-                            // Recorre el JSONArray
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject jsonObject = response.getJSONObject(i);
-
-                                // Extrae los datos del JSON
-                                int id = jsonObject.getInt("id");
-                                String folio = jsonObject.getString("folio");
-                                String idequipo = jsonObject.getString("idequipo");
-                                String descripcion = jsonObject.getString("nombreequipo");
-                                String fecha = jsonObject.getString("fecha");
-                                String hora = jsonObject.getString("hora");
-                                String estado = jsonObject.getString("estado");
-                                String numverificacion = jsonObject.getString("numverificacion");
-
-                                // Crea un objeto Item y lo añade a la lista
-                                dataMantenimiento item = new dataMantenimiento(id, folio,idequipo,descripcion,fecha,hora,estado,numverificacion);
-                                itemList.add(item);
+                            if (currentPage == 1) {
+                                itemList.clear();
+                            } else {
+                                adapter.removeLoading(); // quita loading al recibir nueva página
                             }
 
-                            // Notifica al adaptador que los datos han cambiado
-                            adapter.updateData(itemList);
+                            if (response.length() > 0) {
+                                for (int i = 0; i < response.length(); i++) {
+                                    JSONObject jsonObject = response.getJSONObject(i);
+
+                                    int id = jsonObject.getInt("id");
+                                    String folio = jsonObject.getString("folio");
+                                    String idequipo = jsonObject.getString("idequipo");
+                                    String descripcion = jsonObject.getString("nombreequipo");
+                                    String fecha = jsonObject.getString("fecha");
+                                    String hora = jsonObject.getString("hora");
+                                    String estado = jsonObject.getString("estado");
+                                    String numverificacion = jsonObject.getString("numverificacion");
+
+                                    dataMantenimiento item = new dataMantenimiento(id, folio, idequipo, descripcion, fecha, hora, estado, numverificacion);
+                                    itemList.add(item);
+                                }
+
+                                adapter.updateData(itemList);
+                                currentPage++;
+                                isLoading = false;
+
+                                if (response.length() < perPage) {
+                                    isLastPage = true;
+                                }
+                            } else {
+                                isLastPage = true;
+                                adapter.removeLoading(); // si no hay más datos, quita loading
+                            }
+
                             ocultarError();
                             DialogHelper.hideProgressDialog();
 
                         } catch (JSONException e) {
                             DialogHelper.hideProgressDialog();
-                            mostrarError();
+                            if (currentPage == 1) {
+                                mostrarError();
+                            }
+                            isLoading = false;
+                            adapter.removeLoading();
                         }
                     }
                 },
@@ -217,13 +262,22 @@ public class MantenimientoPreventivo extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         DialogHelper.hideProgressDialog();
-                        mostrarError();
+                        if (currentPage == 1) {
+                            mostrarError();
+                        }
+                        isLoading = false;
+                        adapter.removeLoading();
                     }
                 });
 
-        requestQueue.add(jsonArrayRequest);
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
+                20000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
+        requestQueue.add(jsonArrayRequest);
     }
+
 
     private void mostrarError() {
         Mensaje.setVisibility(View.VISIBLE);
@@ -242,7 +296,11 @@ public class MantenimientoPreventivo extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1 && resultCode == RESULT_OK) {
-            fetchMantenimiento();
+
+            if (!isLoading && !isLastPage) {
+                isLoading = true;
+                fetchMantenimiento();
+            }
         }
 
     }
