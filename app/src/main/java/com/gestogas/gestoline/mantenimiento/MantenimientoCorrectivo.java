@@ -20,6 +20,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -52,6 +53,11 @@ public class MantenimientoCorrectivo extends AppCompatActivity {
     ImageView ImgResultado;
     TextView Mensaje;
     FloatingActionButton NuevoMantenimiento;
+
+    private int currentPage = 1;
+    private final int perPage = 200;
+    private boolean isLoading = false;
+    private boolean isLastPage = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +109,20 @@ public class MantenimientoCorrectivo extends AppCompatActivity {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int totalItemCount = layoutManager.getItemCount();
+                int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+
+                int visibleThreshold = 5;
+
+                if (!isLoading && !isLastPage && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+                    isLoading = true;
+                    adapter.addLoading(); // muestra el item loading
+                    fetchMantenimiento();
+                }
+
                 // Oculta el FAB mientras se hace scroll hacia abajo
                 if (dy > 0 && NuevoMantenimiento.isShown()) {
                     NuevoMantenimiento.hide();
@@ -164,8 +184,11 @@ public class MantenimientoCorrectivo extends AppCompatActivity {
 
     private void fetchMantenimiento() {
 
-        DialogHelper.showProgressDialog(this);
-        String url = Constantes.URL_SERVIDOR + "Mantenimiento/lista-mantenimiento-correctivo.php?idEstacion=" + Idestacion;
+        if (currentPage == 1) {
+            DialogHelper.showProgressDialog(this);
+        }
+
+        String url = Constantes.URL_SERVIDOR + "Mantenimiento/lista-mantenimiento-correctivo.php?idEstacion=" + Idestacion + "&page=" + currentPage + "&per_page=" + perPage;
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
@@ -173,10 +196,14 @@ public class MantenimientoCorrectivo extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
-                            // Limpia la lista actual
-                            itemList.clear();
+                            if (currentPage == 1) {
+                                itemList.clear();
+                            } else {
+                                adapter.removeLoading(); // quita loading al recibir nueva página
+                            }
 
                             // Recorre el JSONArray
+                            if (response.length() > 0) {
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject jsonObject = response.getJSONObject(i);
 
@@ -191,16 +218,28 @@ public class MantenimientoCorrectivo extends AppCompatActivity {
                                 dataMantenimiento item = new dataMantenimiento(id, folio,"0",descripcion,fecha,hora,"1","0");
                                 itemList.add(item);
                             }
-
-                            // Notifica al adaptador que los datos han cambiado
                             adapter.updateData(itemList);
+                                currentPage++;
+                                isLoading = false;
+
+                                if (response.length() < perPage) {
+                                    isLastPage = true;
+                                }
+                            } else {
+                                isLastPage = true;
+                                adapter.removeLoading(); // si no hay más datos, quita loading
+                            }
+
                             ocultarError();
-                            recyclerView.smoothScrollToPosition(0);
                             DialogHelper.hideProgressDialog();
 
                         } catch (JSONException e) {
                             DialogHelper.hideProgressDialog();
-                            mostrarError();
+                            if (currentPage == 1) {
+                                mostrarError();
+                            }
+                            isLoading = false;
+                            adapter.removeLoading();
                         }
                     }
                 },
@@ -208,9 +247,18 @@ public class MantenimientoCorrectivo extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         DialogHelper.hideProgressDialog();
-                        mostrarError();
+                        if (currentPage == 1) {
+                            mostrarError();
+                        }
+                        isLoading = false;
+                        adapter.removeLoading();
                     }
                 });
+
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
+                20000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         requestQueue.add(jsonArrayRequest);
 
