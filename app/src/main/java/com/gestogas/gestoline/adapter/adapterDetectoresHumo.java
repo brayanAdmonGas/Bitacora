@@ -58,7 +58,6 @@ public class adapterDetectoresHumo extends RecyclerView.Adapter<adapterDetectore
                 TxtRevision3, TxtResultado3,
                 TxtRevision4, TxtResultado4;
 
-
         public ItemViewHolder(@NonNull View view) {
             super(view);
 

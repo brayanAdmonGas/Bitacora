@@ -3,12 +3,19 @@ package com.gestogas.gestoline;
 import static com.gestogas.gestoline.utils.Constantes.URL_SERVIDOR;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,12 +24,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.gestogas.gestoline.controllers.AppController;
 import com.gestogas.gestoline.mantenimiento.MantenimientoCorrectivo;
 import com.gestogas.gestoline.mantenimiento.MantenimientoPreventivo;
 import com.gestogas.gestoline.profeco.Profeco;
 import com.gestogas.gestoline.recepcion.RecepcionBitacora;
+import com.gestogas.gestoline.utils.Constantes;
 import com.gestogas.gestoline.utils.DialogHelper;
 import com.gestogas.gestoline.utils.LocationHelper;
 import com.gestogas.gestoline.utils.ToastUtils;
@@ -33,6 +45,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -40,8 +53,15 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.cardview.widget.CardView;
 import android.widget.GridLayout;
+import android.widget.Toast;
 
 import com.gestogas.gestoline.databinding.ActivityHomeBinding;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class Home extends BaseActivity {
 
@@ -50,18 +70,15 @@ public class Home extends BaseActivity {
     private NavigationView navigationView;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private LocationHelper locationHelper;
+    ProgressDialog progressDialog;
 
-    private LinearLayout rootLayout;
-    private static final String VERSION_URL = "";
-
+    String latestVersion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         locationHelper = new LocationHelper(this);
-        rootLayout = findViewById(R.id.root_home);
-
         String razon_social = AppController.getInstance().GetRazonSocial();
         String permiso_cre = AppController.getInstance().GetPermisoCre();
         String direccion = AppController.getInstance().GetDireccion();
@@ -210,6 +227,8 @@ public class Home extends BaseActivity {
 
         });
 
+        checkForUpdate();
+
     }
 
     private void AlertaUbicacion(){
@@ -339,10 +358,121 @@ public class Home extends BaseActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startLocationUpdates();
             } else {
-                ToastUtils.show(this, "Permisos de ubicación denegados", ToastUtils.SUCCESS);
+                ToastUtils.show(this, "Permisos de ubicación denegados", ToastUtils.ERROR);
             }
         }
     }
 
+    private void checkForUpdate() {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String serverUrl = Constantes.URL_SERVIDOR + "Configuracion/version.json";
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, serverUrl, null,
+                response -> {
+                    try {
+                        latestVersion = response.getString("version");
+                        String apkUrl = response.getString("apk_url");
+
+                        String currentVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+
+                        if (!currentVersion.equals(latestVersion)) {
+                            showUpdateDialog(apkUrl);
+                        }
+                    } catch (Exception e) {
+                        Log.e("UpdateCheck", "Parse error: " + e.getMessage());
+                    }
+                },
+                error -> Log.e("UpdateCheck", "Volley error: " + error.getMessage()));
+
+        queue.add(request);
+    }
+
+    private void showUpdateDialog(String apkUrl) {
+        new AlertDialog.Builder(this)
+                .setTitle("Actualización disponible")
+                .setMessage("Hay una nueva versión disponible. ¿Desea actualizar?")
+                .setPositiveButton("Sí, actualizar", (dialog, which) -> {
+                    downloadAndInstallApk(apkUrl);
+                })
+                .setNegativeButton("No, gracias", null)
+                .show();
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private void downloadAndInstallApk(String apkUrl) {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Descargando actualización");
+        progressDialog.setMessage("Por favor espere...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setMax(100);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        new AsyncTask<String, Integer, File>() {
+            @Override
+            protected File doInBackground(String... urls) {
+                try {
+                    URL url = new URL(urls[0]);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.connect();
+
+                    int fileLength = conn.getContentLength();
+
+                    InputStream is = conn.getInputStream();
+                    File file = new File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), latestVersion + ".apk");
+                    FileOutputStream fos = new FileOutputStream(file);
+
+                    byte[] buffer = new byte[4096];
+                    int len;
+                    long total = 0;
+
+                    while ((len = is.read(buffer)) != -1) {
+                        total += len;
+                        if (fileLength > 0) {
+                            publishProgress((int) (total * 100 / fileLength));
+                        }
+                        fos.write(buffer, 0, len);
+                    }
+
+                    fos.close();
+                    is.close();
+                    return file;
+
+                } catch (Exception e) {
+                    Log.e("DownloadApk", "Error: " + e.getMessage());
+                    return null;
+                }
+            }
+
+            @Override
+            protected void onProgressUpdate(Integer... values) {
+                super.onProgressUpdate(values);
+                progressDialog.setProgress(values[0]);
+            }
+
+            @Override
+            protected void onPostExecute(File file) {
+                progressDialog.dismiss();
+                if (file != null) {
+                    installApk(file);
+                } else {
+                    ToastUtils.show(Home.this, "Error al descargar APK", ToastUtils.ERROR);
+                }
+            }
+        }.execute(apkUrl);
+    }
+
+    private void installApk(File file) {
+        try {
+            Uri apkUri = FileProvider.getUriForFile(this, getPackageName() + ".provider", file);
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            ToastUtils.show(Home.this, "No se pudo abrir el instalador", ToastUtils.ERROR);
+        }
+    }
 
 }

@@ -51,9 +51,7 @@
         <activity
             android:name=".mantenimiento.MantenimientoPreventivoRevisarDetalle"
             android:exported="false" />
-        <activity
-            android:name=".mantenimiento.MantenimientoPreventivoTres"
-            android:exported="false" />
+
         <activity
             android:name=".mantenimiento.MantenimientoPreventivoRevisar"
             android:exported="false" />
