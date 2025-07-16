@@ -11,8 +11,8 @@ android {
         applicationId = "com.gestogas.gestoline"
         minSdk = 24
         targetSdk = 35
-        versionCode = 5
-        versionName = "1.2.1.3"
+        versionCode = 7
+        versionName = "1.2.1.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
