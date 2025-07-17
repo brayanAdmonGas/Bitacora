@@ -117,6 +117,8 @@ public class Login extends BaseActivity {
                     public void onResponse(String res) {
                         //Manejar la respuesta
 
+                        Log.d("respuesta", res.toString());
+
                         String nombreusuario= "", idgrupo = "", nombregrupo = "", permisocre = "", razonsocial = "", direccion = "", productouno = "", productodos = "", productotres = "",
                                 logo = "", latitud = "", longitud = "", distmax = "", ubicacion = "";
                         int idusuario = 0, idestacion = 0, idpuesto = 0, confiprofeco = 0, code = 0, permisbitacora = 0;
@@ -214,6 +216,8 @@ public class Login extends BaseActivity {
                     System.out.println();
                     ToastUtils.show(Login.this, "Se produjo un error, revise su conexión a internet", ToastUtils.INFO);
                 }
+
+                Log.d("error", error.toString());
 
                 InputUsuario.setEnabled(true);
                 InputPassword.setEnabled(true);

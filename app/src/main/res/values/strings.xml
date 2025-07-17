@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GestoLine</string>
+    <string name="app_name">GBitacora</string>
     <string name="descripcion_imagen">Descripción de la imagen</string>
 
     <!-- Login -->
